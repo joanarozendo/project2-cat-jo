@@ -1,11 +1,24 @@
 <div>
     {{#if user}}
     <a href="/">Home</a>
-    <a href="/user/profile">Profile</a>
-    <a href="/authentication/logout">Log Our</a>
+    {{#ifUser user}}
+    <a href="/user/profile/{{user._id}}">Profile</a>
+    <p>I am a user</p>
+    {{/ifUser}}
+    {{#ifBand user}}
+    <a href="/band/profile/{{user._id}}">Profile</a>
+    <p>I am a band</p>
+    {{/ifBand}}
+    {{#ifAdmin user}}
+    <a href="/admin/profile/{{user._id}}">Profile</a>
+    <p>I am an administrator</p>
+    {{/ifAdmin}}
+    <form action="/authentication/logout" method="POST">
+        <button>Log Out</button>
+    </form>
     {{else}}
     <a href="/">Home</a>
-    <a href="/authentication/login">Log in</a>
-    <a href="/authentication/signup">Sign up</a>
+    <a href="/authentication/login">Log In</a>
+    <a href="/authentication/signup">Sign Up</a>
     {{/if}}
 </div>

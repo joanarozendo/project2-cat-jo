@@ -36,6 +36,30 @@ app.set('view engine', 'hbs');
 const hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/partials');
 
+//Register hbs helpers
+hbs.registerHelper('ifBand', function (v1, options) {
+  if (v1.role === 'artist') {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('ifUser', function (v1, options) {
+  if (v1.role === 'user') {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('ifAdmin', function (v1, options) {
+  if (v1.role === 'admin') {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+
+
 app.use(logger('dev'));
 app.use(express.urlencoded({
   extended: true

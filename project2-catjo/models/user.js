@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
   username: {
     type: String,
     // required: true,
-    unique: true,
+    //unique: true,
     trim: true
   },
   email: {
@@ -25,22 +25,20 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  facebook: [
-    {
-      id: {
-        type: String
-      },
-      token: {
-        type: String
-      },
-      name: {
-        type: String
-      },
-      email: {
-        type: String
-      }
+  facebook: [{
+    id: {
+      type: String
+    },
+    token: {
+      type: String
+    },
+    name: {
+      type: String
+    },
+    email: {
+      type: String
     }
-  ],
+  }],
   description: {
     type: String,
     minlength: 1,
@@ -51,12 +49,10 @@ const schema = new mongoose.Schema({
     // required: true,
     enum: ["artist", "user", "admin"]
   },
-  favoriteGenres: [
-    {
-      type: String,
-      enum: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"]
-    }
-  ],
+  favoriteGenres: [{
+    type: String,
+    enum: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"]
+  }],
   artistGenre: {
     type: String,
     // required: true,
