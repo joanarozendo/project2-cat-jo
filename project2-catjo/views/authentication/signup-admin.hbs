@@ -1,25 +1,44 @@
-<form action="/authentication/signup-admin" method="POST">
+<form action="/authentication/signup-user" method="POST">
 
- <label for="input-firstName">Your First Name</label>
-  <input type="text" id="input-firstName" name="firstName" placeholder="Your first name here" />
-  <br>
-  
-  <label for="input-lastName">Your Last Name</label>
-  <input type="text" id="input-lastName" name="lastName" placeholder="Your last name here" />
-  <br>
+<div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="input-email">Email</label>
+    <input type="email" class="form-control" id="input-email" name="email" placeholder="abc@def.com">
+    </div>
 
-  <label for="input-username">Username</label>
-  <input type="text" id="input-username" name="username" placeholder="Your username here" />
-  <br>
+    <div class="form-group col-md-6">
+      <label for="input-password">Password</label>
+    <input type="password" class="form-control" id="input-password" name="password" placeholder="Password">
+    </div>
+  </div>
 
-  <label for="input-email">Email</label>
-  <input type="email" id="input-email" name="email" placeholder="Your email" />
-  <br>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="input-username">Username</label>
+      <input type="text" class="form-control" id="input-username" name="username" placeholder="jane_doe">
+    </div>
 
-  <label for="input-password">Password</label>
-  <input type="password" name="password" id="input-password" placeholder="Your password here" />
-  <br>
+    <div class="form-group col-md-4">
+      <label for="input-firstName">First Name</label>
+      <input type="text" class="form-control" id="input-firstName" name="firstName" placeholder="Jane">
+    </div>
 
-  <button>Sign Up</button>
+    <div class="form-group col-md-4">
+      <label for="input-lastName">Last Name</label>
+      <input type="text" class="form-control" id="input-lastName" name="lastName" placeholder="Doe">
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck" required>
+      <label class="form-check-label" for="gridCheck">
+        I accept the Terms and Conditions
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Sign Up</button>
 
 </form>
