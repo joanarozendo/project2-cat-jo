@@ -1,0 +1,11 @@
+<div>
+    {{#if user}}
+    <a href="/">Home</a>
+    <a href="/user/profile">Profile</a>
+    <a href="/authentication/logout">Log Our</a>
+    {{else}}
+    <a href="/">Home</a>
+    <a href="/authentication/login">Log in</a>
+    <a href="/authentication/signup">Sign up</a>
+    {{/if}}
+</div>

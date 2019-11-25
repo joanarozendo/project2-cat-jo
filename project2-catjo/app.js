@@ -9,13 +9,15 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const serveFavicon = require('serve-favicon');
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 
 //SESSIONS
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const MongoStore = connectMongo(expressSession);
 
+//Require USER
+const User = require('./models/user')
 
 //ROUTES
 const indexRouter = require('./routes/index');
@@ -29,6 +31,10 @@ const app = express();
 
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+//Register partials
+const hbs = require('hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(logger('dev'));
 app.use(express.urlencoded({
@@ -65,7 +71,7 @@ app.use(
 );
 
 //GETTING ACCESS TO THE USER IN LOCALS
-/*
+
 app.use((req, res, next) => {
   const userId = req.session.user;
   if (userId) {
@@ -81,7 +87,7 @@ app.use((req, res, next) => {
   } else {
     next();
   }
-});*/
+});
 
 //APP USER ROUTES
 app.use('/', indexRouter);
