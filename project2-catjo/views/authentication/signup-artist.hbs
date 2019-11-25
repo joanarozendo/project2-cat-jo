@@ -1,0 +1,29 @@
+<form action="/authentication/signup-artist" method="POST">
+
+  <label for="input-artistName">Artist/Band Name</label>
+  <input type="text" id="input-artistName" name="artistName" placeholder="Your name here" />
+
+  <label for="input-description">About You</label>
+  <textarea name="description" id="input-description" cols="30" rows="10">Write something about you here</textarea>
+
+  <label for="input-genres">Genres</label>
+  <input type="checkbox" name="indie" value="indie">Indie<br>
+  <input type="checkbox" name="rock" value="rock">Rock<br>
+  <input type="checkbox" name="pop" value="pop">Pop<br>
+
+{{!-- ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"] --}}
+
+  <label for="input-artistAlbums">Your Albums</label>
+  <input type="text" id="input-artistAlbums" name="artistAlbums" placeholder="Your albums here" />
+
+  <label for="input-username">Username</label>
+  <input type="text" id="input-username" name="username" placeholder="Your username here" />
+
+  <label for="input-email">Email</label>
+  <input type="email" id="input-email" name="email" placeholder="Your email" />
+
+  <label for="input-password">Password</label>
+  <input type="password" name="password" id="input-password" placeholder="Your password here" />
+  <button>Sign Up</button>
+
+</form>
