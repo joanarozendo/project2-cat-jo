@@ -1,11 +1,13 @@
 <form action="/authentication/signup-first-step" method="POST">
-
-  <label for="input-role">What are you?</label> <br>
-  <select name="role" id=>
-    <option value="artist">Artist/Band</option>
-    <option value="user">User</option>
-    <option value="admin">Administrator</option>
-  </select>
-  <button>Submit</button>
-
+  <div class="input-group">
+    <select name="role" class="custom-select" id="inputGroupSelect04">
+      <option selected>Choose your profile type...</option>
+      <option value="artist">Artist/Band</option>
+      <option value="user">User</option>
+      <option value="admin">Administrator</option>
+    </select>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit">Submit</button>
+    </div>
+  </div>
 </form>

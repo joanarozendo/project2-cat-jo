@@ -1,4 +1,4 @@
-<form action="/authentication/signup-artist" method="POST">
+{{!-- <form action="/authentication/signup-artist" method="POST">
 
   <label for="input-artistName">Artist/Band Name</label>
   <input type="text" id="input-artistName" name="artistName" placeholder="Your name here" />
@@ -37,5 +37,68 @@
   <br>
 
   <button>Sign Up</button>
+
+</form> --}}
+
+<form action="/authentication/signup-user" method="POST">
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="input-email">Email</label>
+    <input type="email" class="form-control" id="input-email" name="email" placeholder="abc@def.com">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="input-password">Password</label>
+    <input type="password" class="form-control" id="input-password" name="password" placeholder="Password">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="input-username">Username</label>
+      <input type="text" class="form-control" id="input-username" name="username" placeholder="xpto_10">
+    </div>
+
+    <div class="form-group col-md-8">
+      <label for="input-artistName">Artist/Band Name</label>
+      <input type="text" class="form-control" id="input-artistName" name="artistName" placeholder="XPTO">
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <label for="input-description">About you</label>
+    <textarea name="description" class="form-control" id="input-description" rows="2" placeholder="Write something here..." ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="input-description">Choose the genres that apply</label>
+    <select name="genres" class="form-control" id="input-description" multiple>
+      <option value="indie">Indie</option>
+      <option value="rock">Rock</option>
+      <option value="pop">Pop</option>
+      <option value="rap">Rap</option>
+      <option value="hip-pop">Hip-Pop</option>
+      <option value="metal">Metal</option>
+      <option value="fado">Fado</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="input-artistAlbums">List your albums</label>
+    <textarea name="artistAlbums" class="form-control" id="input-artistAlbums" rows="2" placeholder="List your albums here..."></textarea>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck" required>
+      <label class="form-check-label" for="gridCheck">
+        I accept the Terms and Conditions
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Sign Up</button>
 
 </form>

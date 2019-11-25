@@ -1,4 +1,4 @@
-<h2>List of bands</h2>
+{{!-- <h2>List of bands</h2>
 
 <ul>
     {{#each bands}}
@@ -7,4 +7,27 @@
         </p>
     </li>
     {{/each}}
+</ul> --}}
+
+<ul class="list-unstyled">
+  {{#each bands}}
+  <li>
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          {{!-- <img src="..." class="card-img" alt="..."> --}}
+          <img src="/images/03.jpg" alt="" width="185px">
+
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{artistName}}</h5>
+            <p class="card-text">{{description}}</p>
+            <a href="/band/profile/{{_id}}" class="card-text"><small class="text-muted">Check out this profile</small></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+  {{/each}}
 </ul>
