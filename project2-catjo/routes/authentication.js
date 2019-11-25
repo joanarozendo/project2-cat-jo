@@ -8,24 +8,41 @@ const routeGuard = require("./../middleware/route-guard");
 
 //here we will do the login sign up/log in/sign out
 // Sign Up
-authenticationRouter.get('/signup', (req, res, next) => {
-  res.render('authentication/signup');
+authenticationRouter.get('/signup-first-step', (req, res, next) => {
+  res.render('authentication/signup-first-step');
 });
 
-authenticationRouter.post('/signup', (req, res, next) => {
-  const { name, username, email, password, description, role, favoriteGenres, artistGenre, artistAlbums } = req.body;
+authenticationRouter.post('/signup-first-step', (req, res, next) => {
+  const { role } = req.body;
+  if (role === "artist") {
+    res.render('authentication/signup-artist');
+  }
+  if (role === "user") {
+    res.render('authentication/signup-user');
+  }
+  if (role === "admin") {
+    res.render('authentication/signup-admin');
+  }
+});
+
+
+authenticationRouter.get('/signup-artist', (req, res, next) => {
+  res.render('authentication/signup-artist');
+});
+
+authenticationRouter.post('/signup-artist', (req, res, next) => {
+  const { artistName, username, email, password, role, description, genres, artistAlbums } = req.body;
   bcryptjs
     .hash(password, 10)
     .then(hash => {
       return User.create({
-        name,
+        artistName,
         username,
         email,
         passwordHash: hash,
+        role: "artist",
         description,
-        role,
-        favoriteGenres,
-        artistGenre,
+        genres,
         artistAlbums
       });
     })

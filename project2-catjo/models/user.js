@@ -3,22 +3,32 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
-    required: true,
+    // required: true,
+    trim: true
+  },
+  lastName: {
+    type: String,
+    // required: true,
+    trim: true
+  },
+  artistName: {
+    type: String,
+    // required: true,
     trim: true
   },
   username: {
     type: String,
     // required: true,
-    unique: true,
+    // unique: true,
     trim: true
   },
   email: {
     type: String,
     lowercase: true,
     required: true,
-    unique: true,
+    // unique: true,
     trim: true
   },
   passwordHash: {
@@ -48,20 +58,17 @@ const schema = new mongoose.Schema({
   },
   role: {
     type: String,
-    // required: true,
+    required: true,
     enum: ["artist", "user", "admin"]
   },
-  favoriteGenres: [
+  genres: [
     {
       type: String,
-      enum: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"]
+      // required: true,
+      enum: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"],
+      default: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"]
     }
   ],
-  artistGenre: {
-    type: String,
-    // required: true,
-    enum: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"]
-  },
   artistAlbums: {
     type: String
   }
