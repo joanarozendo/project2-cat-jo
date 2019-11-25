@@ -8,8 +8,14 @@
 </ul>
 <div>Description: {{band.description}}</div>
 <div><a href="/band/events/{{band.id}}">Events</a></div>
-{{#ifBandLoggedIn band user}}
+{{#ifSameLoggedIn band user}}
 <div><a href="/band/edit/{{band._id}}">Edit</a>
 </div>
 <form action='/band/delete/{{band._id}}' method="POST"><button>Delete your Profile</button></form>
-{{/ifBandLoggedIn}}
+{{/ifSameLoggedIn}}
+
+{{#isAdmin user}}
+<div><a href="/band/edit/{{band._id}}">Edit</a>
+</div>
+<form action='/band/delete/{{band._id}}' method="POST"><button>Delete this Artist's Profile</button></form>
+{{/isAdmin}}

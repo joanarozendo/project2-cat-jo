@@ -7,16 +7,20 @@
         {{/ifUser}}
         {{#ifBand user}}
         <li class="nav-item"> <a class="nav-link" href="/band/profile/{{user._id}}">Profile</a></li>
+        <li class="nav-item"> <a class="nav-link" href="/band/event/{{user._id}}/add-event">Add an Event</a></li>
+        <li class="nav-item"> <a class="nav-link" href="/band/event/{{user._id}}">Your events</a></li>
         {{/ifBand}}
         {{#ifAdmin user}}
         <li class="nav-item"> <a class="nav-link" href="/admin/profile/{{user._id}}">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin/add-user-first-page">Add Users/Artists</a></li>
         {{/ifAdmin}}
         <li class="nav-item"><a class="nav-link" href="/band/list">List of bands</a></li>
         <li class="nav-item"><a class="nav-link" href="/user/list">List of users</a></li>
-        <li class="nav-item">
+        <li class="nav-item"><a class="nav-link" href="/band/event/list">List of events</a></li>
         </li>
         {{else}}
         <li class="nav-item"> <a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"> <a class="nav-link" href="/about">About</a></li>
         <li class="nav-item"><a class="nav-link" href="/authentication/login">Log In</a></li>
         <li class="nav-item"> <a class="nav-link" href="/authentication/signup-first-step">Sign Up</a></li>
         {{/if}}

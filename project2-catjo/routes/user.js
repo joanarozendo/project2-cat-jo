@@ -1,6 +1,8 @@
 "use strict";
 
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 const userRouter = new Router();
 const routeGuard = require("./../middleware/route-guard");
 const User = require("./../models/user");
@@ -10,9 +12,9 @@ const bcryptjs = require("bcryptjs");
 userRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
   User.findById(userId)
-    .then(user => {
+    .then(user_individual => {
       res.render("user/profile", {
-        user
+        user_individual
       });
     })
     .catch(error => {
@@ -23,7 +25,7 @@ userRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
 // GOING TO PROFILE EDIT PAGE
 userRouter.get("/edit/:user_id", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
-  if (JSON.stringify(userId) === JSON.stringify(req.user._id)) {
+  if (JSON.stringify(userId) === JSON.stringify(req.user._id) || req.user.role === 'admin') {
     User.findById(userId)
       .then(user => {
         res.render("user/edit", {
@@ -41,40 +43,39 @@ userRouter.get("/edit/:user_id", routeGuard, (req, res, next) => {
 // EDITING USER PROFILE
 userRouter.post("/edit/:user_id", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
-  const {firstName,
+  const {
+    firstName,
     lastName,
     username,
     email,
     password,
-    description} = req.body;
-    console.log('PASS', password);
-    
-  if (JSON.stringify(userId) === JSON.stringify(req.user._id)) {
+    description
+  } = req.body;
+  console.log('PASS', password);
+
+  if (JSON.stringify(userId) === JSON.stringify(req.user._id) || req.user.role === 'admin') {
     bcryptjs
-    .hash(password, 10)
-    .then(hash => {
-      return User.findOneAndUpdate(
-        {
-          _id: userId
-        },
-        {
-          firstName: firstName,
-          lastName: lastName,
-          username: username,
-          email: email,
-          passwordHash: hash,
-          description: description
-        }
-      )
-        .then(user => {
-          console.log("The user was edited", user);
-          res.redirect(`/user/profile/${userId}`);
-        })
-        .catch(error => {
-          console.log("The user was not edited");
-          next(error);
-        });
-    });
+      .hash(password, 10)
+      .then(hash => {
+        return User.findOneAndUpdate({
+            _id: userId
+          }, {
+            firstName: firstName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            passwordHash: hash,
+            description: description
+          })
+          .then(user => {
+            console.log("The user was edited", user);
+            res.redirect(`/user/profile/${userId}`);
+          })
+          .catch(error => {
+            console.log("The user was not edited");
+            next(error);
+          });
+      });
   } else {
     res.redirect(`/user/profile/${userId}`);
   }
@@ -84,11 +85,11 @@ userRouter.post("/edit/:user_id", routeGuard, (req, res, next) => {
 userRouter.get("/list", routeGuard, (req, res, next) => {
   // console.log(req.params);
   User.find({
-    role: "user"
-  })
-    .then(user => {
+      role: "user"
+    })
+    .then(user_individual => {
       res.render("user/list", {
-        user
+        user_individual
       });
     })
     .catch(error => {
@@ -99,10 +100,10 @@ userRouter.get("/list", routeGuard, (req, res, next) => {
 // DELETE PROFILE
 userRouter.post("/:user_id/delete", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
-  if (JSON.stringify(userId) === JSON.stringify(req.user._id)) {
+  if (JSON.stringify(userId) === JSON.stringify(req.user._id) || req.user.role === 'admin') {
     User.findByIdAndDelete({
-      _id: userId
-    })
+        _id: userId
+      })
       .then(res.redirect("/"))
       .catch(error => {
         next(error);

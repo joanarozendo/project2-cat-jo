@@ -58,8 +58,15 @@ hbs.registerHelper('ifAdmin', function (v1, options) {
   return options.inverse(this);
 });
 
-hbs.registerHelper('ifBandLoggedIn', function (arg1, arg2, options) {
-  return JSON.stringify(arg1._id) ==  JSON.stringify(arg2._id) ? options.fn(this) : options.inverse(this);
+hbs.registerHelper('ifSameLoggedIn', function (arg1, arg2, options) {
+  return JSON.stringify(arg1._id) == JSON.stringify(arg2._id) ? options.fn(this) : options.inverse(this);
+});
+
+hbs.registerHelper('isAdmin', function (arg1, options) {
+  if (arg1.role === 'admin') {
+    return options.fn(this);
+  }
+  return options.inverse(this);
 });
 
 app.use(logger('dev'));
