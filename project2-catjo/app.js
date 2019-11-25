@@ -58,7 +58,9 @@ hbs.registerHelper('ifAdmin', function (v1, options) {
   return options.inverse(this);
 });
 
-
+hbs.registerHelper('ifBandLoggedIn', function (arg1, arg2, options) {
+  return JSON.stringify(arg1._id) ==  JSON.stringify(arg2._id) ? options.fn(this) : options.inverse(this);
+});
 
 app.use(logger('dev'));
 app.use(express.urlencoded({

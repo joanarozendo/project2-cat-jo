@@ -1,9 +1,8 @@
 const { Router } = require("express");
 const bandRouter = new Router();
-
+const bcryptjs = require("bcryptjs");
 const routeGuard = require("./../middleware/route-guard");
 const User = require("./../models/user");
-
 //Going to the band profile (all users have access if they are logged in)
 bandRouter.get("/profile/:band_id", routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
@@ -17,7 +16,6 @@ bandRouter.get("/profile/:band_id", routeGuard, (req, res, next) => {
       next(error);
     });
 });
-
 //Going to the band edit profile (only the the band that is logged in can access its own profile editor)
 bandRouter.get("/edit/:band_id", routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
@@ -35,33 +33,75 @@ bandRouter.get("/edit/:band_id", routeGuard, (req, res, next) => {
     res.redirect(`/band/profile/${bandId}`);
   }
 });
-
 //Going to the band edit profile (only the the band that is logged in can access its own profile editor)
 bandRouter.post("/edit/:band_id", routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
-  const { username, email, description } = req.body;
+  const {
+    artistName,
+    username,
+    email,
+    password,
+    description,
+    genres,
+    artistAlbums
+  } = req.body;
   if (JSON.stringify(bandId) === JSON.stringify(req.user._id)) {
-    User.findOneAndUpdate(
-      {
-        _id: bandId
-      },
-      {
-        username: username,
-        email: email,
-        description: description
-      }
-    )
-      .then(band => {
-        console.log("The band was edited", band);
-        res.redirect(`/band/profile/${bandId}`);
+    bcryptjs.hash(password, 10).then(hash => {
+      return User.findOneAndUpdate(
+        {
+          _id: bandId
+        },
+        {
+          username: username,
+          email: email,
+          description: description,
+          genres: genres,
+          artistAlbums: artistAlbums,
+          artistName: artistName,
+          password: hash
+        }
+      )
+        .then(band => {
+          console.log("The band was edited", band);
+          res.redirect(`/band/profile/${bandId}`);
+        })
+        .catch(error => {
+          console.log("The band was not edited");
+          next(error);
+        });
+    });
+  } else {
+    res.redirect(`/band/profile/${bandId}`);
+  }
+});
+bandRouter.get("/list", routeGuard, (req, res, next) => {
+  User.find({
+    role: "artist"
+  })
+    .then(bands => {
+      res.render("band/list", {
+        bands
+      });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+bandRouter.post("/delete/:band_id", routeGuard, (req, res, next) => {
+  const bandId = req.params.band_id;
+  if (JSON.stringify(bandId) === JSON.stringify(req.user._id)) {
+    User.findByIdAndDelete({
+      _id: bandId
+    })
+      .then(() => {
+        res.redirect("/");
       })
-      .catch(error => {
-        console.log("The band was not edited");
-        next(error);
+      .catch(err => {
+        console.log("couldnt delete band");
+        next(err);
       });
   } else {
     res.redirect(`/band/profile/${bandId}`);
   }
 });
-
 module.exports = bandRouter;
