@@ -3,6 +3,8 @@ const {
 } = require('express');
 const bandRouter = new Router();
 
+const bcryptjs = require("bcryptjs");
+
 
 const routeGuard = require('./../middleware/route-guard');
 const User = require('./../models/user');
@@ -46,25 +48,69 @@ bandRouter.get('/edit/:band_id', routeGuard, (req, res, next) => {
 bandRouter.post('/edit/:band_id', routeGuard, (req, res, next) => {
     const bandId = req.params.band_id;
     const {
+        artistName,
         username,
         email,
-        description
+        password,
+        description,
+        genres,
+        artistAlbums
     } = req.body;
     if (JSON.stringify(bandId) === JSON.stringify(req.user._id)) {
-        User.findOneAndUpdate({
+        bcryptjs
+            .hash(password, 10)
+            .then(hash => {
+                return User.findOneAndUpdate({
+                        _id: bandId
+                    }, {
+                        username: username,
+                        email: email,
+                        description: description,
+                        genres: genres,
+                        artistAlbums: artistAlbums,
+                        artistName: artistName,
+                        password: hash
+                    })
+                    .then(band => {
+                        console.log('The band was edited', band);
+                        res.redirect(`/band/profile/${bandId}`)
+                    })
+                    .catch(error => {
+                        console.log('The band was not edited');
+                        next(error);
+                    });
+            });
+    } else {
+        res.redirect(`/band/profile/${bandId}`);
+    }
+});
+
+bandRouter.get('/list', routeGuard, (req, res, next) => {
+    User.find({
+            role: 'artist'
+        })
+        .then(bands => {
+            res.render('band/list', {
+                bands
+            });
+        })
+        .catch(err => {
+            next(err);
+        });
+});
+
+bandRouter.post('/delete/:band_id', routeGuard, (req, res, next) => {
+    const bandId = req.params.band_id;
+    if (JSON.stringify(bandId) === JSON.stringify(req.user._id)) {
+        User.findByIdAndDelete({
                 _id: bandId
-            }, {
-                username: username,
-                email: email,
-                description: description
             })
-            .then(band => {
-                console.log('The band was edited', band);
-                res.redirect(`/band/profile/${bandId}`)
+            .then(() => {
+                res.redirect('/');
             })
-            .catch(error => {
-                console.log('The band was not edited');
-                next(error);
+            .catch(err => {
+                console.log('couldnt delete band');
+                next(err);
             });
     } else {
         res.redirect(`/band/profile/${bandId}`);

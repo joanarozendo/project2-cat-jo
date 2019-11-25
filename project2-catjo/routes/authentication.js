@@ -1,4 +1,6 @@
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 const authenticationRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const User = require('./../models/user');
@@ -13,7 +15,9 @@ authenticationRouter.get('/signup-first-step', (req, res, next) => {
 });
 
 authenticationRouter.post('/signup-first-step', (req, res, next) => {
-  const { role } = req.body;
+  const {
+    role
+  } = req.body;
   if (role === "artist") {
     res.render('authentication/signup-artist');
   }
@@ -31,18 +35,27 @@ authenticationRouter.get('/signup-artist', (req, res, next) => {
 });
 
 authenticationRouter.post('/signup-artist', (req, res, next) => {
-  const { artistName, username, email, password, description, genres, artistAlbums } = req.body;
+  const {
+    artistName,
+    username,
+    email,
+    password,
+    description,
+    genres,
+    artistAlbums
+  } = req.body;
+  console.log('genres', genres);
   bcryptjs
-  .hash(password, 10)
-  .then(hash => {
-    return User.create({
-      artistName,
-      username,
-      email,
-      passwordHash: hash,
-      role: "artist",
-      description,
-        genres,
+    .hash(password, 10)
+    .then(hash => {
+      return User.create({
+        artistName,
+        username,
+        email,
+        passwordHash: hash,
+        role: "artist",
+        description,
+        genres: genres,
         artistAlbums
       });
     })
@@ -53,17 +66,25 @@ authenticationRouter.post('/signup-artist', (req, res, next) => {
     .catch(error => {
       next(error);
     });
-  });
-  
-  // Sign Up - Users
-  authenticationRouter.get('/signup-user', (req, res, next) => {
-    res.render('authentication/signup-user');
-  });
-  
-  authenticationRouter.post('/signup-user', (req, res, next) => {
-    const { firstName, lastName, username, email, password, description, genres } = req.body;
-    console.log('GENRES', req.body.genres);
-    bcryptjs
+});
+
+// Sign Up - Users
+authenticationRouter.get('/signup-user', (req, res, next) => {
+  res.render('authentication/signup-user');
+});
+
+authenticationRouter.post('/signup-user', (req, res, next) => {
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password,
+    description,
+    genres
+  } = req.body;
+  console.log('GENRES', req.body.genres);
+  bcryptjs
     .hash(password, 10)
     .then(hash => {
       return User.create({
@@ -84,15 +105,21 @@ authenticationRouter.post('/signup-artist', (req, res, next) => {
     .catch(error => {
       next(error);
     });
-  });
-  
-  // Sign Up - Admin
+});
+
+// Sign Up - Admin
 authenticationRouter.get('/signup-admin', (req, res, next) => {
   res.render('authentication/signup-admin');
 });
 
 authenticationRouter.post('/signup-admin', (req, res, next) => {
-  const { firstName, lastName, username, email, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password
+  } = req.body;
   bcryptjs
     .hash(password, 10)
     .then(hash => {
@@ -121,8 +148,13 @@ authenticationRouter.get('/login', (req, res, next) => {
 
 authenticationRouter.post('/login', (req, res, next) => {
   let userId;
-  const { email, password } = req.body;
-  User.findOne({ email })
+  const {
+    email,
+    password
+  } = req.body;
+  User.findOne({
+      email
+    })
     .then(user => {
       if (!user) {
         return Promise.reject(new Error("There's no user with that email."));

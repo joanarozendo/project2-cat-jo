@@ -1,24 +1,29 @@
-<div>
+<div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex justify-content-between">
+    <ul class="navbar-nav">
+        {{#if user}}
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        {{#ifUser user}}
+        <li class="nav-item"> <a class="nav-link" href="/user/profile/{{user._id}}">Profile</a></li>
+        {{/ifUser}}
+        {{#ifBand user}}
+        <li class="nav-item"> <a class="nav-link" href="/band/profile/{{user._id}}">Profile</a></li>
+        {{/ifBand}}
+        {{#ifAdmin user}}
+        <li class="nav-item"> <a class="nav-link" href="/admin/profile/{{user._id}}">Profile</a></li>
+        {{/ifAdmin}}
+        <li class="nav-item"><a class="nav-link" href="/band/list">List of bands</a></li>
+        <li class="nav-item"><a class="nav-link" href="/user/list">List of users</a></li>
+        <li class="nav-item">
+        </li>
+        {{else}}
+        <li class="nav-item"> <a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/authentication/login">Log In</a></li>
+        <li class="nav-item"> <a class="nav-link" href="/authentication/signup-first-step">Sign Up</a></li>
+        {{/if}}
+    </ul>
     {{#if user}}
-    <a href="/">Home</a>
-    {{#ifUser user}}
-    <a href="/user/profile/{{user._id}}">Profile</a>
-    <p>I am a user</p>
-    {{/ifUser}}
-    {{#ifBand user}}
-    <a href="/band/profile/{{user._id}}">Profile</a>
-    <p>I am a band</p>
-    {{/ifBand}}
-    {{#ifAdmin user}}
-    <a href="/admin/profile/{{user._id}}">Profile</a>
-    <p>I am an administrator</p>
-    {{/ifAdmin}}
     <form action="/authentication/logout" method="POST">
-        <button>Log Out</button>
+        <button class="btn btn-outline-success my-2 my-sm-0">Log Out</button>
     </form>
-    {{else}}
-    <a href="/">Home</a>
-    <a href="/authentication/login">Log In</a>
-    <a href="/authentication/signup-first-step">Sign Up</a>
     {{/if}}
 </div>

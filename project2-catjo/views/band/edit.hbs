@@ -1,11 +1,34 @@
 <h1>Edit your band profile</h1>
 
 <form action="/band/edit/{{band._id}}" method='POST'>
+    <!-- username -->
     <label for="username">Username</label><textarea name="username" id="" cols="30"
         rows="1">{{band.username}}</textarea>
+    <!-- description -->
     <label for="description">Description</label> <textarea name="description" id="" cols="30"
         rows="2">{{band.description}}</textarea>
-        <label for="email">Email</label>
-        <textarea name="email" type='email' id="" cols="30" rows="1">{{band.email}}</textarea>
+    <!-- email -->
+    <label for="email">Email</label>
+    <textarea name="email" type='email' id="" cols="30" rows="1">{{band.email}}</textarea>
+    <!-- genres-->
+    <label for="input-genres">What is your genre? You can select more than one</label>
+    <select name="genres" id="input-genres" multiple>
+        <option value="indie">Indie</option>
+        <option value="rock">Rock</option>
+        <option value="pop">Pop</option>
+        <option value="rap">Rap</option>
+        <option value="hip-pop">Hip-Pop</option>
+        <option value="metal">Metal</option>
+        <option value="fado">Fado</option>
+    </select>
+    <!-- artist/band name-->
+    <label for="input-artistName">Artist/Band Name</label>
+    <input type="text" id="input-artistName" name="artistName" placeholder="{{band.artistName}}" />
+    <!-- Albuns-->
+    <label for="input-artistAlbums">Your Albums</label>
+    <input type="text" id="input-artistAlbums" name="artistAlbums" placeholder="{{band.artistAlbums}}" />
+    <!-- Password-->
+    <label for="input-password">Password</label>
+    <input type="password" name="password" id="input-password" placeholder="Your password here" />
     <button>Edit</button>
 </form>

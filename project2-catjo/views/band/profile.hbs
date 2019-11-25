@@ -1,14 +1,15 @@
 <h1>Band profile</h1>
 <img src="#" alt="Here will be an image">
-<h2>{{band.username}}</h2>
+<h2>{{band.artistName}}</h2>
 <ul>Genre:
-    {{#each band.genre}}
+    {{#each band.genres}}
     <li>{{this}}</li>
     {{/each}}
 </ul>
 <div>Description: {{band.description}}</div>
 <div><a href="/band/events/{{band.id}}">Events</a></div>
-{{#ifBand band}}
+{{#ifBandLoggedIn band user}}
 <div><a href="/band/edit/{{band._id}}">Edit</a>
 </div>
-{{/ifBand}}
+<form action='/band/delete/{{band._id}}' method="POST"><button>Delete your Profile</button></form>
+{{/ifBandLoggedIn}}
