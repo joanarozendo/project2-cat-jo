@@ -7,7 +7,7 @@ const User = require('./../models/user');
 const routeGuard = require("./../middleware/route-guard");
 
 //here we will do the login sign up/log in/sign out
-// Sign Up
+// Sign Up - First Step - Choose Role
 authenticationRouter.get('/signup-first-step', (req, res, next) => {
   res.render('authentication/signup-first-step');
 });
@@ -25,25 +25,85 @@ authenticationRouter.post('/signup-first-step', (req, res, next) => {
   }
 });
 
-
+// Sign Up - Artists
 authenticationRouter.get('/signup-artist', (req, res, next) => {
   res.render('authentication/signup-artist');
 });
 
 authenticationRouter.post('/signup-artist', (req, res, next) => {
-  const { artistName, username, email, password, role, description, genres, artistAlbums } = req.body;
+  const { artistName, username, email, password, description, genres, artistAlbums } = req.body;
+  // console.log('GENRES', req.body.genres);
+  bcryptjs
+  .hash(password, 10)
+  .then(hash => {
+    return User.create({
+      artistName,
+      username,
+      email,
+      passwordHash: hash,
+      role: "artist",
+      description,
+        genres,
+        artistAlbums
+      });
+    })
+    .then(user => {
+      req.session.user = user._id;
+      res.redirect('/');
+    })
+    .catch(error => {
+      next(error);
+    });
+  });
+  
+  // Sign Up - Users
+  authenticationRouter.get('/signup-user', (req, res, next) => {
+    res.render('authentication/signup-user');
+  });
+  
+  authenticationRouter.post('/signup-user', (req, res, next) => {
+    const { firstName, lastName, username, email, password, description, genres } = req.body;
+    console.log('GENRES', req.body.genres);
+    bcryptjs
+    .hash(password, 10)
+    .then(hash => {
+      return User.create({
+        firstName,
+        lastName,
+        username,
+        email,
+        passwordHash: hash,
+        role: "user",
+        description,
+        genres
+      });
+    })
+    .then(user => {
+      req.session.user = user._id;
+      res.redirect('/');
+    })
+    .catch(error => {
+      next(error);
+    });
+  });
+  
+  // Sign Up - Admin
+authenticationRouter.get('/signup-admin', (req, res, next) => {
+  res.render('authentication/signup-admin');
+});
+
+authenticationRouter.post('/signup-admin', (req, res, next) => {
+  const { firstName, lastName, username, email, password } = req.body;
   bcryptjs
     .hash(password, 10)
     .then(hash => {
       return User.create({
-        artistName,
+        firstName,
+        lastName,
         username,
         email,
         passwordHash: hash,
-        role: "artist",
-        description,
-        genres,
-        artistAlbums
+        role: "admin"
       });
     })
     .then(user => {

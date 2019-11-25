@@ -1,14 +1,18 @@
-<form action="/authentication/signup-artist" method="POST">
+<form action="/authentication/signup-user" method="POST">
 
-  <label for="input-artistName">Artist/Band Name</label>
-  <input type="text" id="input-artistName" name="artistName" placeholder="Your name here" />
+  <label for="input-firstName">Your First Name</label>
+  <input type="text" id="input-firstName" name="firstName" placeholder="Your first name here" />
+  <br>
+  
+  <label for="input-lastName">Your Last Name</label>
+  <input type="text" id="input-lastName" name="lastName" placeholder="Your last name here" />
   <br>
 
   <label for="input-description">About You</label>
   <textarea name="description" id="input-description" cols="30" rows="10">Write something about you here</textarea>
   <br>
 
-  <label for="input-genres">What is your genre? You can select more than one</label>
+  <label for="input-genres">Choose your favorite genres</label>
   <select name="genres" id="input-genres" multiple>
     <option value="indie">Indie</option>
     <option value="rock">Rock</option>
@@ -18,10 +22,6 @@
     <option value="metal">Metal</option>
     <option value="fado">Fado</option>
   </select>
-  <br>
-
-  <label for="input-artistAlbums">Your Albums</label>
-  <input type="text" id="input-artistAlbums" name="artistAlbums" placeholder="Your albums here" />
   <br>
 
   <label for="input-username">Username</label>
