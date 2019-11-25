@@ -1,0 +1,24 @@
+<h1>Edit your profile</h1>
+
+<form action="/user/edit/{{user._id}}" method='POST'>
+  <label for="firstName">First Name</label>
+  <textarea name="firstName" id="" cols="30" rows="1">{{user.firstName}}</textarea>
+  
+  <label for="lastName">Last Name</label>
+  <textarea name="lastName" id="" cols="30" rows="1">{{user.lastName}}</textarea>
+  
+  <label for="username">Username</label>
+  <textarea name="username" id="" cols="30" rows="1">{{user.username}}</textarea>
+  
+  <label for="description">Description</label> 
+  <textarea name="description" id="" cols="30" rows="1">{{user.description}}</textarea>
+  
+  <label for="email">Email</label>
+  <textarea name="email" type='email' id="" cols="30" rows="1">{{user.email}}</textarea>
+
+  <label for="password">Password</label>
+  <textarea name="password" type='password' id="" cols="30" rows="1">{{user.password}}</textarea>
+
+  <button>Edit</button>
+
+</form>

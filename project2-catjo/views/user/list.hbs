@@ -1,0 +1,8 @@
+<ul>USER LIST:
+    {{#each user}}
+    <li>{{firstName}} {{lastName}}</li>
+    <li>
+      <a href="/user/profile/{{_id}}">Check out their profile</a>
+    </li>
+    {{/each}}
+</ul>

@@ -1,1 +1,21 @@
-<h1>This is the user profile</h1>
+<h1>{{user.firstName}}'s Profile</h1>
+{{!-- <img src="#" alt="Profile image"> --}}
+<h2>{{user.firstName}} {{user.lastName}}</h2>
+<h2>{{user.username}}</h2>
+<h2>{{user.email}}</h2>
+<div>Description: {{user.description}}</div>
+<ul>Favorite genres:
+  {{#each user.genres}}
+  <li>{{this}}</li>
+  {{/each}}
+</ul>
+{{#ifUser user}}
+<div>
+  <a href="/user/edit/{{user._id}}">Edit</a>
+</div>
+<div>
+  <form action="/user/{{user._id}}/delete" method="POST">
+    <button>Delete Your Profile</button>
+  </form>
+</div>
+{{/ifUser}}
