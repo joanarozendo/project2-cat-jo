@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
   },
   username: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
     trim: true
   },
@@ -48,7 +48,7 @@ const schema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true,
+    // required: true,
     enum: ["artist", "user", "admin"]
   },
   favoriteGenres: [
@@ -59,7 +59,7 @@ const schema = new mongoose.Schema({
   ],
   artistGenre: {
     type: String,
-    required: true,
+    // required: true,
     enum: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"]
   },
   artistAlbums: {
