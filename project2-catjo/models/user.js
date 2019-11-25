@@ -63,12 +63,12 @@ const schema = new mongoose.Schema({
     {
       type: String,
       // required: true,
-      enum: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"],
-      default: ["indie", "rock", "pop", "rap", "hip pop", "metal", "fado"]
+      enum: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"],
+      default: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
     }
   ],
   artistAlbums: {
-    type: String
+    type: Array
   }
 });
 
