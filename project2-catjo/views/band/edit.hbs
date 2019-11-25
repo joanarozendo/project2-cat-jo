@@ -1,1 +1,11 @@
 <h1>Edit your band profile</h1>
+
+<form action="/band/edit/{{band._id}}" method='POST'>
+    <label for="username">Username</label><textarea name="username" id="" cols="30"
+        rows="1">{{band.username}}</textarea>
+    <label for="description">Description</label> <textarea name="description" id="" cols="30"
+        rows="2">{{band.description}}</textarea>
+        <label for="email">Email</label>
+        <textarea name="email" type='email' id="" cols="30" rows="1">{{band.email}}</textarea>
+    <button>Edit</button>
+</form>

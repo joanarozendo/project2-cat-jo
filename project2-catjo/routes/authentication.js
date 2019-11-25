@@ -31,7 +31,7 @@ authenticationRouter.get('/signup-artist', (req, res, next) => {
 });
 
 authenticationRouter.post('/signup-artist', (req, res, next) => {
-  const { artistName, username, email, password, role, description, genres, artistAlbums } = req.body;
+  const { artistName, username, email, password, description, genres, artistAlbums } = req.body;
   bcryptjs
     .hash(password, 10)
     .then(hash => {

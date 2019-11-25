@@ -1,9 +1,14 @@
 <h1>Band profile</h1>
 <img src="#" alt="Here will be an image">
-<div>{{band.name}}</div>
-<div>{{band.genre}}</div>
-<div>{{band.description}}</div>
-<a href="/band/events/{{band.id}}">Events</a>
+<h2>{{band.username}}</h2>
+<ul>Genre:
+    {{#each band.genre}}
+    <li>{{this}}</li>
+    {{/each}}
+</ul>
+<div>Description: {{band.description}}</div>
+<div><a href="/band/events/{{band.id}}">Events</a></div>
 {{#ifBand band}}
-<a href="/band/edit">Edit</a>
+<div><a href="/band/edit/{{band._id}}">Edit</a>
+</div>
 {{/ifBand}}
