@@ -1,4 +1,7 @@
-<h2>Hi {{admin.username}}.</h2>
+<h2>Hi, {{admin.username}}.</h2>
+{{!-- {{#each admin.images}} --}}
+<img src={{admin.images.0.resizedUrl}}>
+{{!-- {{/each}} --}}
 <h3>You are an administrator</h3> 
 <p>Please access to the list of users or bands to be able to delete/edit their profiles.</p>
 <p>You can also add users or bands through this link: <br><a href="/admin/add-user-first-page">Add users</a></p>

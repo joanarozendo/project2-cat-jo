@@ -69,7 +69,11 @@ const schema = new mongoose.Schema({
   ],
   artistAlbums: {
     type: Array
-  }
+  },
+  images: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Image'
+  }]
 });
 
 module.exports = mongoose.model("User", schema);
