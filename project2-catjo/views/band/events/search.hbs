@@ -1,0 +1,28 @@
+<div class='center'>
+    <h1>Refine your search</h1>
+    <div class= 'd-flex'>
+    <label for="filter_genre"> Filter by Genre:</label>
+    <form action="/events/filter/genre" method='POST' name='filter_genre'>
+        <select name="genres" class="form-control w-100" id="input-description" multiple>
+            <option value="indie">Indie</option>
+            <option value="rock">Rock</option>
+            <option value="pop">Pop</option>
+            <option value="rap">Rap</option>
+            <option value="hip-pop">Hip-Pop</option>
+            <option value="metal">Metal</option>
+            <option value="fado">Fado</option>
+        </select>
+        <button>Let's go!</button>
+    </form>
+
+    <form action="/events/filter/artist-name" method='POST'>
+        <label for="artistName"> Filter by Band Name:</label>
+        <select name="artistName">
+            {{#each artists}}
+            <option value="{{{this.artistName}}}">{{{this.artistName}}}</option>
+            {{/each}}
+        </select>
+        <button>Let'sgo</button>
+    </form>
+    </div>
+</div>

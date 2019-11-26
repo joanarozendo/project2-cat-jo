@@ -1,1 +1,8 @@
-<h1>Here are your events</h1>
+<div class='center'>
+    <h1>Events</h1>
+    <ul>
+    {{#each results}}
+<li>{{this.nameOfEvent}} <br> {{bandName}}<br>{{this.date}} <br> {{this.address.city}} <a href="/events/edit/{{this._id}}">Edit</a></li>
+    {{/each}}
+    </ul>
+</div>

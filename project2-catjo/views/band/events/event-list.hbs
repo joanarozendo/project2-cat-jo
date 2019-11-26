@@ -1,1 +1,9 @@
-<h1>List of events</h1>
+
+
+<div class='center'><h1>List of events</h1>
+<a href="/events/search">Go to search page</a>
+{{#each events}}
+<li>{{this.nameOfEvent}} <br> Who? {{this.bandName}} <br>When? {{this.date}} <br>Where? {{this.address.city}} <a href="/events/profile/{{this._id}}">Click to know more!</a></li>
+{{/each}}
+
+</div>

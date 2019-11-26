@@ -1,13 +1,16 @@
-<form action="/authentication/signup-first-step" method="POST" class="light-text">
-  <div class="input-group">
-    <select name="role" class="custom-select" id="inputGroupSelect04">
-      <option selected>Choose your profile type...</option>
-      <option value="artist">Artist/Band</option>
-      <option value="user">User</option>
-      <option value="admin">Administrator</option>
-    </select>
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="submit">Submit</button>
+<div class='center'>
+  <h2>Let's rock! <br> Please select your profile type.</h2>
+  <form action="/authentication/signup-first-step" method="POST" class="light-text">
+    <div class="d-flex flex-column">
+      <select name="role" class="custom-select w-50" id="inputGroupSelect04">
+        <option selected>Choose your profile type...</option>
+        <option value="artist">Artist/Band</option>
+        <option value="user">User</option>
+        <option value="admin">Administrator</option>
+      </select>
+      <div class="input-group-append mt-2">
+        <button class="btn btn-outline-secondary" type="submit">Submit</button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>

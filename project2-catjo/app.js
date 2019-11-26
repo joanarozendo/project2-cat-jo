@@ -25,6 +25,7 @@ const authenticationRouter = require('./routes/authentication');
 const usersRouter = require('./routes/user');
 const bandRouter = require('./routes/band');
 const adminRouter = require('./routes/admin');
+const eventRouter = require('./routes/event');
 
 
 const app = express();
@@ -128,6 +129,8 @@ app.use('/authentication', authenticationRouter);
 app.use('/user', usersRouter);
 app.use('/band', bandRouter);
 app.use('/admin', adminRouter);
+app.use('/events', eventRouter);
+
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {

@@ -107,17 +107,7 @@ bandRouter.post("/delete/:band_id", routeGuard, (req, res, next) => {
     }
 });
 
-bandRouter.get("/event/list", routeGuard, (req, res, next) => {
-    res.render('band/events/event-list');
-});
 
-bandRouter.get("/event/:band_id/add-event", routeGuard, (req, res, next) => {
-    res.render('band/events/add-event');
-});
-
-bandRouter.get("/event/:band_id", routeGuard, (req, res, next) => {
-    res.render('band/events/event-single-band');
-});
 
 
 
