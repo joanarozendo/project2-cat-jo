@@ -5,10 +5,56 @@ const authenticationRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const User = require("./../models/user");
 const Image = require("./../models/image");
+const nodemailer = require("nodemailer");
 
-//PARAMETER THAT WILL CHECK IF USER IS LOGGED IN
+// PARAMETER THAT WILL CHECK IF USER IS LOGGED IN
 const routeGuard = require("./../middleware/route-guard");
+// MIDDLEWARE TO UPLOAD IMAGES
 const uploader = require("./../middleware/upload");
+
+const generateToken = length => {
+  const characters =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let token = "";
+  for (let i = 0; i < length; i++) {
+    token += characters[Math.floor(Math.random() * characters.length)];
+  }
+  // console.log(token);
+  return token;
+};
+
+const ourEmail = process.env.EMAIL;
+const ourPassword = process.env.PASSWORD;
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: ourEmail,
+    pass: ourPassword
+  }
+});
+
+function sendMail(user) {
+  transporter.sendMail({
+    from: `Music Inn <ourEmail>`,
+    to: `${user.email}`,
+    subject: "Confirm your account on Music Inn",
+    html: `
+    <p>Thanks for signing up with Music Inn! You must follow this link to activate your account:
+    <br>
+    <a href="http://localhost:3000/authentication/confirm-email/${user.confirmationCode}">http://localhost:3000/authentication/confirm-email/${user.confirmationCode}</a>
+    <br>
+    Have fun, 
+    <br>
+    The Music Inn Team 
+    🎵🤘🎤🎷🎹🎸
+    </p>
+    `
+  });
+}
+/* <h1>PLEASE WORK</h1></h1> */
+/* please confirm your email 
+    <a href="http://localhost:3000/authentication/confirm-email/${user.confirmationCode}">here</a> */
 
 //here we will do the login sign up/log in/sign out
 // Sign Up - First Step - Choose Role
@@ -46,6 +92,7 @@ authenticationRouter.post(
       username,
       email,
       passwordHash,
+      passRecoveryQuestion,
       description,
       genres,
       artistAlbums
@@ -57,8 +104,9 @@ authenticationRouter.post(
       };
     });
     Image.create(imageObjectArray).then((images = []) => {
+      let newConfirmationCode = generateToken(12);
       const imageIds = images.map(image => image._id);
-      console.log("HEEEERE", imageIds);
+      // console.log("HEEEERE", imageIds);
       return bcryptjs
         .hash(passwordHash, 10)
         .then(hash => {
@@ -67,16 +115,20 @@ authenticationRouter.post(
             username,
             email,
             passwordHash: hash,
+            passRecoveryQuestion,
             role: "artist",
             description,
             genres,
             artistAlbums,
-            images: imageIds
+            images: imageIds,
+            confirmationCode: newConfirmationCode
           });
         })
         .then(user => {
+          sendMail(user);
           req.session.user = user._id;
-          res.redirect("/");
+          res.redirect("/authentication/pending-confirmation");
+          // res.redirect("/");
         })
         .catch(error => {
           next(error);
@@ -84,6 +136,27 @@ authenticationRouter.post(
     });
   }
 );
+
+authenticationRouter.get("/pending-confirmation", (req, res, next) => {
+  // console.log("UNDEFINED?",req.session.user);
+  res.render("authentication/pending-confirmation");
+});
+
+authenticationRouter.get("/confirm-email/:mailToken", (req, res, next) => {
+  const mailToken = req.params.mailToken;
+  User.findOneAndUpdate({ confirmationCode: mailToken }, { status: "Active" })
+    .then(user => {
+      // console.log('USER', user);
+      req.session.user = user._id;
+      res.redirect("/authentication/confirmation-page");
+    })
+    .catch(err => next(err));
+});
+
+authenticationRouter.get("/confirmation-page", (req, res, next) => {
+  // console.log("UNDEFINED?", req.params);
+  res.render("authentication/confirmation-page");
+});
 
 // Sign Up - Users
 authenticationRouter.get("/signup-user", (req, res, next) => {
@@ -110,7 +183,7 @@ authenticationRouter.post(
     });
     Image.create(imageObjectArray).then((images = []) => {
       const imageIds = images.map(image => image._id);
-      console.log("HEEEERE", imageIds);
+      // console.log("HEEEERE", imageIds);
       return bcryptjs
         .hash(passwordHash, 10)
         .then(hash => {
@@ -127,7 +200,7 @@ authenticationRouter.post(
           });
         })
         .then(user => {
-          console.log("IMAGESSSS", images);
+          // console.log("IMAGESSSS", images);
           req.session.user = user._id;
           res.redirect("/");
         })
@@ -161,7 +234,7 @@ authenticationRouter.post(
     });
     Image.create(imageObjectArray).then((images = []) => {
       const imageIds = images.map(image => image._id);
-      console.log("HEEEERE", imageIds);
+      // console.log("HEEEERE", imageIds);
       return bcryptjs
         .hash(passwordHash, 10)
         .then(hash => {
@@ -205,6 +278,7 @@ authenticationRouter.post("/login", (req, res, next) => {
         return Promise.reject(new Error("There's no user with that email."));
       } else {
         userId = user._id;
+        console.log(password === user.passwordHash);
         return bcryptjs.compare(password, user.passwordHash);
       }
     })
@@ -222,6 +296,47 @@ authenticationRouter.post("/login", (req, res, next) => {
       next(error);
     });
 });
+
+authenticationRouter.get("/password-recovery", (req, res, next) => {
+  // User.findById
+  res.render("authentication/password-recovery");
+});
+
+authenticationRouter.get("/edit-password", (req, res, next) => {
+  res.render("edit-password");
+});
+
+authenticationRouter.post("/password-recovery", (req, res, next) => {
+  let userId;
+  const { email, passRecoveryQuestion } = req.body;
+  console.log(req.body.email)
+
+  User.findOne({
+    email
+  })
+    .then(user => {
+      console.log(user)
+
+      if (!user) {
+        return Promise.reject(new Error("There's no user with that email."));
+      } else {
+        userId = user._id;
+        return user;
+      }
+    })
+    .then(user => {
+      if (passRecoveryQuestion === user.passRecoveryQuestion) {
+        req.session.user = userId;
+        res.redirect("/edit-password");
+      } else {
+        return Promise.reject(new Error("Wrong answer."));
+      }
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
 
 // Log Out
 authenticationRouter.post("/logout", (req, res, next) => {

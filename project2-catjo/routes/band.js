@@ -49,7 +49,7 @@ bandRouter.post("/edit/:band_id", routeGuard, (req, res, next) => {
     genres,
     artistAlbums
   } = req.body;
-  console.log("THIS IS ROLE OF SESSION", req.user.role);
+  // console.log("THIS IS ROLE OF SESSION", req.user.role);
   if (
     JSON.stringify(bandId) === JSON.stringify(req.user._id) ||
     req.user.role === "admin"
@@ -87,6 +87,9 @@ bandRouter.get("/list", routeGuard, (req, res, next) => {
   User.find({
     role: "artist"
   })
+  .sort({
+    creationDate: -1
+})
     .populate("user images")
     .then(bands => {
       res.render("band/list", {

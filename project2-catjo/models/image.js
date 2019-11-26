@@ -27,8 +27,8 @@ imageSchema.virtual("resizedUrl").get(function() {
   const images = this;
   const url = images.url;
   const path = url.replace(/[\w\/.:]+upload\//i, "");
-  console.log(path);
-  const resizedUrl = cloudinary.url(path, { width: 300 });
+  // console.log(path);
+  const resizedUrl = cloudinary.url(path, { width: 150, height: 150 });
   return resizedUrl;
 });
 
