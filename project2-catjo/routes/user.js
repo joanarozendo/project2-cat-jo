@@ -54,7 +54,7 @@ userRouter.post("/edit/:user_id", routeGuard, (req, res, next) => {
     password,
     description
   } = req.body;
-  console.log("PASS", password);
+  // console.log("PASS", password);
 
   if (
     JSON.stringify(userId) === JSON.stringify(req.user._id) ||
@@ -94,7 +94,10 @@ userRouter.get("/list", routeGuard, (req, res, next) => {
   User.find({
     role: "user"
   })
-  .populate("user images")
+    .sort({
+      creationDate: -1
+    })
+    .populate("user images")
     .then(user_individual => {
       res.render("user/list", {
         user_individual

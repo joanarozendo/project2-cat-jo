@@ -35,6 +35,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  passRecoveryQuestion: {
+    type: String,
+    // required: true
+  },
   facebook: [{
     id: {
       type: String
@@ -51,7 +55,7 @@ const schema = new mongoose.Schema({
   }],
   description: {
     type: String,
-    minlength: 1,
+    // minlength: 1,
     maxlength: 200
   },
   role: {
@@ -70,10 +74,30 @@ const schema = new mongoose.Schema({
   artistAlbums: {
     type: Array
   },
+  /* image: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Image'
+  }, */
   images: [{
     type: mongoose.Types.ObjectId,
     ref: 'Image'
-  }]
-});
+  }],
+  status: {
+    type: String,
+    enum: ["Pending Confirmation", "Active"],
+    default: "Pending Confirmation"
+  },
+  confirmationCode: {
+    type: String,
+    unique: true
+  }
+},
+{
+  timestamps: {
+    createdAt: "creationDate",
+    updatedAt: "updateDate"
+  }
+}
+);
 
 module.exports = mongoose.model("User", schema);

@@ -1,9 +1,8 @@
 <div class="center">
     <h1>Band profile</h1>
-    {{#each band.images}}
-    <img src={{0.resizedUrl}}>
-    {{/each}}
-    {{!-- <img src="#" alt="Here will be an image"> --}}
+    {{!-- {{#each band.images}} --}}
+    <img src={{band.images.0.resizedUrl}}>
+    {{!-- {{/each}} --}}
     <h2>{{band.artistName}}</h2>
     <ul>Genre:
         {{#each band.genres}}

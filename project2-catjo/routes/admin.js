@@ -10,7 +10,7 @@ adminRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
   User.findById(userId)
     .populate("user images")
     .then(admin => {
-      console.log('IMAGEEEES', admin.images[0].url);
+      // console.log('IMAGEEEES', admin.images[0].url);
       
       res.render("admin/profile", {
         admin
@@ -31,7 +31,7 @@ adminRouter.get("/add-user-first-page", routeGuard, (req, res, next) => {
 
 adminRouter.post("/add-user-first-page", routeGuard, (req, res, next) => {
   const { role } = req.body;
-  console.log("this is role", role);
+  // console.log("this is role", role);
   if (req.user.role === "admin") {
     if (role === "artist") {
       res.render("admin/add-artist");
