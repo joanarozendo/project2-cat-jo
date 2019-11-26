@@ -1,35 +1,37 @@
 <div class="card mb-3">
-  <img src="/images/02.jpg" class="card-img-top" alt="..." width="5%">
+  {{#each user_individual.images}}
+  <img src={{0.resizedUrl}}>
+  {{/each}}
   <div class="card-body">
     <h5 class="card-title">{{user_individual.firstName}}'s Profile</h5>
     <p>Name: {{user_individual.firstName}} {{user_individual.lastName}}</p>
-  <p>Username: {{user_individual.username}}</p>
-  <p>Email: {{user_individual.email}}</p>
-  <p>About Me: {{user_individual.description}}</p>
-  <ul>Favorite genres:
-    {{#each user_individual.genres}}
-    <li>{{this}}</li>
-    {{/each}}
-  </ul>
-  {{#ifSameLoggedIn user_individual user}}
-  <div>
-    <a href="/user/edit/{{user_individual._id}}">Edit</a>
-  </div>
-  <div>
-    <form action="/user/{{user_individual._id}}/delete" method="POST">
-      <button>Delete Your Profile</button>
-    </form>
-  </div>
-  {{/ifSameLoggedIn}}
-  {{#isAdmin user}}
-  <div>
-    <a href="/user/edit/{{user_individual._id}}">Edit</a>
-  </div>
-  <div>
-    <form action="/user/{{user_individual._id}}/delete" method="POST">
-      <button>Delete this User's Profile</button>
-    </form>
-  </div>
-  {{/isAdmin}}
+    <p>Username: {{user_individual.username}}</p>
+    <p>Email: {{user_individual.email}}</p>
+    <p>About Me: {{user_individual.description}}</p>
+    <ul>Favorite genres:
+      {{#each user_individual.genres}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
+    {{#ifSameLoggedIn user_individual user}}
+    <div>
+      <a href="/user/edit/{{user_individual._id}}">Edit</a>
+    </div>
+    <div>
+      <form action="/user/{{user_individual._id}}/delete" method="POST">
+        <button>Delete Your Profile</button>
+      </form>
+    </div>
+    {{/ifSameLoggedIn}}
+    {{#isAdmin user}}
+    <div>
+      <a href="/user/edit/{{user_individual._id}}">Edit</a>
+    </div>
+    <div>
+      <form action="/user/{{user_individual._id}}/delete" method="POST">
+        <button>Delete this User's Profile</button>
+      </form>
+    </div>
+    {{/isAdmin}}
   </div>
 </div>

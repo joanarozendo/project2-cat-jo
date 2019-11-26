@@ -5,7 +5,10 @@
       <div class="row no-gutters">
         <div class="col-md-4">
           {{!-- <img src="..." class="card-img" alt="..."> --}}
-          <img src="/images/02.jpg" alt="" width="180px">
+          {{!-- {{#each user_individual.images}} --}}
+
+          <img src="{{images.0.resizedUrl}}" alt="" width="180px">
+          {{!-- {{/each}} --}}
 
         </div>
         <div class="col-md-8">
