@@ -54,8 +54,6 @@ userRouter.post("/edit/:user_id", routeGuard, (req, res, next) => {
     password,
     description
   } = req.body;
-  console.log("PASS", password);
-
   if (
     JSON.stringify(userId) === JSON.stringify(req.user._id) ||
     req.user.role === "admin"
@@ -75,7 +73,6 @@ userRouter.post("/edit/:user_id", routeGuard, (req, res, next) => {
         }
       )
         .then(user => {
-          console.log("The user was edited", user);
           res.redirect(`/user/profile/${userId}`);
         })
         .catch(error => {
@@ -121,5 +118,7 @@ userRouter.post("/:user_id/delete", routeGuard, (req, res, next) => {
       });
   }
 });
+
+
 
 module.exports = userRouter;

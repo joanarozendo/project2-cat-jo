@@ -1,6 +1,8 @@
 "use strict";
 
-const { join } = require("path");
+const {
+  join
+} = require("path");
 const express = require("express");
 const createError = require("http-errors");
 const cookieParser = require("cookie-parser");
@@ -10,7 +12,7 @@ const serveFavicon = require("serve-favicon");
 const mongoose = require("mongoose");
 
 //SESSIONS
-const expressSession = require("express-session");
+const expressSession = require("express-session");  //passport1
 const connectMongo = require("connect-mongo");
 const MongoStore = connectMongo(expressSession);
 
@@ -36,34 +38,34 @@ const hbs = require("hbs");
 hbs.registerPartials(__dirname + "/views/partials");
 
 //Register hbs helpers
-hbs.registerHelper("ifBand", function(v1, options) {
+hbs.registerHelper("ifBand", function (v1, options) {
   if (v1.role === "artist") {
     return options.fn(this);
   }
   return options.inverse(this);
 });
 
-hbs.registerHelper("ifUser", function(v1, options) {
+hbs.registerHelper("ifUser", function (v1, options) {
   if (v1.role === "user") {
     return options.fn(this);
   }
   return options.inverse(this);
 });
 
-hbs.registerHelper("ifAdmin", function(v1, options) {
+hbs.registerHelper("ifAdmin", function (v1, options) {
   if (v1.role === "admin") {
     return options.fn(this);
   }
   return options.inverse(this);
 });
 
-hbs.registerHelper("ifSameLoggedIn", function(arg1, arg2, options) {
-  return JSON.stringify(arg1._id) == JSON.stringify(arg2._id)
-    ? options.fn(this)
-    : options.inverse(this);
+hbs.registerHelper("ifSameLoggedIn", function (arg1, arg2, options) {
+  return JSON.stringify(arg1._id) == JSON.stringify(arg2._id) ?
+    options.fn(this) :
+    options.inverse(this);
 });
 
-hbs.registerHelper("isAdmin", function(arg1, options) {
+hbs.registerHelper("isAdmin", function (arg1, options) {
   if (arg1.role === "admin") {
     return options.fn(this);
   }
@@ -76,18 +78,17 @@ app.use(
     extended: true
   })
 );
-app.use(cookieParser());
+app.use(cookieParser()); //passport3
 app.use(serveFavicon(join(__dirname, "public/images", "favicon.ico")));
 app.use(
   sassMiddleware({
     src: join(__dirname, "public"),
     dest: join(__dirname, "public"),
-    outputStyle:
-      process.env.NODE_ENV === "development" ? "nested" : "compressed",
+    outputStyle: process.env.NODE_ENV === "development" ? "nested" : "compressed",
     sourceMap: true
   })
 );
-app.use(express.static(join(__dirname, "public")));
+app.use(express.static(join(__dirname, "public")));  //passport2
 
 //SETTING UP SESSION
 app.use(
@@ -108,6 +109,15 @@ app.use(
   })
 );
 
+//PASSPORT CONFIG
+require('./passport-config');
+
+const passport = require('passport');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 //GETTING ACCESS TO THE USER IN LOCALS
 
 app.use((req, res, next) => {
@@ -126,6 +136,7 @@ app.use((req, res, next) => {
     next();
   }
 });
+
 
 //APP USER ROUTES
 app.use('/', indexRouter);

@@ -24,6 +24,18 @@ form {
   margin-right: auto;
   padding: 110px; }
 
+.spotify_sign_up {
+  font-size: 16px;
+  line-height: 1;
+  border-radius: 500px;
+  padding: 19px 56px 21px;
+  color: #fff;
+  background-color: #1db954;
+  border: 1px solid transparent;
+  font-weight: 700;
+  text-decoration: none;
+  margin: 10em 0; }
+
 /* .jumbotron {
   width: 100%;
   height: 85vh;

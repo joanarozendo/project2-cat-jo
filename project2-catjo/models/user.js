@@ -27,13 +27,13 @@ const schema = new mongoose.Schema({
   email: {
     type: String,
     lowercase: true,
-    required: true,
+   // required: true,
     // unique: true,
     trim: true
   },
   passwordHash: {
     type: String,
-    required: true
+    //required: true
   },
   facebook: [{
     id: {
@@ -56,13 +56,13 @@ const schema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true,
+    //required: true,
     enum: ["artist", "user", "admin"]
   },
   genres: [
     {
       type: String,
-      required: true,
+      //required: true,
       enum: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"],
       default: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
     }
@@ -73,7 +73,10 @@ const schema = new mongoose.Schema({
   images: [{
     type: mongoose.Types.ObjectId,
     ref: 'Image'
-  }]
+  }],
+  spotify_id: String,
+  spotify_access_token: String,
+  spotify_refresh_token: String
 });
 
 module.exports = mongoose.model("User", schema);

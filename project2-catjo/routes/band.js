@@ -66,7 +66,7 @@ bandRouter.post("/edit/:band_id", routeGuard, (req, res, next) => {
           genres: genres,
           artistAlbums: artistAlbums,
           artistName: artistName,
-          password: hash
+          passwordHash: hash
         }
       )
         .then(band => {
@@ -79,7 +79,6 @@ bandRouter.post("/edit/:band_id", routeGuard, (req, res, next) => {
         });
     });
   } else {
-    console.log("NOT POSSIBLE TO EDIT", req.user.role);
     res.redirect(`/band/profile/${bandId}`);
   }
 });

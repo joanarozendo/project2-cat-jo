@@ -1,4 +1,6 @@
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 const authenticationRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const User = require("./../models/user");
@@ -15,7 +17,9 @@ authenticationRouter.get("/signup-first-step", (req, res, next) => {
 });
 
 authenticationRouter.post("/signup-first-step", (req, res, next) => {
-  const { role } = req.body;
+  const {
+    role
+  } = req.body;
   if (role === "artist") {
     res.render("authentication/signup-artist");
   }
@@ -143,7 +147,13 @@ authenticationRouter.post(
   "/signup-admin",
   uploader.array("images", 1),
   (req, res, next) => {
-    const { firstName, lastName, username, email, passwordHash } = req.body;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      passwordHash
+    } = req.body;
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -183,10 +193,13 @@ authenticationRouter.get("/login", (req, res, next) => {
 
 authenticationRouter.post("/login", (req, res, next) => {
   let userId;
-  const { email, password } = req.body;
+  const {
+    email,
+    password
+  } = req.body;
   User.findOne({
-    email
-  })
+      email
+    })
     .then(user => {
       if (!user) {
         return Promise.reject(new Error("There's no user with that email."));
@@ -198,6 +211,8 @@ authenticationRouter.post("/login", (req, res, next) => {
     .then(result => {
       if (result) {
         req.session.user = userId;
+        console.log('req session of simple authentication', req.session);
+        console.log('req user of simple authenticarion', req.user);
         res.redirect("/");
       } else {
         return Promise.reject(new Error("Wrong password."));
@@ -214,9 +229,29 @@ authenticationRouter.post("/logout", (req, res, next) => {
   res.redirect("/");
 });
 
-// Private
-authenticationRouter.get("/private", routeGuard, (req, res, next) => {
-  res.render("private");
+///SPOTIFY ROUTES
+const passport = require('passport');
+
+authenticationRouter.get('/spotify', passport.authenticate('spotify', {
+  scope: ['user-read-email', 'user-read-private'],
+  showDailog: true
+}), function (req, res) {
+  console.log('in the spotify function')
+  //
+  //
 });
+
+authenticationRouter.get(
+  '/spotify/callback',
+  passport.authenticate('spotify', {
+    showDailog: true,
+    failureRedirect: '/authentication/login' //failure
+  }),
+  function (req, res) {
+    // req.user._id = req.session.passport
+    req.session.user = req.user._id;
+    res.redirect(`/user/edit/${req.user._id}`); //if success will redirect for the profile edition
+  }
+);
 
 module.exports = authenticationRouter;
