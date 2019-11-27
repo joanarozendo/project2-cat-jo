@@ -1,35 +1,45 @@
 <div class='center'>
   <h2>Update your settings</h2>
-  <form action="/user/edit/{{user._id}}" method='POST'>
-    <label for="firstName">First Name</label>
-    <textarea name="firstName" id="" cols="30" rows="1">{{user.firstName}}</textarea>
-    <br>
-    <label for="lastName">Last Name</label>
-    <textarea name="lastName" id="" cols="30" rows="1">{{user.lastName}}</textarea>
-    <br>
-    <label for="username">Username</label>
-    <textarea name="username" id="" cols="30" rows="1">{{user.username}}</textarea>
-    <br>
-    <label for="description">Description</label>
-    <textarea name="description" id="" cols="30" rows="1">{{user.description}}</textarea>
-    <br>
-    <label for="email">Email</label>
-    <textarea name="email" type='email' id="" cols="30" rows="1" placeholder="required"
-      required>{{user.email}}</textarea>
-    <br>
-    <label for="password">Password</label>
-    <textarea name="password" type='password' id="" cols="30" rows="1" placeholder="required"></textarea>
-    <label for="input-genres">Choose your favorite genres</label>
-    <select name="genres" class="form-control" id="input-genres" multiple required>
-      <option value="indie">Indie</option>
-      <option value="rock">Rock</option>
-      <option value="pop">Pop</option>
-      <option value="rap">Rap</option>
-      <option value="hip-pop">Hip-Pop</option>
-      <option value="metal">Metal</option>
-      <option value="fado">Fado</option>
-    </select>
-    <button>Edit</button>
+  <form action="/user/edit/{{user._id}}" method='POST' enctype="multipart/form-data">
+    <!-- image -->
+    <label for="input-images">Your Profile Image<label>
+        <img src={{user.images.0.resizedUrl}}>
+        <input type="file" id="input-images" name="images" class="form-control" />
+        <label for="firstName">First Name</label>
+        <textarea name="firstName" id="" cols="30" rows="1">{{user.firstName}}</textarea>
+        <br>
+        <label for="lastName">Last Name</label>
+        <textarea name="lastName" id="" cols="30" rows="1">{{user.lastName}}</textarea>
+        <br>
+        <label for="username">Username</label>
+        <textarea name="username" id="" cols="30" rows="1">{{user.username}}</textarea>
+        <br>
+        <label for="description">Description</label>
+        <textarea name="description" id="" cols="30" rows="1">{{user.description}}</textarea>
+        <br>
+        <label for="email">Email</label>
+        <textarea name="email" type='email' id="" cols="30" rows="1" placeholder="required"
+          required>{{user.email}}</textarea>
+        <br>
+        <label for="input-genres">Choose your favorite genres</label>
+        <select name="genres" class="form-control" id="input-genres" multiple required>
+          <option value="indie">Indie</option>
+          <option value="rock">Rock</option>
+          <option value="pop">Pop</option>
+          <option value="rap">Rap</option>
+          <option value="hip-pop">Hip-Pop</option>
+          <option value="metal">Metal</option>
+          <option value="fado">Fado</option>
+        </select>
+
+        <label for="passwordHash">Password</label>
+        <textarea name="passwordHash" type='password' id="" cols="30" rows="1" placeholder="required"></textarea>
+
+        <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
+        <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion"
+          placeholder="{{user.passRecoveryQuestion}}" />
+
+        <button>Edit</button>
 
   </form>
 </div>

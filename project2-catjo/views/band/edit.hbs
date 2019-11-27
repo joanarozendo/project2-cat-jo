@@ -1,6 +1,10 @@
 <h1>Edit your band profile</h1>
 
-<form action="/band/edit/{{band._id}}" method='POST'>
+<form action="/band/edit/{{band._id}}" method='POST' enctype="multipart/form-data">
+    <!-- image -->
+    <label for="input-images">Your Profile Image<label>
+    <img src={{band.images.0.resizedUrl}}>
+    <input type="file" id="input-images" name="images" class="form-control" />
     <!-- username -->
     <label for="username">Username</label><textarea name="username" id="" cols="30"
         rows="1">{{band.username}}</textarea>
@@ -29,6 +33,9 @@
     <input type="text" id="input-artistAlbums" name="artistAlbums" placeholder="{{band.artistAlbums}}" />
     <!-- Password-->
     <label for="input-password">Password</label>
-    <input type="password" name="password" id="input-password" placeholder="Your password here" />
+    <input type="password" name="passwordHash" id="input-password" placeholder="Your password here" />
+    {{!-- Pass Recovery --}}
+    <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
+    <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion" placeholder="{{band.passRecoveryQuestion}}" />
     <button>Edit</button>
 </form>

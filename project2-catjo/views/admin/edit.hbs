@@ -1,0 +1,34 @@
+<div class='center'>
+  <h2>Update your settings</h2>
+  <form action="/admin/edit/{{admin._id}}" method='POST' enctype="multipart/form-data">
+      <!-- image -->
+    <label for="input-images">Your Profile Image<label>
+    <img src={{admin.images.0.resizedUrl}}>
+    <input type="file" id="input-images" name="images"/>
+    <br>
+    <label for="firstName">First Name</label>
+    <textarea name="firstName" id="" cols="30" rows="1">{{admin.firstName}}</textarea>
+    <br>
+    <label for="lastName">Last Name</label>
+    <textarea name="lastName" id="" cols="30" rows="1">{{admin.lastName}}</textarea>
+    <br>
+    <label for="username">Username</label>
+    <textarea name="username" id="" cols="30" rows="1">{{admin.username}}</textarea>
+    <br>
+    <label for="description">Description</label>
+    <textarea name="description" id="" cols="30" rows="1">{{admin.description}}</textarea>
+    <br>
+    <label for="email">Email</label>
+    <textarea name="email" type='email' id="" cols="30" rows="1" placeholder="required"
+      required>{{admin.email}}</textarea>
+    <br>
+    <label for="password">Password</label>
+    <textarea name="passwordHash" type='password' id="" cols="30" rows="1" placeholder="required"></textarea>
+    <br>
+    <label for="passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
+    <textarea name="passRecoveryQuestion" id="" cols="30" rows="1">{{admin.passRecoveryQuestion}}</textarea>
+
+    <button>Edit</button>
+
+  </form>
+</div>

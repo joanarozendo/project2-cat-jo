@@ -1,17 +1,16 @@
 const { Router } = require("express");
 const adminRouter = new Router();
-
-const User = require("./../models/user");
-const routeGuard = require("./../middleware/route-guard");
 const bcryptjs = require("bcryptjs");
+const routeGuard = require("./../middleware/route-guard");
+const uploader = require("./../middleware/upload");
+const User = require("./../models/user");
+const Image = require("./../models/image");
 
 adminRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
   User.findById(userId)
     .populate("user images")
     .then(admin => {
-      // console.log('IMAGEEEES', admin.images[0].url);
-      
       res.render("admin/profile", {
         admin
       });
@@ -20,6 +19,143 @@ adminRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
       next(error);
     });
 });
+
+// -------------------------------------------------------------------------------------------------
+
+adminRouter.get("/edit/:admin_id", routeGuard, (req, res, next) => {
+  const adminId = req.params.admin_id;
+  if (JSON.stringify(adminId) === JSON.stringify(req.user._id)) {
+    User.findById(adminId)
+      .populate("user images")
+      .then(admin => {
+        res.render("admin/edit", {
+          admin
+        });
+      })
+      .catch(error => {
+        next(error);
+      });
+  } else {
+    res.redirect(`/admin/profile/${adminId}`);
+  }
+});
+
+adminRouter.post(
+  "/edit/:admin_id",
+  routeGuard,
+  uploader.array("images", 1),
+  (req, res, next) => {
+    const adminId = req.params.admin_id;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      passwordHash,
+      passRecoveryQuestion
+    } = req.body;
+    const imageObjectArray = (req.files || []).map(file => {
+      return {
+        url: file.url
+      };
+    });
+    // console.log("THIS IS ROLE OF SESSION", req.user.role);
+    if (JSON.stringify(adminId) === JSON.stringify(req.user._id)) {
+      Image.create(imageObjectArray).then((images = []) => {
+        const imageIds = images.map(image => image._id);
+        return bcryptjs
+        .hash(passwordHash, 10)
+        .then(hash => {
+        return User.findOneAndUpdate(
+          {
+            _id: adminId
+          },
+          {
+            firstName: firstName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            passwordHash: hash,
+            passRecoveryQuestion: passRecoveryQuestion,
+            images: imageIds
+          }
+        )
+      })
+
+          .then(admin => {
+            console.log("The admin was edited", admin);
+            res.redirect(`/admin/profile/${adminId}`);
+          })
+          .catch(error => {
+            console.log("The admin was not edited");
+            next(error);
+          });
+      });
+    } else {
+      res.redirect(`/admin/profile/${adminId}`);
+    }
+  }
+);
+
+// -------------------------------------------------------------------------------------------------
+
+
+//-------------------------------------------------------------------------------------------------------
+
+adminRouter.get("/edit-password/:admin_id", routeGuard, (req, res, next) => {
+  const adminId = req.params.admin_id;
+  if (
+    JSON.stringify(adminId) === JSON.stringify(req.user._id)
+  ) {
+    User.findById(adminId)
+      .populate("user images")
+      .then(user => {
+        res.render("admin/edit-password", {
+          user
+        });
+      })
+      .catch(error => {
+        next(error);
+      });
+  } else {
+    res.redirect(`/admin/profile/${adminId}`);
+  }
+});
+
+adminRouter.post("/edit-password/:admin_id", routeGuard, (req, res, next) => {
+  const adminId = req.params.admin_id;
+  const { passwordHash } = req.body;
+  if (
+    JSON.stringify(adminId) === JSON.stringify(req.user._id)
+  ) {
+    bcryptjs
+      .hash(passwordHash, 10)
+      .then(hash => {
+        return User.findOneAndUpdate(
+          {
+            _id: adminId
+          },
+          {
+            passwordHash: hash
+          }
+        );
+      })
+      .then(admin => {
+        console.log("The user was edited", admin);
+        res.redirect(`/admin/profile/${adminId}`);
+      })
+      .catch(error => {
+        console.log("The admin was not edited");
+        next(error);
+      });
+  } else {
+    res.redirect(`/admin/profile/${adminId}`);
+  }
+});
+
+//-------------------------------------------------------------------------------------------------------
+
+
 
 adminRouter.get("/add-user-first-page", routeGuard, (req, res, next) => {
   if (req.user.role === "admin") {
