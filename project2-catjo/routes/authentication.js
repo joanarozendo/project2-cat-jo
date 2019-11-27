@@ -1,6 +1,4 @@
-const {
-  Router
-} = require("express");
+const { Router } = require("express");
 const authenticationRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const User = require("./../models/user");
@@ -9,6 +7,7 @@ const nodemailer = require("nodemailer");
 
 // PARAMETER THAT WILL CHECK IF USER IS LOGGED IN
 const routeGuard = require("./../middleware/route-guard");
+
 // MIDDLEWARE TO UPLOAD IMAGES
 const uploader = require("./../middleware/upload");
 
@@ -19,8 +18,7 @@ const generateToken = length => {
   for (let i = 0; i < length; i++) {
     token += characters[Math.floor(Math.random() * characters.length)];
   }
-  // console.log(token);
-  return token;
+    return token;
 };
 
 const ourEmail = process.env.EMAIL;
@@ -40,7 +38,7 @@ function sendMail(user) {
     to: `${user.email}`,
     subject: "Confirm your account on Music Inn",
     html: `
-    <p>Thanks for signing up with Music Inn! You must follow this link to activate your account:
+    <p>Thanks for signing up with Music Inn, ${user.username}! Follow this link to activate your account:
     <br>
     <a href="http://localhost:3000/authentication/confirm-email/${user.confirmationCode}">http://localhost:3000/authentication/confirm-email/${user.confirmationCode}</a>
     <br>
@@ -52,20 +50,18 @@ function sendMail(user) {
     `
   });
 }
-/* <h1>PLEASE WORK</h1></h1> */
-/* please confirm your email 
-    <a href="http://localhost:3000/authentication/confirm-email/${user.confirmationCode}">here</a> */
 
-//here we will do the login sign up/log in/sign out
-// Sign Up - First Step - Choose Role
+// BASIC AUTHENTICATION
+
+// SIGN UP
+
+// First Step: Choose Role
 authenticationRouter.get("/signup-first-step", (req, res, next) => {
   res.render("authentication/signup-first-step");
 });
 
 authenticationRouter.post("/signup-first-step", (req, res, next) => {
-  const {
-    role
-  } = req.body;
+  const { role } = req.body;
   if (role === "artist") {
     res.render("authentication/signup-artist");
   }
@@ -77,7 +73,7 @@ authenticationRouter.post("/signup-first-step", (req, res, next) => {
   }
 });
 
-// Sign Up - Artists
+// Sign Up - ARTISTS
 authenticationRouter.get("/signup-artist", (req, res, next) => {
   res.render("authentication/signup-artist");
 });
@@ -86,7 +82,6 @@ authenticationRouter.post(
   "/signup-artist",
   uploader.array("images", 1),
   (req, res, next) => {
-    // console.log(req.file);
     const {
       artistName,
       username,
@@ -97,7 +92,6 @@ authenticationRouter.post(
       genres,
       artistAlbums
     } = req.body;
-    // console.log("GENRES", req.body.genres);
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -106,7 +100,6 @@ authenticationRouter.post(
     Image.create(imageObjectArray).then((images = []) => {
       let newConfirmationCode = generateToken(12);
       const imageIds = images.map(image => image._id);
-      // console.log("HEEEERE", imageIds);
       return bcryptjs
         .hash(passwordHash, 10)
         .then(hash => {
@@ -128,7 +121,6 @@ authenticationRouter.post(
           sendMail(user);
           req.session.user = user._id;
           res.redirect("/authentication/pending-confirmation");
-          // res.redirect("/");
         })
         .catch(error => {
           next(error);
@@ -138,7 +130,6 @@ authenticationRouter.post(
 );
 
 authenticationRouter.get("/pending-confirmation", (req, res, next) => {
-  // console.log("UNDEFINED?",req.session.user);
   res.render("authentication/pending-confirmation");
 });
 
@@ -146,7 +137,6 @@ authenticationRouter.get("/confirm-email/:mailToken", (req, res, next) => {
   const mailToken = req.params.mailToken;
   User.findOneAndUpdate({ confirmationCode: mailToken }, { status: "Active" })
     .then(user => {
-      // console.log('USER', user);
       req.session.user = user._id;
       res.redirect("/authentication/confirmation-page");
     })
@@ -154,11 +144,10 @@ authenticationRouter.get("/confirm-email/:mailToken", (req, res, next) => {
 });
 
 authenticationRouter.get("/confirmation-page", (req, res, next) => {
-  // console.log("UNDEFINED?", req.params);
   res.render("authentication/confirmation-page");
 });
 
-// Sign Up - Users
+// Sign Up - USERS
 authenticationRouter.get("/signup-user", (req, res, next) => {
   res.render("authentication/signup-user");
 });
@@ -173,6 +162,7 @@ authenticationRouter.post(
       username,
       email,
       passwordHash,
+      passRecoveryQuestion,
       description,
       genres
     } = req.body;
@@ -182,8 +172,8 @@ authenticationRouter.post(
       };
     });
     Image.create(imageObjectArray).then((images = []) => {
+      let newConfirmationCode = generateToken(12);
       const imageIds = images.map(image => image._id);
-      // console.log("HEEEERE", imageIds);
       return bcryptjs
         .hash(passwordHash, 10)
         .then(hash => {
@@ -193,16 +183,18 @@ authenticationRouter.post(
             username,
             email,
             passwordHash: hash,
+            passRecoveryQuestion,
             role: "user",
             description,
             genres,
-            images: imageIds
+            images: imageIds,
+            confirmationCode: newConfirmationCode
           });
         })
         .then(user => {
-          // console.log("IMAGESSSS", images);
+          sendMail(user);
           req.session.user = user._id;
-          res.redirect("/");
+          res.redirect("/authentication/pending-confirmation");
         })
         .catch(error => {
           next(error);
@@ -211,7 +203,7 @@ authenticationRouter.post(
   }
 );
 
-// Sign Up - Admin
+// Sign Up - ADMINISTRATOR
 authenticationRouter.get("/signup-admin", (req, res, next) => {
   res.render("authentication/signup-admin");
 });
@@ -220,13 +212,7 @@ authenticationRouter.post(
   "/signup-admin",
   uploader.array("images", 1),
   (req, res, next) => {
-    const {
-      firstName,
-      lastName,
-      username,
-      email,
-      passwordHash
-    } = req.body;
+    const { firstName, lastName, username, email, passwordHash, passRecoveryQuestion } = req.body;
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -234,7 +220,6 @@ authenticationRouter.post(
     });
     Image.create(imageObjectArray).then((images = []) => {
       const imageIds = images.map(image => image._id);
-      // console.log("HEEEERE", imageIds);
       return bcryptjs
         .hash(passwordHash, 10)
         .then(hash => {
@@ -244,7 +229,9 @@ authenticationRouter.post(
             username,
             email,
             passwordHash: hash,
+            passRecoveryQuestion,
             role: "admin",
+            status: "Active",
             images: imageIds
           });
         })
@@ -259,34 +246,30 @@ authenticationRouter.post(
   }
 );
 
-// Log In
+// LOG IN
 authenticationRouter.get("/login", (req, res, next) => {
   res.render("authentication/login");
 });
 
 authenticationRouter.post("/login", (req, res, next) => {
   let userId;
-  const {
-    email,
-    password
-  } = req.body;
+  const { email, password } = req.body;
   User.findOne({
-      email
-    })
+    email
+  })
     .then(user => {
       if (!user) {
         return Promise.reject(new Error("There's no user with that email."));
       } else {
         userId = user._id;
-        console.log(password === user.passwordHash);
         return bcryptjs.compare(password, user.passwordHash);
       }
     })
     .then(result => {
       if (result) {
         req.session.user = userId;
-        console.log('req session of simple authentication', req.session);
-        console.log('req user of simple authenticarion', req.user);
+        // console.log("req session of simple authentication", req.session);
+        // console.log("req user of simple authentication", req.user);
         res.redirect("/");
       } else {
         return Promise.reject(new Error("Wrong password."));
@@ -297,26 +280,18 @@ authenticationRouter.post("/login", (req, res, next) => {
     });
 });
 
+// PASSWORD RECOVERY
 authenticationRouter.get("/password-recovery", (req, res, next) => {
-  // User.findById
   res.render("authentication/password-recovery");
-});
-
-authenticationRouter.get("/edit-password", (req, res, next) => {
-  res.render("edit-password");
 });
 
 authenticationRouter.post("/password-recovery", (req, res, next) => {
   let userId;
   const { email, passRecoveryQuestion } = req.body;
-  console.log(req.body.email)
-
   User.findOne({
     email
   })
     .then(user => {
-      console.log(user)
-
       if (!user) {
         return Promise.reject(new Error("There's no user with that email."));
       } else {
@@ -325,11 +300,24 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
       }
     })
     .then(user => {
-      if (passRecoveryQuestion === user.passRecoveryQuestion) {
-        req.session.user = userId;
-        res.redirect("/edit-password");
-      } else {
+      let passRecoveryQuestionInput = passRecoveryQuestion.toLowerCase();
+      if (user.passRecoveryQuestion !== passRecoveryQuestionInput) {
         return Promise.reject(new Error("Wrong answer."));
+      } else {
+        req.session.user = userId;
+        User.findById(userId)
+        .then(user => {
+          console.log('ROLE', user.role);
+          if (user.role === 'artist') {
+            res.redirect(`/band/edit-password/${user._id}`);
+          }
+          if (user.role === 'user') {
+            res.redirect(`/user/edit-password/${user._id}`);
+          }
+          if (user.role === 'admin') {
+            res.redirect(`/admin/edit-password/${user._id}`);
+          }
+        }) 
       }
     })
     .catch(error => {
@@ -337,32 +325,39 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
     });
 });
 
+/* authenticationRouter.get("/edit-password", (req, res, next) => {
+  res.render("edit-password");
+}); */
 
-// Log Out
+// LOG OUT
 authenticationRouter.post("/logout", (req, res, next) => {
   req.session.destroy();
   res.redirect("/");
 });
 
 ///SPOTIFY ROUTES
-const passport = require('passport');
-
-authenticationRouter.get('/spotify', passport.authenticate('spotify', {
-  scope: ['user-read-email', 'user-read-private'],
-  showDailog: true
-}), function (req, res) {
-  console.log('in the spotify function')
-  //
-  //
-});
+const passport = require("passport");
 
 authenticationRouter.get(
-  '/spotify/callback',
-  passport.authenticate('spotify', {
-    showDailog: true,
-    failureRedirect: '/authentication/login' //failure
+  "/spotify",
+  passport.authenticate("spotify", {
+    scope: ["user-read-email", "user-read-private"],
+    showDailog: true
   }),
-  function (req, res) {
+  function(req, res) {
+    // console.log("in the spotify function");
+    //
+    //
+  }
+);
+
+authenticationRouter.get(
+  "/spotify/callback",
+  passport.authenticate("spotify", {
+    showDailog: true,
+    failureRedirect: "/authentication/login" //failure
+  }),
+  function(req, res) {
     // req.user._id = req.session.passport
     req.session.user = req.user._id;
     res.redirect(`/user/edit/${req.user._id}`); //if success will redirect for the profile edition

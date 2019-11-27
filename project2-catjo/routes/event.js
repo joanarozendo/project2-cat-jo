@@ -12,7 +12,7 @@ eventRouter.get("/list", routeGuard, (req, res, next) => {
         .sort([
             ["date", -1]
         ])
-        .then(events => {
+        .then(events => {          
             res.render("band/events/event-list", {
                 events
             });

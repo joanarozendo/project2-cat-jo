@@ -1,25 +1,35 @@
 <div class="center">
-    <h1>Band profile</h1>
-    {{!-- {{#each band.images}} --}}
-    <img src={{band.images.0.resizedUrl}}>
-    {{!-- {{/each}} --}}
-    <h2>{{band.artistName}}</h2>
-    <ul>Genre:
-        {{#each band.genres}}
-        <li>{{this}}</li>
-        {{/each}}
-    </ul>
-    <div>Description: {{band.description}}</div>
-    <div><a href="/events/{{band.id}}">Events</a></div>
-    {{#ifSameLoggedIn band user}}
-    <div><a href="/band/edit/{{band._id}}">Edit</a>
-    </div>
-    <form action='/band/delete/{{band._id}}' method="POST"><button>Delete your Profile</button></form>
-    {{/ifSameLoggedIn}}
+  <h1>Band profile</h1>
+  {{!-- {{#each band.images}} --}}
+  <img src={{band.images.0.resizedUrl}}>
+  {{!-- {{/each}} --}}
+  <h2>{{band.artistName}}</h2>
+  <ul>Genre:
+    {{#each band.genres}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+  <div>Description: {{band.description}}</div>
+  <div>Recovery Q: {{band.passRecoveryQuestion}}</div>
+  <div><a href="/events/{{band.id}}">Events</a></div>
 
-    {{#isAdmin user}}
-    <div><a href="/band/edit/{{band._id}}">Edit</a>
-    </div>
-    <form action='/band/delete/{{band._id}}' method="POST"><button>Delete this Artist's Profile</button></form>
-    {{/isAdmin}}
+  <form action="/" method="POST">
+  <label for="input-artistRating">Rate this band</label>
+  <input type="number" min="1" max="5" id="input-artistRating" name="artistRating">
+    <button>Rate</button>
+  </form>
+
+  {{#ifSameLoggedIn band user}}
+  <div><a href="/band/edit/{{band._id}}">Edit</a>
+  </div>
+  <form action='/band/delete/{{band._id}}' method="POST"><button>Delete your Profile</button></form>
+  {{/ifSameLoggedIn}}
+
+  {{#isAdmin user}}
+  <div><a href="/band/edit/{{band._id}}">Edit</a>
+  </div>
+  <form action='/band/delete/{{band._id}}' method="POST">
+    <button>Delete this Artist's Profile</button>
+  </form>
+  {{/isAdmin}}
 </div>

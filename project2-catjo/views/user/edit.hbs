@@ -1,6 +1,12 @@
 <div class='center'>
   <h2>Update your settings</h2>
-  <form action="/user/edit/{{user._id}}" method='POST'>
+  <form action="/user/edit/{{user._id}}" method='POST' enctype="multipart/form-data">
+  <!-- image -->
+    <label for="input-images">Your Profile Image<label>
+    <img src={{user.images.0.resizedUrl}}>
+    <input type="file" id="input-images" name="images" class="form-control" />
+
+
     <label for="firstName">First Name</label>
     <textarea name="firstName" id="" cols="30" rows="1">{{user.firstName}}</textarea>
     <br>
@@ -18,7 +24,10 @@
       required>{{user.email}}</textarea>
     <br>
     <label for="password">Password</label>
-    <textarea name="password" type='password' id="" cols="30" rows="1" placeholder="required"></textarea>
+    <textarea name="passwordHash" type='password' id="" cols="30" rows="1" placeholder="required"></textarea>
+
+    <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
+    <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion" placeholder="{{user.passRecoveryQuestion}}" />
 
     <button>Edit</button>
 
