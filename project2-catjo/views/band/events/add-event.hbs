@@ -1,20 +1,32 @@
 <div class='center'>
     <h1>Add events</h1>
     <form action="/events/{{user._id}}/add-event" method='POST' class='d-flex flex-column'>
-        <label for="date">Date</label><input type="date" name='date'>
-        <label for="time">Time</label><input type="time" name='time'>
-        <label for="nameOfEvent">Name Of Event</label><input type="text" name='nameOfEvent'>
+        <label for="date">Date</label><input type="date" name='date' required>
+        <label for="time">Time</label><input type="time" name='time' required>
+        <label for="nameOfEvent">Name Of Event</label><input type="text" name='nameOfEvent' required>
         Address:
         <label for="site">Site</label><input type="text" name='site'>
         <label for="road">Road</label><input type="text" name='road'>
         <label for="building">Number</label><input type="text" name='building'>
         <label for="floor">Floor</label><input type="text" name='floor'>
-        <label for="city">City</label><input type="text" name='city'>
+        <label for="city">City</label> <select name="city" id="" required>
+            <option value="Lisbon">Lisbon</option>
+            <option value="Porto">Porto</option>
+            <option value="Faro">Faro</option>
+        </select>
         <label for="zip_code">Zip Code</label> <input type="text" name='zip_code'>
-        <label for="latitude">Latitude</label><input type="number" name='latitude'>
-        <label for="longitude">Longitude</label><input type="number" name='longitude'>
+        <label for="latitude">Latitude</label>
+        <input type="text" name="latitude" min="-90" max="90" required placeholder="Latitude" />
+        <label for="longitude">Longitude</label>
+        <input type="text" name="longitude" min="-180" max="180" required placeholder="Longitude" />
         <label for="description">Description</label> <input type="text" name='description'>
         <label for="price">Price</label><input type="number" name='price'>
         <button class='mt-1 w-25'>Add event!</button>
     </form>
+    <div id="map">Map</div>
 </div>
+
+<script src='/scripts/geo-location.js'></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGD7_VrYPlO5F-qYuZSo_KSNAjHWev2Tg&&language=pt&region=PT&callback=initMap"
+    async defer></script>

@@ -7,6 +7,21 @@ const User = require("./../models/user");
 const Event = require("./../models/events");
 
 //get list of bands
+
+eventRouter.get('/data', (req, res, next) => {
+    let date = new Date();
+    console.log('todays date', date);
+    Event.find()
+        .then(events => {
+            res.send({
+                events
+            });
+        })
+        .catch(err => {
+            next(err)
+        })
+});
+
 eventRouter.get("/list", routeGuard, (req, res, next) => {
     Event.find()
         .sort([
@@ -75,6 +90,23 @@ eventRouter.post('/filter/genre', routeGuard, (req, res, next) => {
         });
 });
 
+//filter by genre
+eventRouter.post('/filter/city', routeGuard, (req, res, next) => {
+    const city = req.body.city;
+    Event.find({
+            city: city
+        })
+        .then(events => {
+            res.render("band/events/event-list", {
+                events
+            });
+        })
+        .catch(err => {
+            console.log("step 3");
+            next(err);
+        });
+});
+
 //get event profile
 eventRouter.get("/profile/:event_id", routeGuard, (req, res, next) => {
     const eventId = req.params.event_id;
@@ -108,8 +140,6 @@ eventRouter.post("/:band_id/add-event", routeGuard, (req, res, next) => {
     const bandId = req.params.band_id;
     const artistName = req.user.artistName;
     const typeOfMusic = req.user.genres;
-    console.log(req.user);
-    console.log("this is the artist tyoe of music", typeOfMusic);
     const {
         nameOfEvent,
         site,
@@ -149,8 +179,7 @@ eventRouter.post("/:band_id/add-event", routeGuard, (req, res, next) => {
                 bandName: artistName,
                 type: typeOfMusic
             })
-            .then(() => {
-                console.log("event created");
+            .then((event) => {
                 res.redirect(`/events/${bandId}`);
             })
             .catch(err => {

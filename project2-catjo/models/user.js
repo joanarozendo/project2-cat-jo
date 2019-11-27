@@ -39,20 +39,6 @@ const schema = new mongoose.Schema({
     type: String,
     // required: true
   },
-  facebook: [{
-    id: {
-      type: String
-    },
-    token: {
-      type: String
-    },
-    name: {
-      type: String
-    },
-    email: {
-      type: String
-    }
-  }],
   description: {
     type: String,
     // minlength: 1,

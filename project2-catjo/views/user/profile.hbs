@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-<div class="card mb-3 center">
-  {{#each user_individual.images}}
-  <img src={{0.resizedUrl}}>
-  {{/each}}
-=======
 <div class="card mb-3">
   {{!-- {{#each user_individual.images}} --}}
   <img src={{user_individual.images.0.resizedUrl}}>
   {{!-- {{/each}} --}}
->>>>>>> 2b338bd21fe1aef1fa55000b4113161b27971c2a
   <div class="card-body">
     <h5 class="card-title">{{user_individual.firstName}}'s Profile</h5>
     <p>Name: {{user_individual.firstName}} {{user_individual.lastName}}</p>

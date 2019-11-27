@@ -52,7 +52,8 @@ userRouter.post("/edit/:user_id", routeGuard, (req, res, next) => {
     username,
     email,
     password,
-    description
+    description,
+    genres
   } = req.body;
   if (
     JSON.stringify(userId) === JSON.stringify(req.user._id) ||
@@ -69,7 +70,8 @@ userRouter.post("/edit/:user_id", routeGuard, (req, res, next) => {
           username: username,
           email: email,
           passwordHash: hash,
-          description: description
+          description: description,
+          genres: genres
         }
       )
         .then(user => {

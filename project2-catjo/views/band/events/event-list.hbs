@@ -1,9 +1,20 @@
 
+<div class='center d-flex justify-content-between flex-row-reverse '>
+    <div id="map_list">Map</div>
+    <div>
+        <h1>List of events</h1>
+        <a href="/events/search">Go to search page</a>
+        {{#each events}}
+        <li>{{this.nameOfEvent}} <br> Who? {{this.bandName}} <br>When? {{this.date}} <br>Where? {{this.address.city}} <a
+                href="/events/profile/{{this._id}}">Click to know more!</a></li>
+        {{/each}}
 
-<div class='center'><h1>List of events</h1>
-<a href="/events/search">Go to search page</a>
-{{#each events}}
-<li>{{this.nameOfEvent}} <br> Who? {{this.bandName}} <br>When? {{this.date}} <br>Where? {{this.address.city}} <a href="/events/profile/{{this._id}}">Click to know more!</a></li>
-{{/each}}
-
+    </div>
 </div>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src='/scripts/geo-location.js'></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGD7_VrYPlO5F-qYuZSo_KSNAjHWev2Tg&&language=pt&region=PT&callback=initMapList"
+    async defer></script>
