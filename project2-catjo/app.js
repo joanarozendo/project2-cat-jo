@@ -12,7 +12,7 @@ const serveFavicon = require("serve-favicon");
 const mongoose = require("mongoose");
 
 //SESSIONS
-const expressSession = require("express-session");  //passport1
+const expressSession = require("express-session"); //passport1
 const connectMongo = require("connect-mongo");
 const MongoStore = connectMongo(expressSession);
 
@@ -26,6 +26,9 @@ const usersRouter = require('./routes/user');
 const bandRouter = require('./routes/band');
 const adminRouter = require('./routes/admin');
 const eventRouter = require('./routes/event');
+const postBandRouter = require('./routes/post_band');
+const postEventsRouter = require('./routes/post_event');
+
 
 
 const app = express();
@@ -65,6 +68,12 @@ hbs.registerHelper("ifSameLoggedIn", function (arg1, arg2, options) {
     options.inverse(this);
 });
 
+hbs.registerHelper("ifSame", function (arg1, arg2, options) {
+  return JSON.stringify(arg1) == JSON.stringify(arg2._id) ?
+    options.fn(this) :
+    options.inverse(this);
+});
+
 hbs.registerHelper("isAdmin", function (arg1, options) {
   if (arg1.role === "admin") {
     return options.fn(this);
@@ -88,7 +97,7 @@ app.use(
     sourceMap: true
   })
 );
-app.use(express.static(join(__dirname, "public")));  //passport2
+app.use(express.static(join(__dirname, "public"))); //passport2
 
 //SETTING UP SESSION
 app.use(
@@ -145,7 +154,8 @@ app.use('/user', usersRouter);
 app.use('/band', bandRouter);
 app.use('/admin', adminRouter);
 app.use('/events', eventRouter);
-
+app.use('/band/post', postBandRouter);
+app.use('/events/post', postEventsRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {

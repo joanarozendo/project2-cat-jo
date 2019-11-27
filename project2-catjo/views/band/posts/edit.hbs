@@ -1,0 +1,11 @@
+
+<div class="single-post center">
+     <h3>Edit your post</h3>
+    <form action="/band/post/edit/{{post._id}}" method="POST">
+        <textarea name="text" maxlength="140" cols="30" rows="3">{{ post.text }}</textarea>
+        <button>Edit</button>
+    </form>
+    <form action="/band/post/delete/{{post._id}}" method="POST">
+        <button class="btn">Delete</button>
+    </form>
+</div>

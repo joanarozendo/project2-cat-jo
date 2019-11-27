@@ -42,8 +42,34 @@
     <button>Delete this Artist's Profile</button>
   </form>
   {{/isAdmin}}
-
-
+  <div class="single-post">
+    <h3>Add posts</h3>
+    <form action="/band/post/{{band._id}}/create" method="POST" enctype="multipart/form-data">
+      <textarea class='"md-textarea form-control' name="text" maxlength="140" placeholder="Write your text here..."
+        required></textarea>
+      <input type="file" name="images" multiple />
+      <button class="btn btn-secondary">Publish</button>
+    </form>
+  </div>
+  <h3>Posts</h3>
+  {{#each post}}
+    
+  <div class="single-post d-flex justify-content-between">
+    <a href="/band/post/{{this._id }}">
+    <div>
+      {{#each this.images}}
+      <img src={{this.resizedUrl}}>
+      {{/each}}
+    </div>
+    <div class='d-flex flex-column'>
+      <p>{{ this.text }}</p>
+      <small>{{ this.creationDate }}</small>
+      <br />
+      <small>{{ this.author.username }}</small>
+    </div>
+    </a>
+  </div>
+  {{/each}}
 </div>
-
-<script src='/scripts/band-rate.js'></script>
+</div>
+</div>

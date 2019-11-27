@@ -6,8 +6,9 @@ const routeGuard = require("./../middleware/route-guard");
 const User = require("./../models/user");
 const Event = require("./../models/events");
 
-//get list of bands
 
+
+//get list of events/API
 eventRouter.get('/data', (req, res, next) => {
     let date = new Date();
     console.log('todays date', date);
@@ -22,12 +23,41 @@ eventRouter.get('/data', (req, res, next) => {
         })
 });
 
+//attend events
+eventRouter.post('/attend/:event_id', routeGuard, (req, res, next) => {
+    const eventId = req.params.event_id;
+    const userId = req.user._id;
+    Event.findByIdAndUpdate(eventId, {
+            $push: {
+                attend_users_id: userId
+            }
+        })  
+        //I AM HERE, NOW I NEED TO ADD A CONDITION. IF THE ID OF THE USER ALREADY EXISTS ON THE ATTEND_USER_ARRAY I CAN'T ATTEND AGAIN -> USE HBS HELPERS FOR THAT AND HIDE BUTTON? ADD A MESSAGE "YOU ARE ATTENDING". ADD A BUTTON "NOT ATTENDING ANYMORE".
+        .then(event => {
+            const attendingNumber = event.number_of_attendants + 1;
+            return Event.findByIdAndUpdate(eventId, {
+                    number_of_attendants: attendingNumber
+                })
+                .then(event => {
+                    console.log('Attending number event', event.number_of_attendants);
+                    res.render("band/events/profile", {
+                        event: event
+                    });
+                })
+        })
+        .catch(err => {
+            console.log('not possible to attend event');
+        });
+});
+
+
+//list all events
 eventRouter.get("/list", routeGuard, (req, res, next) => {
     Event.find()
         .sort([
             ["date", -1]
         ])
-        .then(events => {          
+        .then(events => {
             res.render("band/events/event-list", {
                 events
             });
