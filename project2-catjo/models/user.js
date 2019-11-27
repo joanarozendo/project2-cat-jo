@@ -58,6 +58,8 @@ const schema = new mongoose.Schema({
   artistAlbums: {
     type: Array
   },
+  bandRate: Number,
+  bandWebsite: String,
   images: [{
     type: mongoose.Types.ObjectId,
     ref: 'Image'

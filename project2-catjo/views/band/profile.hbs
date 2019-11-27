@@ -10,14 +10,24 @@
     {{/each}}
   </ul>
   <div>Description: {{band.description}}</div>
-  <div>Recovery Q: {{band.passRecoveryQuestion}}</div>
+  <div>Our Spotify Page: <a href="{{band.bandWebsite}}" target="blank">HERE</a></div>
+  {{!-- <div>Recovery Q: {{band.passRecoveryQuestion}}</div> --}}
   <div><a href="/events/{{band.id}}">Events</a></div>
 
-  <form action="/" method="POST">
-  <label for="input-artistRating">Rate this band</label>
-  <input type="number" min="1" max="5" id="input-artistRating" name="artistRating">
+  {{#ifUser user}}
+  <span>Want to get in touch with the band? Click <a href="/band/contact-form/{{band.id}}">here</a>.</span>
+  <form>
+    <label for="artistRating">Rate this band</label>
+    <select name="artistRating" id="">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
     <button>Rate</button>
   </form>
+  {{/ifUser}}
 
   {{#ifSameLoggedIn band user}}
   <div><a href="/band/edit/{{band._id}}">Edit</a>
@@ -32,4 +42,8 @@
     <button>Delete this Artist's Profile</button>
   </form>
   {{/isAdmin}}
+
+
 </div>
+
+<script src='/scripts/band-rate.js'></script>

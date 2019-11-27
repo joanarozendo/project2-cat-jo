@@ -90,7 +90,8 @@ authenticationRouter.post(
       passRecoveryQuestion,
       description,
       genres,
-      artistAlbums
+      artistAlbums,
+      bandWebsite
     } = req.body;
     const imageObjectArray = (req.files || []).map(file => {
       return {
@@ -114,7 +115,8 @@ authenticationRouter.post(
             genres,
             artistAlbums,
             images: imageIds,
-            confirmationCode: newConfirmationCode
+            confirmationCode: newConfirmationCode,
+            bandWebsite
           });
         })
         .then(user => {
@@ -307,7 +309,7 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
         req.session.user = userId;
         User.findById(userId)
         .then(user => {
-          console.log('ROLE', user.role);
+          // console.log('ROLE', user.role);
           if (user.role === 'artist') {
             res.redirect(`/band/edit-password/${user._id}`);
           }
