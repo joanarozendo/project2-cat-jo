@@ -1,8 +1,8 @@
 <div class='center'>
-    <h1>Profile event</h1>
+    <h1>Event</h1>
     <h2>{{event.bandName}}</h2>
-    <p> {{event.date}}
-        {{event.time}}
+    <h3>{{event.date}}</h3>
+    <p> {{event.time}}
         {{event.nameOfEvent}}
         {{event.address.site}}
         {{event.address.road}}
@@ -14,4 +14,7 @@
         {{event.address.longitude}}
         {{event.description}}
         {{event.price}}</p>
+    <label for="rate">Number of attendants:</label> <textarea name="rate" cols="2" rows="1"
+        disabled>{{event.number_of_attendants}}</textarea>
+    <form action="/events/attend/{{event.id}}" method='POST'><button> Attend</button></form>
 </div>

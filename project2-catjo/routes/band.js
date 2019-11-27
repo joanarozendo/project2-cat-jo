@@ -1,10 +1,13 @@
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 const bandRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const routeGuard = require("./../middleware/route-guard");
 const uploader = require("./../middleware/upload");
 const User = require("./../models/user");
 const Image = require("./../models/image");
+const Post = require('./../models/post');
 
 //Going to the band profile (all users have access if they are logged in)
 bandRouter.get("/profile/:band_id", routeGuard, (req, res, next) => {
@@ -12,9 +15,25 @@ bandRouter.get("/profile/:band_id", routeGuard, (req, res, next) => {
   User.findById(bandId)
     .populate("user images")
     .then(band => {
-      res.render("band/profile", {
-        band
-      });
+      return Post.find({
+        band: band._id
+      })
+      .populate('author images')
+      .sort([
+        ["creationDate", -1]
+    ])
+      .then(post => {
+        console.log('posts were found!!!', post.images);
+        res.render("band/profile", {
+          band: band,
+          post: post
+        });
+      }).catch(err => {
+        console.log('no posts were found');
+        res.render("band/profile", {
+          band: band,
+        })
+      })
     })
     .catch(error => {
       next(error);
@@ -73,22 +92,19 @@ bandRouter.post(
         return bcryptjs
           .hash(passwordHash, 10)
           .then(hash => {
-            return User.findOneAndUpdate(
-              {
-                _id: bandId
-              },
-              {
-                username: username,
-                email: email,
-                description: description,
-                genres: genres,
-                artistAlbums: artistAlbums,
-                artistName: artistName,
-                passwordHash: hash,
-                passRecoveryQuestion: passRecoveryQuestion,
-                images: imageIds
-              }
-            );
+            return User.findOneAndUpdate({
+              _id: bandId
+            }, {
+              username: username,
+              email: email,
+              description: description,
+              genres: genres,
+              artistAlbums: artistAlbums,
+              artistName: artistName,
+              passwordHash: hash,
+              passRecoveryQuestion: passRecoveryQuestion,
+              images: imageIds
+            });
           })
           .then(band => {
             console.log("The band was edited", band);
@@ -130,7 +146,9 @@ bandRouter.get("/edit-password/:band_id", routeGuard, (req, res, next) => {
 
 bandRouter.post("/edit-password/:band_id", routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
-  const { passwordHash } = req.body;
+  const {
+    passwordHash
+  } = req.body;
   if (
     JSON.stringify(bandId) === JSON.stringify(req.user._id) ||
     req.user.role === "admin"
@@ -138,14 +156,11 @@ bandRouter.post("/edit-password/:band_id", routeGuard, (req, res, next) => {
     bcryptjs
       .hash(passwordHash, 10)
       .then(hash => {
-        return User.findOneAndUpdate(
-          {
-            _id: bandId
-          },
-          {
-            passwordHash: hash
-          }
-        );
+        return User.findOneAndUpdate({
+          _id: bandId
+        }, {
+          passwordHash: hash
+        });
       })
       .then(band => {
         console.log("The band was edited", band);
@@ -164,8 +179,8 @@ bandRouter.post("/edit-password/:band_id", routeGuard, (req, res, next) => {
 
 bandRouter.get("/list", routeGuard, (req, res, next) => {
   User.find({
-    role: "artist"
-  })
+      role: "artist"
+    })
     .sort({
       creationDate: -1
     })
@@ -186,8 +201,8 @@ bandRouter.post("/delete/:band_id", routeGuard, (req, res, next) => {
     req.user.role === "admin"
   ) {
     User.findByIdAndDelete({
-      _id: bandId
-    })
+        _id: bandId
+      })
       .then(() => {
         res.redirect("/");
       })
