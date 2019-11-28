@@ -16,12 +16,13 @@ html, body {
 
 body {
   display: flex;
-  flex-direction: column;background-image: url(/images/06.jpg);
+  flex-direction: column;
+  background-color: #red;
+  // background-image: url(/images/06.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-color: #F7C608;
 }
 
 main {

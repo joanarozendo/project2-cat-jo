@@ -9,12 +9,11 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-  background-image: url(/images/06.jpg);
+  background-color: #red;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
-  background-color: #F7C608; }
+  background-size: cover; }
 
 main {
   flex-grow: 2;
