@@ -1,0 +1,21 @@
+<div class="center">
+
+  <h2>Contact Form</h2>
+
+  <form action="/form/contact-form/{{user._id}}" method="POST">
+
+    <label for="name">Your Username</label>
+    <input type="text" name="name" id="" required>
+    <br>
+
+    <label for="email">Your Email</label>
+    <input type="email" name="email" id="" required>
+    <br>
+
+    <label for="message">Your Message</label>
+    <textarea minlength="5" maxlength="200" rows="5" cols="40" type="text" name="message" id="" placeholder="Write your message here" required></textarea>
+
+    <button>Send</button>
+  </form>
+
+</div>

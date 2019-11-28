@@ -28,6 +28,7 @@ const adminRouter = require('./routes/admin');
 const eventRouter = require('./routes/event');
 const postBandRouter = require('./routes/post_band');
 const postEventsRouter = require('./routes/post_event');
+const formRouter = require('./routes/form');
 
 
 
@@ -156,6 +157,7 @@ app.use('/admin', adminRouter);
 app.use('/events', eventRouter);
 app.use('/band/post', postBandRouter);
 app.use('/events/post', postEventsRouter);
+app.use('/form', formRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {

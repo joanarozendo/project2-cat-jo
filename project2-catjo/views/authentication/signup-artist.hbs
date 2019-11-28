@@ -3,40 +3,43 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="input-email">Email</label>
-      <input type="email" class="form-control" id="input-email" name="email" placeholder="abc@def.com">
+      <input type="email" class="form-control" id="input-email" name="email" placeholder="abc@def.com" required>
     </div>
 
     <div class="form-group col-md-6">
       <label for="input-password">Password</label>
-      <input type="password" class="form-control" id="input-password" name="passwordHash" placeholder="Password">
+      <input type="password" {{!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        title="Must contain at least one number and one uppercase and lowercase letter, and 8 or more characters" --}}
+        class="form-control" id="input-password" name="passwordHash" placeholder="Password" required>
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?<label>
-      <input type="text" id="input-passRecoveryQuestion" name="passRecoveryQuestion" class="form-control" placeholder="Your answer"/>
+      <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite song?<label>
+          <input type="text" id="input-passRecoveryQuestion" name="passRecoveryQuestion" class="form-control"
+            placeholder="Your answer" />
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="input-images">Your Profile Image<label>
-      <input type="file" id="input-images" name="images" class="form-control"/>
+          <input type="file" id="input-images" name="images" class="form-control" />
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="input-username">Username</label>
-      <input type="text" class="form-control" id="input-username" name="username" placeholder="xpto_10">
+      <input type="text" class="form-control" id="input-username" name="username" placeholder="xpto_10" required>
     </div>
 
     <div class="form-group col-md-4">
       <label for="input-artistName">Artist/Band Name</label>
       <input type="text" class="form-control" id="input-artistName" name="artistName" placeholder="XPTO">
     </div>
-    
+
     <div class="form-group col-md-4">
       <label for="input-bandWebsite">Your Spotify Page</label>
       <input type="url" class="form-control" id="input-bandWebsite" name="bandWebsite" placeholder="xpto.pt">

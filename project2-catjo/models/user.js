@@ -5,17 +5,14 @@ const mongoose = require("mongoose");
 const schema = new mongoose.Schema({
   firstName: {
     type: String,
-    // required: true,
     trim: true
   },
   lastName: {
     type: String,
-    // required: true,
     trim: true
   },
   artistName: {
     type: String,
-    // required: true,
     trim: true
   },
   username: {
@@ -41,7 +38,6 @@ const schema = new mongoose.Schema({
   },
   description: {
     type: String,
-    // minlength: 1,
     maxlength: 200
   },
   role: {
@@ -51,7 +47,7 @@ const schema = new mongoose.Schema({
   },
   genres: [{
     type: String,
-    //required: true,
+    // required: true,
     enum: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"],
     default: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
   }],

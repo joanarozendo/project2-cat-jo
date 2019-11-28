@@ -12,6 +12,10 @@
       <li>{{this}}</li>
       {{/each}}
     </ul>
+    {{#ifUser user}}
+  <span>Want to get in touch with this user? Click <a href="/form/contact-form/{{user.id}}">here</a>.</span>
+  <br>
+{{/ifUser}}
     {{#ifSameLoggedIn user_individual user}}
     
       <a href="/user/edit/{{user_individual._id}}">Edit</a>

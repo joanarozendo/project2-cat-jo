@@ -18,7 +18,7 @@ const generateToken = length => {
   for (let i = 0; i < length; i++) {
     token += characters[Math.floor(Math.random() * characters.length)];
   }
-    return token;
+  return token;
 };
 
 const ourEmail = process.env.EMAIL;
@@ -44,7 +44,8 @@ function sendMail(user) {
     <br>
     Have fun, 
     <br>
-    The Music Inn Team 
+    The Music Inn Team
+    <br>
     🎵🤘🎤🎷🎹🎸
     </p>
     `
@@ -214,7 +215,14 @@ authenticationRouter.post(
   "/signup-admin",
   uploader.array("images", 1),
   (req, res, next) => {
-    const { firstName, lastName, username, email, passwordHash, passRecoveryQuestion } = req.body;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      passwordHash,
+      passRecoveryQuestion
+    } = req.body;
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -261,7 +269,11 @@ authenticationRouter.post("/login", (req, res, next) => {
   })
     .then(user => {
       if (!user) {
-        return Promise.reject(new Error("There's no user with that email."));
+        res.render("authentication/login", {
+          errorMessageEmail: "There's no user with that email... Try again."
+          // return Promise.reject(new Error("Wrong password."));
+        });
+        // return Promise.reject(new Error("There's no user with that email."));
       } else {
         userId = user._id;
         return bcryptjs.compare(password, user.passwordHash);
@@ -272,9 +284,12 @@ authenticationRouter.post("/login", (req, res, next) => {
         req.session.user = userId;
         // console.log("req session of simple authentication", req.session);
         // console.log("req user of simple authentication", req.user);
-        res.redirect("/");
+        res.redirect("/dashboard");
       } else {
-        return Promise.reject(new Error("Wrong password."));
+        res.render("authentication/login", {
+          errorMessagePassword: "Wrong password! Try again."
+          // return Promise.reject(new Error("Wrong password."));
+        });
       }
     })
     .catch(error => {
@@ -307,19 +322,18 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
         return Promise.reject(new Error("Wrong answer."));
       } else {
         req.session.user = userId;
-        User.findById(userId)
-        .then(user => {
+        User.findById(userId).then(user => {
           // console.log('ROLE', user.role);
-          if (user.role === 'artist') {
+          if (user.role === "artist") {
             res.redirect(`/band/edit-password/${user._id}`);
           }
-          if (user.role === 'user') {
+          if (user.role === "user") {
             res.redirect(`/user/edit-password/${user._id}`);
           }
-          if (user.role === 'admin') {
+          if (user.role === "admin") {
             res.redirect(`/admin/edit-password/${user._id}`);
           }
-        }) 
+        });
       }
     })
     .catch(error => {

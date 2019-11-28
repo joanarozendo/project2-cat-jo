@@ -1,7 +1,8 @@
 <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex justify-content-between">
     <ul class="navbar-nav">
         {{#if user}}
-        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+        {{!-- <li class="nav-item"><a class="nav-link" href="/">Home</a></li> --}}
         {{#ifUser user}}
         <li class="nav-item"> <a class="nav-link" href="/user/profile/{{user._id}}">Profile</a></li>
         {{/ifUser}}

@@ -177,7 +177,7 @@ userRouter.get("/list", routeGuard, (req, res, next) => {
       role: "user"
     })
     .sort({
-      creationDate: -1
+      firstName: -1
     })
     .populate("user images")
     .then(user_individual => {

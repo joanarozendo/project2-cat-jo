@@ -3,6 +3,9 @@
 <img src={{admin.images.0.resizedUrl}}>
 {{!-- {{/each}} --}}
 <h3>You are an administrator</h3>
+{{!-- {{#ifUser user}}
+  <span>Want to get in touch with the administrator? Click <a href="/form/contact-form/{{user.id}}">here</a>.</span>
+{{/ifUser}} --}}
 <div>
   <a href="/admin/edit/{{admin._id}}">Edit your profile</a>
 </div>

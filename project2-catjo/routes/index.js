@@ -11,4 +11,8 @@ router.get('/about', (req, res, next) => {
   res.render('about');
 });
 
+router.get('/dashboard', (req, res, next) => {
+  res.render('dashboard');
+});
+
 module.exports = router;

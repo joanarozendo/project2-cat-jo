@@ -5,12 +5,12 @@ const bandRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const routeGuard = require("./../middleware/route-guard");
 const uploader = require("./../middleware/upload");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 
 const User = require("./../models/user");
 const Image = require("./../models/image");
 const Post = require('./../models/post');
-
+/* 
 const ourEmail = process.env.EMAIL;
 const ourPassword = process.env.PASSWORD;
 
@@ -29,16 +29,22 @@ function sendMailToBand(userMessage, band) {
     subject: `Someone sent you a message...`,
     html: ` 
     <p>
-    ${userMessage.name} (${userMessage.email}) sent you a message! Here it is:
+    ${userMessage.name} (${userMessage.email}) sent you a message!
+    <br> 
+    Here it is:
+    <br>
     "${userMessage.message}"
-    Enjoy,
-    The Music Inn Team 
+    <br>
+    Have fun,
+    <br>
+    The Music Inn Team
+    <br> 
     🎵🤘🎤🎷🎹🎸
     </p>
     `
   });
 }
-
+ */
 //Going to the band profile (all users have access if they are logged in)
 bandRouter.get("/profile/:band_id", routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
@@ -212,7 +218,7 @@ bandRouter.get("/list", routeGuard, (req, res, next) => {
       role: "artist"
     })
     .sort({
-      creationDate: -1
+      artistName: -1
     })
     .populate("user images")
     .then(bands => {
@@ -246,7 +252,7 @@ bandRouter.post("/delete/:band_id", routeGuard, (req, res, next) => {
   }
 });
 
-bandRouter.get("/contact-form/:band_id", routeGuard, (req, res, next) => {
+/* bandRouter.get("/contact-form/:band_id", routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
   // console.log(bandId);
   User.findById(bandId)
@@ -268,7 +274,7 @@ bandRouter.post("/contact-form/:band_id", routeGuard, (req, res, next) => {
   User.findById(bandId)
   .then(band => {
     sendMailToBand(userMessage, band);
-    console.log('SENT MAIL TO BAND');
+    // console.log('SENT MAIL TO BAND');
     res.redirect("/band/successful-contact");
     // console.log('USER MESSAGE', userMessage);
     // console.log('BAND', band);
@@ -279,8 +285,8 @@ bandRouter.post("/contact-form/:band_id", routeGuard, (req, res, next) => {
   });
   
   bandRouter.get("/successful-contact", routeGuard, (req, res, next) => {
-    console.log('OIIIIIIIIIIIIII');
+    // console.log('OIIIIIIIIIIIIII');
     res.render("band/successful-contact");
-  });
+  }); */
 
   module.exports = bandRouter;
