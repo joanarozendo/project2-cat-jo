@@ -1,36 +1,12 @@
-<form action="/authentication/signup-admin" method="POST" class="light-text" enctype="multipart/form-data">
-
+<form action="/authentication/signup-admin" method="POST"
+  class="border border-secondary p-5 m-1 rounded-sm font-weight-bold" enctype="multipart/form-data">
+  <h1>Sign up</h1>
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="input-email">Email</label>
-      <input type="email" class="form-control" id="input-email" name="email" placeholder="abc@def.com" required>
-    </div>
 
-    <div class="form-group col-md-6">
-      <label for="input-password">Password</label>
-      <input type="password" {{!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and 8 or more characters"  --}}class="form-control" id="input-password" name="passwordHash" placeholder="Password" required>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite song?<label>
-      <input type="text" id="input-passRecoveryQuestion" name="passRecoveryQuestion" class="form-control"
-            placeholder="Your answer" />
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="input-images">Your Profile Image<label>
-          <input type="file" id="input-images" name="images" class="form-control" />
-    </div>
-  </div>
-
-  <div class="form-row">
     <div class="form-group col-md-4">
       <label for="input-username">Username</label>
-      <input type="text" class="form-control" id="input-username" name="username" placeholder="jane_doe" required>
+      <input type="text" pattern="[^ \x22]+" title="Mustn't contain spaces" maxlength="8" class="form-control"
+        id="input-username" name="username" placeholder="jane_doe" required>
     </div>
 
     <div class="form-group col-md-4">
@@ -42,10 +18,44 @@
       <label for="input-lastName">Last Name</label>
       <input type="text" class="form-control" id="input-lastName" name="lastName" placeholder="Doe">
     </div>
+  </div>
+
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="input-email">Email</label>
+      <input type="email" class="form-control" id="input-email" name="email" placeholder="abc@def.com" required>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="input-password">Password</label>
+      <input type="password" class="form-control" id="input-password" name="passwordHash" placeholder="Password"
+        required>
+    </div>
+
+    <div class="form-group col-md-4">
+
+      <label for="images_upload">Your Profile Image<label>
+          <div class="custom-file" name='images_upload'>
+            <input type="file" class="custom-file-input" id="input-images" name="images">
+            <label class="custom-file-label" for="images">Choose file</label>
+          </div>
+    </div>
 
   </div>
 
-  <div class="form-group">
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+
+      <label for="input-password">Password recovery question: What's your favorite song?</label>
+      <input type="text" id="input-passRecoveryQuestion" name="passRecoveryQuestion" class="form-control"
+        placeholder="Your answer" required>
+
+    </div>
+  </div>
+
+  <div class="form-row">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="gridCheck" required>
       <label class="form-check-label" for="gridCheck">
@@ -54,6 +64,8 @@
     </div>
   </div>
 
-  <button type="submit" class="my-btn btn btn-primary">Sign Up</button>
-
+  <button type="submit" class="btn btn-dark border-secondary mt-1">Sign Up</button>
+  <a href="/authentication/spotify" class='btn btn-success border-secondary rounded-sm mt-1'>Sign in with Spotify <i
+      class="fa fa-spotify"></i>
+  </a>
 </form>

@@ -1,16 +1,12 @@
-<div id='fullViewDiv'>
-  <h2>Let's rock! <br> Please select your profile type.</h2>
-  <form action="/authentication/signup-first-step" method="POST" class="light-text">
-    <div class="d-flex flex-column">
-      <select name="role" class="custom-select w-50" id="inputGroupSelect04">
-        <option selected>Choose your profile type...</option>
-        <option value="artist">Artist/Band</option>
-        <option value="user">User</option>
-        <option value="admin">Administrator</option>
-      </select>
-      <div class="input-group-append mt-2">
-        <button class="my-btn btn btn-outline-secondary" type="submit">Submit</button>
-      </div>
-    </div>
-  </form>
-</div>
+<form action="/authentication/signup-first-step" method="POST"
+  class="text-center border border-secondary p-5 m-1 rounded-sm align-middle">
+  <h1 class='font-weight-bold my-3'>Let's Jam! 🎵</h1>
+  <h3>What's your profile type?</h3>
+  <select name="role" class="custom-select w-50 text-center my-2" id="inputGroupSelect04">
+    <option selectet>Choose here...</option>
+    <option value="artist">Artist/Band</option>
+    <option value="user">User</option>
+    <option value="admin">Administrator</option>
+  </select>
+  <button class="btn btn-dark border-secondary my-2 w-50" type="submit">Let's go!</button>
+</form>
