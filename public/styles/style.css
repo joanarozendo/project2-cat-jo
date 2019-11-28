@@ -13,12 +13,11 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
-  background-color: #F7C608; }
+  background-size: cover; }
 
 main {
   flex-grow: 2;
-  margin-top: 5em; }
+  margin-top: 2em; }
 
 .main-font {
   font-family: 'Lato', sans-serif; }
@@ -31,7 +30,11 @@ main {
 
 .footer {
   font-family: 'Karla', sans-serif;
-  margin-top: 2em; }
+  margin-top: 1em;
+  bottom: 0;
+  height: 3em; }
+  .footer p {
+    padding-top: 1em; }
 
 .my-btn {
   font-family: 'Karla', sans-serif; }
@@ -39,7 +42,7 @@ main {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Karla', sans-serif; }
 
-.spotify_sign_up {
+/* .spotify_sign_up {
   font-size: 16px;
   line-height: 1;
   border-radius: 500px;
@@ -49,8 +52,8 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid transparent;
   font-weight: 700;
   text-decoration: none;
-  margin: 10em 0; }
-
+  margin: 10em 0;
+} */
 #map {
   color: blue;
   width: 100%;
