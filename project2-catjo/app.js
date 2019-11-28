@@ -69,6 +69,12 @@ hbs.registerHelper("ifSameLoggedIn", function (arg1, arg2, options) {
     options.inverse(this);
 });
 
+hbs.registerHelper("ifNotSameLoggedIn", function (arg1, arg2, options) {
+  return !JSON.stringify(arg1._id)==JSON.stringify(arg2._id) ?
+    options.fn(this) :
+    options.inverse(this);
+});
+
 hbs.registerHelper("ifSame", function (arg1, arg2, options) {
   return JSON.stringify(arg1) == JSON.stringify(arg2._id) ?
     options.fn(this) :

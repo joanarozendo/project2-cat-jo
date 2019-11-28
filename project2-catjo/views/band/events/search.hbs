@@ -12,7 +12,7 @@
                 <option value="metal">Metal</option>
                 <option value="fado">Fado</option>
             </select>
-            <button>Let's go!</button>
+            <button class="my-btn">Let's go!</button>
         </form>
 
         <form action="/events/filter/artist-name" method='POST'>
@@ -22,7 +22,11 @@
                 <option value="{{{this.artistName}}}">{{{this.artistName}}}</option>
                 {{/each}}
             </select>
+<<<<<<< HEAD
             <button>Let's go</button>
+=======
+            <button class="my-btn">Let'sgo</button>
+>>>>>>> 4bc211663534c44e934f9c5033f7d9e39add4e28
         </form>
         <label for="location">Filter by location:</label>
         <form action="/events/filter/city" name='location' method='POST'>
@@ -31,7 +35,7 @@
                 <option value="Porto">Porto</option>
                 <option value="Faro">Faro</option>
             </select>
-            <button>Let's go!</button></form>
+            <button class="my-btn">Let's go!</button></form>
     </div>
 </div>
 

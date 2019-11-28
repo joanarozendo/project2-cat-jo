@@ -1,37 +1,38 @@
 <div class="center">
   <img src={{user_individual.images.0.resizedUrl}}>
-  
-    <h5>{{user_individual.firstName}}'s Profile</h5>
-    <p>Name: {{user_individual.firstName}} {{user_individual.lastName}}</p>
-    <p>Username: {{user_individual.username}}</p>
-    <p>Email: {{user_individual.email}}</p>
-    <p>About Me: {{user_individual.description}}</p>
-    {{!-- <div>Recovery Q: {{user_individual.passRecoveryQuestion}}</div> --}}
-    <ul>Favorite genres:
-      {{#each user_individual.genres}}
-      <li>{{this}}</li>
-      {{/each}}
-    </ul>
-    {{#ifUser user}}
+
+  <h5>{{user_individual.firstName}}'s Profile</h5>
+  <p>Name: {{user_individual.firstName}} {{user_individual.lastName}}</p>
+  <p>Username: {{user_individual.username}}</p>
+  <p>Email: {{user_individual.email}}</p>
+  <p>About Me: {{user_individual.description}}</p>
+  {{!-- <div>Recovery Q: {{user_individual.passRecoveryQuestion}}</div> --}}
+  <ul>Favorite genres:
+    {{#each user_individual.genres}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+  {{!-- {{#ifUser user}} --}}
+  {{#ifNotSameLoggedIn user_individual user}}
   <span>Want to get in touch with this user? Click <a href="/form/contact-form/{{user.id}}">here</a>.</span>
   <br>
-{{/ifUser}}
-    {{#ifSameLoggedIn user_individual user}}
-    
-      <a href="/user/edit/{{user_individual._id}}">Edit</a>
-    
-      <form action="/user/{{user_individual._id}}/delete" method="POST">
-        <button>Delete Your Profile</button>
-      </form>
-   
-    {{/ifSameLoggedIn}}
-    {{#isAdmin user}}
-    
-      <a href="/user/edit/{{user_individual._id}}">Edit</a>
-    
-      <form action="/user/{{user_individual._id}}/delete" method="POST">
-        <button>Delete this User's Profile</button>
-      </form>
-   
-    {{/isAdmin}}
+  {{/ifNotSameLoggedIn}}
+  {{#ifSameLoggedIn user_individual user}}
+
+  <a href="/user/edit/{{user_individual._id}}">Edit</a>
+
+  <form action="/user/{{user_individual._id}}/delete" method="POST">
+    <button>Delete Your Profile</button>
+  </form>
+
+  {{/ifSameLoggedIn}}
+  {{#isAdmin user}}
+
+  <a href="/user/edit/{{user_individual._id}}">Edit</a>
+
+  <form action="/user/{{user_individual._id}}/delete" method="POST">
+    <button class="my-btn">Delete this User's Profile</button>
+  </form>
+
+  {{/isAdmin}}
 </div>
