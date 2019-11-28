@@ -1,8 +1,11 @@
-
 <div class="center">
-<h1>Hi, {{user.username}}!</h1>
-<br>
-<h1>RANDOM ARTIST</h1>
-<h1>TOP 5 ARTISTS</h1>
+    <h1>Hi, {{user.username}}!</h1>
+    <br>
+    You like:
+    <ul>
+        {{#each user.genres}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    <a href="/events/list">Check all the events!</a>
 </div>
-

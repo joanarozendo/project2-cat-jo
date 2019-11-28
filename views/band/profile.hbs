@@ -1,4 +1,4 @@
-<div class="center main-font">
+<div class="center">
   <h1>Band profile</h1>
   {{!-- {{#each band.images}} --}}
   <img src={{band.images.0.resizedUrl}}>
@@ -38,14 +38,14 @@
   {{#ifSameLoggedIn band user}}
   <div><a href="/band/edit/{{band._id}}">Edit</a>
   </div>
-  <form action='/band/delete/{{band._id}}' method="POST"><button class="my-btn">Delete your Profile</button></form>
+  <form action='/band/delete/{{band._id}}' method="POST"><button>Delete your Profile</button></form>
   {{/ifSameLoggedIn}}
 
   {{#isAdmin user}}
   <div><a href="/band/edit/{{band._id}}">Edit</a>
   </div>
   <form action='/band/delete/{{band._id}}' method="POST">
-    <button class="my-btn">Delete this Artist's Profile</button>
+    <button>Delete this Artist's Profile</button>
   </form>
   {{/isAdmin}}
   <div class="single-post">
@@ -54,7 +54,7 @@
       <textarea class='"md-textarea form-control' name="text" maxlength="140" placeholder="Write your text here..."
         required></textarea>
       <input type="file" name="images" multiple />
-      <button class="my-btn btn btn-secondary">Publish</button>
+      <button class="btn btn-secondary">Publish</button>
     </form>
   </div>
   <h3>Posts</h3>

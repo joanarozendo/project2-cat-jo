@@ -47,9 +47,7 @@ const schema = new mongoose.Schema({
   },
   genres: [{
     type: String,
-    // required: true,
     enum: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"],
-    default: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
   }],
   artistAlbums: {
     type: Array

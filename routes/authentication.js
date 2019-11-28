@@ -1,4 +1,6 @@
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 const authenticationRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const User = require("./../models/user");
@@ -62,7 +64,9 @@ authenticationRouter.get("/signup-first-step", (req, res, next) => {
 });
 
 authenticationRouter.post("/signup-first-step", (req, res, next) => {
-  const { role } = req.body;
+  const {
+    role
+  } = req.body;
   if (role === "artist") {
     res.render("authentication/signup-artist");
   }
@@ -83,7 +87,7 @@ authenticationRouter.post(
   "/signup-artist",
   uploader.array("images", 1),
   (req, res, next) => {
-    const {
+    let {
       artistName,
       username,
       email,
@@ -94,6 +98,9 @@ authenticationRouter.post(
       artistAlbums,
       bandWebsite
     } = req.body;
+    if (!genres) {
+      genres = ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
+    }
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -113,7 +120,7 @@ authenticationRouter.post(
             passRecoveryQuestion,
             role: "artist",
             description,
-            genres,
+            genres: genres,
             artistAlbums,
             images: imageIds,
             confirmationCode: newConfirmationCode,
@@ -123,10 +130,11 @@ authenticationRouter.post(
         .then(user => {
           sendMail(user);
           req.session.user = user._id;
+          req.user = user;
           res.redirect("/authentication/pending-confirmation");
         })
         .catch(error => {
-          next(error);
+          next(new Error(`It was not possible to create that user.`));
         });
     });
   }
@@ -138,12 +146,16 @@ authenticationRouter.get("/pending-confirmation", (req, res, next) => {
 
 authenticationRouter.get("/confirm-email/:mailToken", (req, res, next) => {
   const mailToken = req.params.mailToken;
-  User.findOneAndUpdate({ confirmationCode: mailToken }, { status: "Active" })
+  User.findOneAndUpdate({
+      confirmationCode: mailToken
+    }, {
+      status: "Active"
+    })
     .then(user => {
       req.session.user = user._id;
       res.redirect("/authentication/confirmation-page");
     })
-    .catch(err => next(err));
+    .catch(err => next(new Error(`Confirmation e-mail. You have no permission to access this page.`)));
 });
 
 authenticationRouter.get("/confirmation-page", (req, res, next) => {
@@ -159,7 +171,7 @@ authenticationRouter.post(
   "/signup-user",
   uploader.array("images", 1),
   (req, res, next) => {
-    const {
+    let {
       firstName,
       lastName,
       username,
@@ -169,6 +181,9 @@ authenticationRouter.post(
       description,
       genres
     } = req.body;
+    if (!genres) {
+      genres = ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
+    }
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -189,7 +204,7 @@ authenticationRouter.post(
             passRecoveryQuestion,
             role: "user",
             description,
-            genres,
+            genres: genres,
             images: imageIds,
             confirmationCode: newConfirmationCode
           });
@@ -200,7 +215,7 @@ authenticationRouter.post(
           res.redirect("/authentication/pending-confirmation");
         })
         .catch(error => {
-          next(error);
+          next(new Error(`It was not possible to create that user.`));
         });
     });
   }
@@ -250,7 +265,7 @@ authenticationRouter.post(
           res.redirect("/");
         })
         .catch(error => {
-          next(error);
+          next(new Error(`It was not possible to create that user.`));
         });
     });
   }
@@ -263,10 +278,13 @@ authenticationRouter.get("/login", (req, res, next) => {
 
 authenticationRouter.post("/login", (req, res, next) => {
   let userId;
-  const { email, password } = req.body;
+  const {
+    email,
+    password
+  } = req.body;
   User.findOne({
-    email
-  })
+      email
+    })
     .then(user => {
       if (!user) {
         res.render("authentication/login", {
@@ -282,8 +300,6 @@ authenticationRouter.post("/login", (req, res, next) => {
     .then(result => {
       if (result) {
         req.session.user = userId;
-        // console.log("req session of simple authentication", req.session);
-        // console.log("req user of simple authentication", req.user);
         res.redirect("/dashboard");
       } else {
         res.render("authentication/login", {
@@ -293,7 +309,7 @@ authenticationRouter.post("/login", (req, res, next) => {
       }
     })
     .catch(error => {
-      next(error);
+      next(new Error(`There was an error in log-in.`));
     });
 });
 
@@ -304,10 +320,13 @@ authenticationRouter.get("/password-recovery", (req, res, next) => {
 
 authenticationRouter.post("/password-recovery", (req, res, next) => {
   let userId;
-  const { email, passRecoveryQuestion } = req.body;
+  const {
+    email,
+    passRecoveryQuestion
+  } = req.body;
   User.findOne({
-    email
-  })
+      email
+    })
     .then(user => {
       if (!user) {
         return Promise.reject(new Error("There's no user with that email."));
@@ -323,7 +342,6 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
       } else {
         req.session.user = userId;
         User.findById(userId).then(user => {
-          // console.log('ROLE', user.role);
           if (user.role === "artist") {
             res.redirect(`/band/edit-password/${user._id}`);
           }
@@ -337,13 +355,10 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
       }
     })
     .catch(error => {
-      next(error);
+      next(new Error(`You have no permission to access this password recovery page.`))
     });
 });
 
-/* authenticationRouter.get("/edit-password", (req, res, next) => {
-  res.render("edit-password");
-}); */
 
 // LOG OUT
 authenticationRouter.post("/logout", (req, res, next) => {
@@ -360,10 +375,8 @@ authenticationRouter.get(
     scope: ["user-read-email", "user-read-private"],
     showDailog: true
   }),
-  function(req, res) {
+  function (req, res) {
     // console.log("in the spotify function");
-    //
-    //
   }
 );
 
@@ -373,10 +386,10 @@ authenticationRouter.get(
     showDailog: true,
     failureRedirect: "/authentication/login" //failure
   }),
-  function(req, res) {
+  function (req, res) {
     // req.user._id = req.session.passport
     req.session.user = req.user._id;
-    res.redirect(`/user/edit/${req.user._id}`); //if success will redirect for the profile edition
+    res.redirect(`/user/profile/${req.user._id}`); //if success will redirect for the profile edition
   }
 );
 

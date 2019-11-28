@@ -70,7 +70,9 @@ hbs.registerHelper("ifSameLoggedIn", function (arg1, arg2, options) {
 });
 
 hbs.registerHelper("ifNotSameLoggedIn", function (arg1, arg2, options) {
-  return !JSON.stringify(arg1._id)==JSON.stringify(arg2._id) ?
+  console.log('arg1', arg1);
+  console.log('arg2', arg2);
+  return !JSON.stringify(arg1._id) == JSON.stringify(arg2._id) ?
     options.fn(this) :
     options.inverse(this);
 });
@@ -102,7 +104,7 @@ hbs.registerHelper("ifNotAttend", function (arg1, arg2, options) {
 
 hbs.registerHelper("ifRated", function (arg1, arg2, options) {
   const usersThatRated = [];
-
+  console.log('user if rated', arg2);
   //In the following function we add all the ids of users that rated to the usersThatRated array.
   arg1.bandUsersRate.forEach(value => {
     usersThatRated.push(JSON.stringify(value.id));
@@ -202,8 +204,10 @@ app.use('/events/post', postEventsRouter);
 app.use('/form', formRouter);
 
 // Catch missing routes and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
+app.use('*', (req, res, next) => {
+  const error = new Error('This page was not found.');
+  error.status = 404;
+  next(error);
 });
 
 // Catch all error handler
@@ -214,6 +218,9 @@ app.use((error, req, res, next) => {
 
   res.status(error.status || 500);
   res.render("error");
+  //to show error go to error view and add {{error.stack}}
 });
+
+
 
 module.exports = app;

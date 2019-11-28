@@ -1,3 +1,7 @@
-<h1>{{message}}</h1>
-<h2>{{error.status}}</h2>
-<pre>{{error.stack}}</pre>
+<div class="container h-100 d-flex justify-content-center flex-column">
+    <h1>We're sorry 😐</h1>
+    {{#if error.message}}
+    <h2>{{error.message}}</h2>
+    {{/if}}
+    <h3>There was an error {{error.status}}</h3>
+</div>

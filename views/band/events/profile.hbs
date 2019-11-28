@@ -1,28 +1,30 @@
 <div class='center'>
-  <h1>Event</h1>
+    <h1>Event</h1>
     <img src="{{event.images.0.resizedUrl}}" alt="">
-  <h2>{{event.bandName}}</h2>
-  <h3>{{event.date}}</h3>
-  <p> {{event.time}}
-    {{event.nameOfEvent}}
-    {{event.address.site}}
-    {{event.address.road}}
-    {{event.address.building}}
-    {{event.address.floor}}
-    {{event.address.city}}
-    {{event.address.zip_code}}
-    {{event.address.latitude}}
-    {{event.address.longitude}}
-    {{event.description}}
-    {{event.price}}</p>
-  <label for="rate">Number of attendants:</label> <textarea name="rate" cols="2" rows="1"
-    disabled>{{event.number_of_attendants}}</textarea>
+    <h2>{{event.bandName}}</h2>
+    <h3>{{event.date}}</h3>
+    <p> {{event.time}}
+        {{event.nameOfEvent}}
+        {{event.address.site}}
+        {{event.address.road}}
+        {{event.address.building}}
+        {{event.address.floor}}
+        {{event.address.city}}
+        {{event.address.zip_code}}
+        {{event.address.latitude}}
+        {{event.address.longitude}}
+        {{event.description}}
 
-  {{#ifNotAttend event user}}
-  <form action="/events/attend/{{event.id}}" method='POST'><button class="my-btn">Attend</button></form>
-  {{/ifNotAttend}}
-  {{#ifAttend event user}}
-  <form action="/events/not-attend/{{event.id}}" method='POST'>You are attending 😁 <button>I can't attend! 😔</button>
-  </form>}
-  {{/ifAttend}}
+        {{event.price}}</p>
+    <label for="rate">Number of attendants:</label> <textarea name="rate" cols="2" rows="1"
+        disabled>{{event.number_of_attendants}}</textarea>
+
+    {{#ifNotAttend event user}}
+    <form action="/events/attend/{{event.id}}" method='POST'><button class="my-btn">Attend</button></form>
+    {{/ifNotAttend}}
+    {{#ifAttend event user}}
+    <form action="/events/not-attend/{{event.id}}" method='POST'>You are attending 😁 <button>I can't attend!
+            😔</button>
+    </form>}
+    {{/ifAttend}}
 </div>
