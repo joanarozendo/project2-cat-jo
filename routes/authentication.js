@@ -42,7 +42,7 @@ function sendMail(user) {
     html: `
     <p>Thanks for signing up with Music Inn, ${user.username}! Follow this link to activate your account:
     <br>
-    <a href="http://localhost:3000/authentication/confirm-email/${user.confirmationCode}">http://localhost:3000/authentication/confirm-email/${user.confirmationCode}</a>
+    <a href="https://jam-up.herokuapp.com/authentication/confirm-email/${user.confirmationCode}">http://localhost:3000/authentication/confirm-email/${user.confirmationCode}</a>
     <br>
     Have fun, 
     <br>

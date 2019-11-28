@@ -31,9 +31,9 @@
   {{!-- <div>Recovery Q: {{band.passRecoveryQuestion}}</div> --}}
   <div><a href="/events/{{band.id}}">Events</a></div>
 
-  {{#ifUser user}}
+  {{#ifNotSameLoggedIn band user}}
   <span>Want to get in touch with the band? Click <a href="/band/contact-form/{{band.id}}">here</a>.</span>
-  {{/ifUser}}
+  {{/ifNotSameLoggedIn}}
 
   {{#ifSameLoggedIn band user}}
   <div><a href="/band/edit/{{band._id}}">Edit</a>
