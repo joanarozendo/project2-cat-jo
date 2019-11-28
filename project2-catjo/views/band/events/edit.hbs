@@ -14,7 +14,7 @@
     <label for="longitude">Longitude</label> <textarea type="number" name='longitude' cols="5" rows="1">{{event.address.longitude}}</textarea>
     <label for="description">Description</label><textarea type="text" name='description' cols="5" rows="1">{{event.description}}</textarea>
     <label for="price">Price</label> <textarea type="number" name='price' cols="5" rows="1">{{event.price}}</textarea>
-    <button class='mt-1 w-25'>Edit event</button>
+    <button class='my-btn mt-1 w-25'>Edit event</button>
 </form>
 
-<form action="/events/delete/{{event._id}}" method='POST'><button>Delete Event</button></form>
+<form action="/events/delete/{{event._id}}" method='POST'><button class="my-btn">Delete Event</button></form>

@@ -1,4 +1,4 @@
-<div class="center">
+<div class="center main-font">
   <h1>Band profile</h1>
   {{!-- {{#each band.images}} --}}
   <img src={{band.images.0.resizedUrl}}>
@@ -13,9 +13,11 @@
   <div>Our Spotify Page: <a href="{{band.bandWebsite}}" target="blank">HERE</a></div>
   {{!-- <div>Recovery Q: {{band.passRecoveryQuestion}}</div> --}}
   <div><a href="/events/{{band.id}}">Events</a></div>
+  {{#ifNotSameLoggedIn user_individual user}}
+  <span>Want to get in touch with the band? Click <a href="/band/contact-form/{{band.id}}">here</a>.</span>
+  {{/ifNotSameLoggedIn}}
 
   {{#ifUser user}}
-  <span>Want to get in touch with the band? Click <a href="/band/contact-form/{{band.id}}">here</a>.</span>
   <form>
     <label for="artistRating">Rate this band</label>
     <select name="artistRating" id="">
@@ -25,21 +27,21 @@
       <option value="4">4</option>
       <option value="5">5</option>
     </select>
-    <button>Rate</button>
+    <button class="my-btn">Rate</button>
   </form>
   {{/ifUser}}
 
   {{#ifSameLoggedIn band user}}
   <div><a href="/band/edit/{{band._id}}">Edit</a>
   </div>
-  <form action='/band/delete/{{band._id}}' method="POST"><button>Delete your Profile</button></form>
+  <form action='/band/delete/{{band._id}}' method="POST"><button class="my-btn">Delete your Profile</button></form>
   {{/ifSameLoggedIn}}
 
   {{#isAdmin user}}
   <div><a href="/band/edit/{{band._id}}">Edit</a>
   </div>
   <form action='/band/delete/{{band._id}}' method="POST">
-    <button>Delete this Artist's Profile</button>
+    <button class="my-btn">Delete this Artist's Profile</button>
   </form>
   {{/isAdmin}}
   <div class="single-post">
@@ -48,25 +50,25 @@
       <textarea class='"md-textarea form-control' name="text" maxlength="140" placeholder="Write your text here..."
         required></textarea>
       <input type="file" name="images" multiple />
-      <button class="btn btn-secondary">Publish</button>
+      <button class="my-btn btn btn-secondary">Publish</button>
     </form>
   </div>
   <h3>Posts</h3>
   {{#each post}}
-    
+
   <div class="single-post d-flex justify-content-between">
     <a href="/band/post/{{this._id }}">
-    <div>
-      {{#each this.images}}
-      <img src={{this.resizedUrl}}>
-      {{/each}}
-    </div>
-    <div class='d-flex flex-column'>
-      <p>{{ this.text }}</p>
-      <small>{{ this.creationDate }}</small>
-      <br />
-      <small>{{ this.author.username }}</small>
-    </div>
+      <div>
+        {{#each this.images}}
+        <img src={{this.resizedUrl}}>
+        {{/each}}
+      </div>
+      <div class='d-flex flex-column'>
+        <p>{{ this.text }}</p>
+        <small>{{ this.creationDate }}</small>
+        <br />
+        <small>{{ this.author.username }}</small>
+      </div>
     </a>
   </div>
   {{/each}}

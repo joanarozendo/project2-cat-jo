@@ -1,4 +1,4 @@
-<div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex justify-content-between">
+<div id="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex justify-content-between">
     <ul class="navbar-nav">
         {{#if user}}
         <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
@@ -28,7 +28,7 @@
     </ul>
     {{#if user}}
     <form action="/authentication/logout" method="POST">
-        <button class="btn btn-outline-success my-2 my-sm-0">Log Out</button>
+        <button class="my-btn btn btn-outline-success my-2 my-sm-0">Log Out</button>
     </form>
     {{/if}}
 </div>

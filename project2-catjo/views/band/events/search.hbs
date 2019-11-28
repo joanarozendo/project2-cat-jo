@@ -12,7 +12,7 @@
                 <option value="metal">Metal</option>
                 <option value="fado">Fado</option>
             </select>
-            <button>Let's go!</button>
+            <button class="my-btn">Let's go!</button>
         </form>
 
         <form action="/events/filter/artist-name" method='POST'>
@@ -22,7 +22,7 @@
                 <option value="{{{this.artistName}}}">{{{this.artistName}}}</option>
                 {{/each}}
             </select>
-            <button>Let'sgo</button>
+            <button class="my-btn">Let'sgo</button>
         </form>
         <label for="location">Filter by location:</label>
         <form action="events/filter/city'" name='location'>
@@ -31,7 +31,7 @@
                 <option value="Porto">Porto</option>
                 <option value="Faro">Faro</option>
             </select>
-            <button>Let's go!</button></form>
+            <button class="my-btn">Let's go!</button></form>
     </div>
 </div>
 
