@@ -82,6 +82,42 @@ hbs.registerHelper("isAdmin", function (arg1, options) {
   return options.inverse(this);
 });
 
+hbs.registerHelper("ifAttend", function (arg1, arg2, options) {
+  return arg1.attend_users_id.includes(arg2._id) ?
+    options.fn(this) :
+    options.inverse(this);
+});
+
+hbs.registerHelper("ifNotAttend", function (arg1, arg2, options) {
+  return !arg1.attend_users_id.includes(arg2._id) ?
+    options.fn(this) :
+    options.inverse(this);
+});
+
+hbs.registerHelper("ifRated", function (arg1, arg2, options) {
+  const usersThatRated = [];
+
+  //In the following function we add all the ids of users that rated to the usersThatRated array.
+  arg1.bandUsersRate.forEach(value => {
+    usersThatRated.push(JSON.stringify(value.id));
+  });
+
+  //both objects were converted to string with JSON.stringify to allow comparison
+  return usersThatRated.includes(JSON.stringify(arg2._id)) ?
+    options.fn(this) :
+    options.inverse(this);
+});
+
+hbs.registerHelper("ifNotRated", function (arg1, arg2, options) {
+  const usersThatRated = [];
+  arg1.bandUsersRate.forEach(value => {
+    usersThatRated.push(JSON.stringify(value.id));
+  });
+  return !usersThatRated.includes(JSON.stringify(arg2._id)) ?
+    options.fn(this) :
+    options.inverse(this);
+});
+
 app.use(logger("dev"));
 app.use(
   express.urlencoded({

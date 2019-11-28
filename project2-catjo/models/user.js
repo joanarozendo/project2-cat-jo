@@ -54,7 +54,15 @@ const schema = new mongoose.Schema({
   artistAlbums: {
     type: Array
   },
-  bandRate: Number,
+  bandAverageRate: {type:String, default:'Be the first to rate!'},
+  bandUsersRate: [{
+    id: {
+      type: mongoose.Types.ObjectId
+    },
+    rate: {
+      type: Number
+    }
+  }],
   bandWebsite: String,
   images: [{
     type: mongoose.Types.ObjectId,

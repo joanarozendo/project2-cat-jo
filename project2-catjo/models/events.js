@@ -23,7 +23,6 @@ const schema = new mongoose.Schema({
   type: [],
   attend_users_id: [],
   number_of_attendants: {type: Number, default:0},
-  averageRate: {type: Number, default:5}
 });
 
 module.exports = mongoose.model("Event", schema);

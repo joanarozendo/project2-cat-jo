@@ -8,7 +8,7 @@ const Event = require("./../models/events");
 
 
 
-//get list of events/API
+//To get API of events' list through axios.
 eventRouter.get('/data', (req, res, next) => {
     let date = new Date();
     console.log('todays date', date);
@@ -19,39 +19,71 @@ eventRouter.get('/data', (req, res, next) => {
             });
         })
         .catch(err => {
-            next(err)
-        })
+            next(err);
+        });
 });
 
-//attend events
+//Button attend events
 eventRouter.post('/attend/:event_id', routeGuard, (req, res, next) => {
+
     const eventId = req.params.event_id;
     const userId = req.user._id;
+
     Event.findByIdAndUpdate(eventId, {
             $push: {
                 attend_users_id: userId
             }
-        })  
-        //I AM HERE, NOW I NEED TO ADD A CONDITION. IF THE ID OF THE USER ALREADY EXISTS ON THE ATTEND_USER_ARRAY I CAN'T ATTEND AGAIN -> USE HBS HELPERS FOR THAT AND HIDE BUTTON? ADD A MESSAGE "YOU ARE ATTENDING". ADD A BUTTON "NOT ATTENDING ANYMORE".
-        .then(event => {
-            const attendingNumber = event.number_of_attendants + 1;
-            return Event.findByIdAndUpdate(eventId, {
-                    number_of_attendants: attendingNumber
-                })
+
+        })
+        .then(() => {
+            return Event.findById(eventId)
                 .then(event => {
-                    console.log('Attending number event', event.number_of_attendants);
-                    res.render("band/events/profile", {
-                        event: event
-                    });
+                    const attendingNumber = event.attend_users_id.length;
+                    return Event.findByIdAndUpdate(eventId, {
+                        number_of_attendants: attendingNumber
+                    }).then(() => {
+                        console.log('third promise', event);
+                        res.redirect(`/events/profile/${eventId}`);
+                    })
                 })
         })
         .catch(err => {
             console.log('not possible to attend event');
+            next(err);
         });
 });
 
+//Button don't attend events
+eventRouter.post('/not-attend/:event_id', routeGuard, (req, res, next) => {
 
-//list all events
+    const eventId = req.params.event_id;
+    const userId = req.user._id;
+
+
+    Event.findByIdAndUpdate(eventId, {
+            $pull: {
+                attend_users_id: userId
+            }
+        })
+        .then(() => {
+            return Event.findById(eventId)
+                .then(event => {
+                    const attendingNumber = event.attend_users_id.length;
+                    return Event.findByIdAndUpdate(eventId, {
+                        number_of_attendants: attendingNumber
+                    }).then(() => {
+                        console.log('third promise', event);
+                        res.redirect(`/events/profile/${eventId}`);
+                    })
+                })
+        })
+        .catch(err => {
+            console.log('not possible to attend event');
+            next(err);
+        });
+});
+
+//List of all events
 eventRouter.get("/list", routeGuard, (req, res, next) => {
     Event.find()
         .sort([
@@ -98,6 +130,7 @@ eventRouter.post("/filter/artist-name", routeGuard, (req, res, next) => {
             });
         })
         .catch(err => {
+            res.redirect('/search');
             next(err);
         });
 });
@@ -115,23 +148,27 @@ eventRouter.post('/filter/genre', routeGuard, (req, res, next) => {
             });
         })
         .catch(err => {
+            res.redirect('/search');
             console.log("step 3");
             next(err);
         });
 });
 
-//filter by genre
+//filter by city
 eventRouter.post('/filter/city', routeGuard, (req, res, next) => {
     const city = req.body.city;
+    console.log('req.body', req.body.city);
     Event.find({
-            city: city
+           'address.city': city
         })
         .then(events => {
+            console.log('we found a city', events);
             res.render("band/events/event-list", {
                 events
             });
         })
         .catch(err => {
+            res.redirect('/search');
             console.log("step 3");
             next(err);
         });

@@ -22,10 +22,10 @@
                 <option value="{{{this.artistName}}}">{{{this.artistName}}}</option>
                 {{/each}}
             </select>
-            <button>Let'sgo</button>
+            <button>Let's go</button>
         </form>
         <label for="location">Filter by location:</label>
-        <form action="events/filter/city'" name='location'>
+        <form action="/events/filter/city" name='location' method='POST'>
             <label for="city">City</label> <select name="city" id="">
                 <option value="Lisbon">Lisbon</option>
                 <option value="Porto">Porto</option>

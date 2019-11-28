@@ -4,6 +4,23 @@
   <img src={{band.images.0.resizedUrl}}>
   {{!-- {{/each}} --}}
   <h2>{{band.artistName}}</h2>
+  <div>⭐ Rate: {{band.bandAverageRate}}</div>
+  {{#ifRated band user}}
+  <div>You already rated this band!</div>
+  {{/ifRated}}
+  {{#ifNotRated band user}}
+  <form action="/band/profile/{{band._id}}/rate" method='POST'>
+    <label for="artistRating">Rate this band</label>
+    <select name="rate" id="">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <button>Rate</button>
+  </form>
+  {{/ifNotRated}}
   <ul>Genre:
     {{#each band.genres}}
     <li>{{this}}</li>
@@ -16,17 +33,6 @@
 
   {{#ifUser user}}
   <span>Want to get in touch with the band? Click <a href="/band/contact-form/{{band.id}}">here</a>.</span>
-  <form>
-    <label for="artistRating">Rate this band</label>
-    <select name="artistRating" id="">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    <button>Rate</button>
-  </form>
   {{/ifUser}}
 
   {{#ifSameLoggedIn band user}}
@@ -53,20 +59,20 @@
   </div>
   <h3>Posts</h3>
   {{#each post}}
-    
+
   <div class="single-post d-flex justify-content-between">
     <a href="/band/post/{{this._id }}">
-    <div>
-      {{#each this.images}}
-      <img src={{this.resizedUrl}}>
-      {{/each}}
-    </div>
-    <div class='d-flex flex-column'>
-      <p>{{ this.text }}</p>
-      <small>{{ this.creationDate }}</small>
-      <br />
-      <small>{{ this.author.username }}</small>
-    </div>
+      <div>
+        {{#each this.images}}
+        <img src={{this.resizedUrl}}>
+        {{/each}}
+      </div>
+      <div class='d-flex flex-column'>
+        <p>{{ this.text }}</p>
+        <small>{{ this.creationDate }}</small>
+        <br />
+        <small>{{ this.author.username }}</small>
+      </div>
     </a>
   </div>
   {{/each}}
