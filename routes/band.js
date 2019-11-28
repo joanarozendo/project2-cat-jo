@@ -16,7 +16,6 @@ bandRouter.post('/profile/:band_id/rate', routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
   const rate = req.body.rate;
   const userId = req.user._id;
-  console.log('req user id', req.user._id);
   User.findByIdAndUpdate(bandId, {
       $push: {
         bandUsersRate: {
@@ -74,7 +73,7 @@ bandRouter.get("/profile/:band_id", routeGuard, (req, res, next) => {
         })
     })
     .catch(error => {
-      next(error);
+      next(new Error(`We couldn't find this profile`));
     });
 });
 
@@ -94,7 +93,7 @@ bandRouter.get("/edit/:band_id", routeGuard, (req, res, next) => {
         });
       })
       .catch(error => {
-        next(error);
+        next(new Error(`We didn't find this band, so it's not possible to edit`));
       });
   } else {
     res.redirect(`/band/profile/${bandId}`);
@@ -148,12 +147,10 @@ bandRouter.post(
             });
           })
           .then(band => {
-            console.log("The band was edited", band);
             res.redirect(`/band/profile/${bandId}`);
           })
           .catch(error => {
-            console.log("The band was not edited");
-            next(error);
+            next(new Error(`It was not possible to edit your profile.`))
           });
       });
     } else {
@@ -178,7 +175,7 @@ bandRouter.get("/edit-password/:band_id", routeGuard, (req, res, next) => {
         });
       })
       .catch(error => {
-        next(error);
+        next(new Error(`It was not possible to edit your profile.`))
       });
   } else {
     res.redirect(`/band/profile/${bandId}`);
@@ -206,12 +203,10 @@ bandRouter.post("/edit-password/:band_id", routeGuard, (req, res, next) => {
         });
       })
       .then(band => {
-        console.log("The band was edited", band);
         res.redirect(`/band/profile/${bandId}`);
       })
       .catch(error => {
-        console.log("The band was not edited");
-        next(error);
+        next(new Error(`It was not possible to edit your password.`))
       });
   } else {
     res.redirect(`/band/profile/${bandId}`);
@@ -235,7 +230,7 @@ bandRouter.get("/list", routeGuard, (req, res, next) => {
       });
     })
     .catch(err => {
-      next(err);
+      next(new Error(`We couldn't find this page.`))
     });
 });
 
@@ -253,8 +248,7 @@ bandRouter.post("/delete/:band_id", routeGuard, (req, res, next) => {
         res.redirect("/");
       })
       .catch(err => {
-        console.log("couldnt delete band");
-        next(err);
+        next(new Error(`It was not possible to edit this profile. Please refresh.`))
       });
   } else {
     res.redirect(`/band/profile/${bandId}`);

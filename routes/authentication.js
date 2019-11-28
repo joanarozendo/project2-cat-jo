@@ -134,7 +134,7 @@ authenticationRouter.post(
           res.redirect("/authentication/pending-confirmation");
         })
         .catch(error => {
-          next(error);
+          next(new Error(`It was not possible to create that user.`));
         });
     });
   }
@@ -155,7 +155,7 @@ authenticationRouter.get("/confirm-email/:mailToken", (req, res, next) => {
       req.session.user = user._id;
       res.redirect("/authentication/confirmation-page");
     })
-    .catch(err => next(err));
+    .catch(err => next(new Error(`Confirmation e-mail. You have no permission to access this page.`)));
 });
 
 authenticationRouter.get("/confirmation-page", (req, res, next) => {
@@ -215,7 +215,7 @@ authenticationRouter.post(
           res.redirect("/authentication/pending-confirmation");
         })
         .catch(error => {
-          next(error);
+          next(new Error(`It was not possible to create that user.`));
         });
     });
   }
@@ -265,7 +265,7 @@ authenticationRouter.post(
           res.redirect("/");
         })
         .catch(error => {
-          next(error);
+          next(new Error(`It was not possible to create that user.`));
         });
     });
   }
@@ -309,7 +309,7 @@ authenticationRouter.post("/login", (req, res, next) => {
       }
     })
     .catch(error => {
-      next(error);
+      next(new Error(`There was an error in log-in.`));
     });
 });
 
@@ -355,7 +355,7 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
       }
     })
     .catch(error => {
-      next(error);
+      next(new Error(`You have no permission to access this password recovery page.`))
     });
 });
 

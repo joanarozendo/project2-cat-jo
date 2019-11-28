@@ -17,7 +17,6 @@ userRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
   User.findById(userId)
     .populate("user images")
     .then(user_individual => {
-      // console.log('LOG THIIIS', user_individual.images);
       res.render("user/profile", {
         user_individual
       });
