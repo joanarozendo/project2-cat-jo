@@ -1,6 +1,6 @@
 <div class='center'>
     <h1>Add events</h1>
-    <form action="/events/{{user._id}}/add-event" method='POST' class='d-flex flex-column'>
+    <form action="/events/{{user._id}}/add-event" method='POST' class='d-flex flex-column' enctype="multipart/form-data">
         <label for="date">Date</label><input type="date" name='date' required>
         <label for="time">Time</label><input type="time" name='time' required>
         <label for="nameOfEvent">Name Of Event</label><input type="text" name='nameOfEvent' required>
@@ -20,6 +20,7 @@
         <label for="longitude">Longitude</label>
         <input type="text" name="longitude" min="-180" max="180" required placeholder="Longitude" />
         <label for="description">Description</label> <input type="text" name='description'>
+        <label for="images">Images</label> <input type="file" name='images'>
         <label for="price">Price</label><input type="number" name='price'>
         <button class='my-btn mt-1 w-25'>Add event!</button>
     </form>

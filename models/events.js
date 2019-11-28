@@ -23,6 +23,10 @@ const schema = new mongoose.Schema({
   type: [],
   attend_users_id: [],
   number_of_attendants: {type: Number, default:0},
+  images: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Image'
+  }]
 });
 
 module.exports = mongoose.model("Event", schema);
