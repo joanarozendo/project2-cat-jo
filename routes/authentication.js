@@ -87,7 +87,7 @@ authenticationRouter.post(
   "/signup-artist",
   uploader.array("images", 1),
   (req, res, next) => {
-    const {
+    let {
       artistName,
       username,
       email,
@@ -98,6 +98,9 @@ authenticationRouter.post(
       artistAlbums,
       bandWebsite
     } = req.body;
+    if (!genres) {
+      genres = ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
+    }
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -117,7 +120,7 @@ authenticationRouter.post(
             passRecoveryQuestion,
             role: "artist",
             description,
-            genres,
+            genres: genres,
             artistAlbums,
             images: imageIds,
             confirmationCode: newConfirmationCode,
@@ -168,7 +171,7 @@ authenticationRouter.post(
   "/signup-user",
   uploader.array("images", 1),
   (req, res, next) => {
-    const {
+    let {
       firstName,
       lastName,
       username,
@@ -178,6 +181,9 @@ authenticationRouter.post(
       description,
       genres
     } = req.body;
+    if (!genres) {
+      genres = ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
+    }
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -198,7 +204,7 @@ authenticationRouter.post(
             passRecoveryQuestion,
             role: "user",
             description,
-            genres,
+            genres: genres,
             images: imageIds,
             confirmationCode: newConfirmationCode
           });
@@ -294,8 +300,6 @@ authenticationRouter.post("/login", (req, res, next) => {
     .then(result => {
       if (result) {
         req.session.user = userId;
-        // console.log("req session of simple authentication", req.session);
-        // console.log("req user of simple authentication", req.user);
         res.redirect("/dashboard");
       } else {
         res.render("authentication/login", {
@@ -338,7 +342,6 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
       } else {
         req.session.user = userId;
         User.findById(userId).then(user => {
-          // console.log('ROLE', user.role);
           if (user.role === "artist") {
             res.redirect(`/band/edit-password/${user._id}`);
           }
@@ -356,9 +359,6 @@ authenticationRouter.post("/password-recovery", (req, res, next) => {
     });
 });
 
-/* authenticationRouter.get("/edit-password", (req, res, next) => {
-  res.render("edit-password");
-}); */
 
 // LOG OUT
 authenticationRouter.post("/logout", (req, res, next) => {
@@ -377,8 +377,6 @@ authenticationRouter.get(
   }),
   function (req, res) {
     // console.log("in the spotify function");
-    //
-    //
   }
 );
 
@@ -391,7 +389,7 @@ authenticationRouter.get(
   function (req, res) {
     // req.user._id = req.session.passport
     req.session.user = req.user._id;
-    res.redirect(`/user/edit/${req.user._id}`); //if success will redirect for the profile edition
+    res.redirect(`/user/profile/${req.user._id}`); //if success will redirect for the profile edition
   }
 );
 

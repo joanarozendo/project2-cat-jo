@@ -2,14 +2,14 @@
   <img src={{user_individual.images.0.resizedUrl}}>
 
   <h5>{{user_individual.firstName}}'s Profile</h5>
-  <p>Name: {{user_individual.firstName}} {{user_individual.lastName}}</p>
+  <p placeholder="Update your name">Name: {{user_individual.firstName}} {{user_individual.lastName}}</p>
   <p>Username: {{user_individual.username}}</p>
   <p>Email: {{user_individual.email}}</p>
   <p>About Me: {{user_individual.description}}</p>
   {{!-- <div>Recovery Q: {{user_individual.passRecoveryQuestion}}</div> --}}
-  <ul>Favorite genres:
-    {{#each user_individual.genres}}
-    <li>{{this}}</li>
+  <ul>Favorite genres: {{user_individual.genres}}
+    {{#each user_individual}}
+    <li>{{genres}}</li>
     {{/each}}
   </ul>
   {{!-- {{#ifUser user}} --}}

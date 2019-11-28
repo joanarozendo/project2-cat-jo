@@ -40,12 +40,15 @@ passport.use(
                                 spotify_refresh_token: refreshToken,
                                 username: profile._json.display_name,
                                 spotify_id: profile._json.id,
-                                role: 'user'
+                                role: 'user',
+                                genres: ["indie", "rock", "pop", "rap", "hip-pop", "metal", "fado"]
                             })
                             .then(user => {
                                 //req.session.user = user._id;
                                 callback(null, user);
                             })
                     }
-                }).catch(err => callback(err))
+                }).catch(err => {
+                    console.log('profile id', profile._json.id);
+                    callback(err)})
         }));
