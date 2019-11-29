@@ -74,7 +74,7 @@
         <textarea class='"md-textarea form-control' name="text" maxlength="140" placeholder="Write your text here..."
           required></textarea>
         <input type="file" name="images" multiple />
-        <button class="btn btn-secondary">Publish</button>
+        <button class="btn btn-secondary mt-3">Publish</button>
       </form>
     </div>
   </div>
@@ -86,17 +86,17 @@
       <div>
         <a href="/band/post/{{this._id }}">
           <div>
-            <p class="text-dark" >{{ this.text }}</p>
+            <p class="text-dark">{{ this.text }}</p>
           </div>
           <div>
             {{#each this.images}}
-            <img class="img-fluid"  src={{this.resizedUrl}}>
+            <img class="img-fluid" src={{this.resizedUrl}}>
             {{/each}}
           </div>
           <div>
-            <small class="text-secondary" >{{ this.creationDate }}</small>
+            <small class="text-secondary">{{ this.creationDate }}</small>
             <br />
-            <small class="text-secondary" >{{ this.author.username }}</small>
+            <small class="text-secondary">{{ this.author.username }}</small>
           </div>
 
         </a>
@@ -107,32 +107,28 @@
   </div>
 
   {{#ifSameLoggedIn band user}}
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card" class="card mb-2 d-flex flex-row">
     <h5 class="card-header"> Profile Settings</h5>
     <div class="card-body">
-      <p class="card-text">Edit your profile.</p>
-      <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit</a>
+      <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit your profile</a>
     </div>
     <div class="card-body">
-      <p class="card-text">Delete your profile.</p>
       <form action='/band/delete/{{band._id}}' method="POST">
-        <button class="btn btn-secondary">Delete</button>
+        <button class="btn btn-secondary">Delete your profile.</button>
       </form>
     </div>
   </div>
   {{/ifSameLoggedIn}}
 
   {{#isAdmin user}}
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card" class="card mb-2 d-flex flex-row">
     <h5 class="card-header">Band Profile Settings</h5>
     <div class="card-body">
-      <p class="card-text">Edit this profile.</p>
-      <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit</a>
+      <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit this profile.</a>
     </div>
     <div class="card-body">
-      <p class="card-text">Delete this profile.</p>
       <form action='/band/delete/{{band._id}}' method="POST">
-        <button class="btn btn-secondary">Delete</button>
+        <button class="btn btn-secondary">Delete this profile.</button>
       </form>
     </div>
   </div>

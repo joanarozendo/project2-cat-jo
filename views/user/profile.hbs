@@ -29,81 +29,36 @@
   <div id="band-profile-card" class="card mb-2">
     <h5 class="card-header">More</h5>
 
-    {{#ifNotSameLoggedIn user_individual user}}
     <div class="card-body">
-      <p class="card-text">Want to get in touch? Send an email!</p>
-      <a href="/user/contact-form/{{user_individual.id}}" class="btn btn-secondary">Contact Me</a>
+      <p class="card-text">Want to get in touch?</p>
+      <a href="/form/contact-form/{{user_individual.id}}" class="btn btn-secondary">Contact Me</a>
     </div>
-    {{/ifNotSameLoggedIn}}
-  </div>
 
-  <div id="band-profile-card" class="card mb-2">
-    <h5 class="card-header">Add a Comment</h5>
-    <div class="card-body">
-      <form class="card-text" action="/user/post/{{user_individual._id}}/create" method="POST"
-        enctype="multipart/form-data">
-        <textarea class='"md-textarea form-control' name="text" maxlength="140" placeholder="Write your text here..."
-          required></textarea>
-        <input type="file" name="images" multiple />
-        <button class="btn btn-secondary">Publish</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="band-profile-card" class="card mb-2">
-    <h5 class="card-header">Comments</h5>
-    <div class="card-body">
-      {{#each post}}
-      <div>
-        <a href="/user/post/{{this._id }}">
-          <div>
-            <p class="text-dark">{{ this.text }}</p>
-          </div>
-          <div>
-            {{#each this.images}}
-            <img class="img-fluid" src={{this.resizedUrl}}>
-            {{/each}}
-          </div>
-          <div>
-            <small class="text-secondary">{{ this.creationDate }}</small>
-            <br />
-            <small class="text-secondary">{{ this.author.username }}</small>
-          </div>
-
-        </a>
-      </div>
-      <hr>
-      {{/each}}
-    </div>
   </div>
 
   {{#ifSameLoggedIn user_individual user}}
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card" class="card mb-2 d-flex flex-row ">
     <h5 class="card-header">Profile Settings</h5>
     <div class="card-body">
-      <p class="card-text">Edit your profile.</p>
-      <a href="/user/edit/{{user_individual._id}}" class="btn btn-secondary">Edit</a>
+      <a href="/user/edit/{{user_individual._id}}" class="btn btn-secondary">Edit your profile</a>
     </div>
     <div class="card-body">
-      <p class="card-text">Delete your profile.</p>
       <form action='/user/delete/{{user_individual._id}}' method="POST">
-        <button class="btn btn-secondary">Delete</button>
+        <button class="btn btn-secondary">Delete your profile</button>
       </form>
     </div>
   </div>
   {{/ifSameLoggedIn}}
 
   {{#isAdmin user}}
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card d-flex flex-row " class="card mb-2">
     <h5 class="card-header">User Profile Settings</h5>
     <div class="card-body">
-      <p class="card-text">Edit this profile.</p>
-      <a href="/user/edit/{{user_individual._id}}" class="btn btn-secondary">Edit</a>
+      <a href="/user/edit/{{user_individual._id}}" class="btn btn-secondary">Edit this profile</a>
     </div>
     <div class="card-body">
-      <p class="card-text">Delete this profile.</p>
       <form action='/user/delete/{{user_individual._id}}' method="POST">
-        <button class="btn btn-secondary">Delete</button>
+        <button class="btn btn-secondary">Delete this profile.</button>
       </form>
     </div>
   </div>
