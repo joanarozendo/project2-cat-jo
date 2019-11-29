@@ -1,137 +1,141 @@
-<div class="p-5 m-1">
-  <div class="card mb-3 {{!-- bg-transparent --}}">
+<div class="p-2 m-0">
+  <div id="band-profile-card" class="card mb-2 {{!-- bg-transparent --}}">
+
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img src="{{band.images.0.url}}" class="card-img" alt="...">
+        <img class="card-img border border-secondary" src="{{band.images.0.url}}" alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h1 class="card-title">{{band.artistName}}</h1>
-          <div>⭐ Rate: {{band.bandAverageRate}}</div>
-          {{#ifRated band user}}
-          <div>You already rated this band!</div>
-          {{/ifRated}}
-          {{#ifNotRated band user}}
-          <form action="/band/profile/{{band._id}}/rate" method='POST'>
-            <label for="artistRating">Rate this band</label>
-            <select name="rate" id="">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <button>Rate</button>
-          </form>
-          {{/ifNotRated}}
-          <ul>Genre:
+          <div class="card-title">
+            <h1>{{band.artistName}}</h1>
+            <span>
+              <div>⭐ Rating: {{band.bandAverageRate}}</div>
+              {{#ifRated band user}}
+              {{!-- <div>You already rated this band!</div> --}}
+              {{/ifRated}}
+              {{#ifNotRated band user}}
+              <form action="/band/profile/{{band._id}}/rate" method='POST'>
+                <label for="artistRating">Rate this band</label>
+                <select name="rate" id="">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <button>Rate</button>
+              </form>
+              {{/ifNotRated}}
+            </span>
+          </div>
+          <div class="card-body">
             {{#each band.genres}}
-            <li>{{this}}</li>
+            <p class="text-capitalize">Genres: {{this}}</p>
             {{/each}}
-          </ul>
-          <div>Description: {{band.description}}</div>
+          </div>
+          <div class="card-body">
+            <p>About: {{band.description}}</p>
+          </div>
+          <div class="card-body">
+            <p>Discography: {{band.artistAlbums}}</p>
+          </div>
 
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Last updated {{band.timestamps.createdAt}}</small></p>
+          <small class="card-body">Last updated {{band.updateDate}}</small>
         </div>
       </div>
     </div>
-    <div class="card">
-      <h5 class="card-header">Featured</h5>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-        
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-        
-      </div>
+
+
+  </div>
+
+  <div id="band-profile-card" class="card mb-2">
+    <h5 class="card-header">More From Us</h5>
+    <div class="card-body">
+      <p class="card-text">Want to know even more about us, and, even better, listen to our music?</p>
+      <a href="{{band.bandWebsite}}" class="btn btn-secondary">Spotify</a>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Come check us out live! Here's a list of our next gigs.</p>
+      <a href="/events/{{band.id}}" class="btn btn-secondary">Concerts</a>
+    </div>
+    {{#ifNotSameLoggedIn band user}}
+    <div class="card-body">
+      <p class="card-text">Want to get in touch with us? Send us an email!</p>
+      <a href="/band/contact-form/{{band.id}}" class="btn btn-secondary">Contact Us</a>
+    </div>
+    {{/ifNotSameLoggedIn}}
+  </div>
+
+  <div id="band-profile-card" class="card mb-2">
+    <h5 class="card-header">Add a Comment</h5>
+    <div class="card-body">
+      <form class="card-text" action="/band/post/{{band._id}}/create" method="POST" enctype="multipart/form-data">
+        <textarea class='"md-textarea form-control' name="text" maxlength="140" placeholder="Write your text here..."
+          required></textarea>
+        <input type="file" name="images" multiple />
+        <button class="btn btn-secondary">Publish</button>
+      </form>
     </div>
   </div>
 
+  <div id="band-profile-card" class="card mb-2">
+    <h5 class="card-header">Comments</h5>
+    <div class="card-body">
+      {{#each post}}
+      <div>
+        <a href="/band/post/{{this._id }}">
+          <div>
+            <p class="text-dark" >{{ this.text }}</p>
+          </div>
+          <div>
+            {{#each this.images}}
+            <img class="img-fluid"  src={{this.resizedUrl}}>
+            {{/each}}
+          </div>
+          <div>
+            <small class="text-secondary" >{{ this.creationDate }}</small>
+            <br />
+            <small class="text-secondary" >{{ this.author.username }}</small>
+          </div>
 
-  <h1>Band profile</h1>
-  {{!-- {{#each band.images}} --}}
-  <img src={{band.images.0.resizedUrl}}>
-  {{!-- {{/each}} --}}
-  <h2>{{band.artistName}}</h2>
-  <div>⭐ Rate: {{band.bandAverageRate}}</div>
-  {{#ifRated band user}}
-  <div>You already rated this band!</div>
-  {{/ifRated}}
-  {{#ifNotRated band user}}
-  <form action="/band/profile/{{band._id}}/rate" method='POST'>
-    <label for="artistRating">Rate this band</label>
-    <select name="rate" id="">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    <button>Rate</button>
-  </form>
-  {{/ifNotRated}}
-  <ul>Genre:
-    {{#each band.genres}}
-    <li>{{this}}</li>
-    {{/each}}
-  </ul>
-  <div>Description: {{band.description}}</div>
-  <div>Our Spotify Page: <a href="{{band.bandWebsite}}" target="blank">HERE</a></div>
-  {{!-- <div>Recovery Q: {{band.passRecoveryQuestion}}</div> --}}
-  <div><a href="/events/{{band.id}}">Events</a></div>
-
-  {{#ifNotSameLoggedIn band user}}
-  <span>Want to get in touch with the band? Click <a href="/band/contact-form/{{band.id}}">here</a>.</span>
-  {{/ifNotSameLoggedIn}}
+        </a>
+      </div>
+      <hr>
+      {{/each}}
+    </div>
+  </div>
 
   {{#ifSameLoggedIn band user}}
-  <div><a href="/band/edit/{{band._id}}">Edit</a>
+  <div id="band-profile-card" class="card mb-2">
+    <h5 class="card-header"> Profile Settings</h5>
+    <div class="card-body">
+      <p class="card-text">Edit your profile.</p>
+      <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit</a>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Delete your profile.</p>
+      <form action='/band/delete/{{band._id}}' method="POST">
+        <button class="btn btn-secondary">Delete</button>
+      </form>
+    </div>
   </div>
-  <form action='/band/delete/{{band._id}}' method="POST"><button>Delete your Profile</button></form>
   {{/ifSameLoggedIn}}
 
   {{#isAdmin user}}
-  <div><a href="/band/edit/{{band._id}}">Edit</a>
+  <div id="band-profile-card" class="card mb-2">
+    <h5 class="card-header">Band Profile Settings</h5>
+    <div class="card-body">
+      <p class="card-text">Edit this profile.</p>
+      <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit</a>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Delete this profile.</p>
+      <form action='/band/delete/{{band._id}}' method="POST">
+        <button class="btn btn-secondary">Delete</button>
+      </form>
+    </div>
   </div>
-  <form action='/band/delete/{{band._id}}' method="POST">
-    <button>Delete this Artist's Profile</button>
-  </form>
   {{/isAdmin}}
-  <div class="single-post">
-    <h3>Add posts</h3>
-    <form action="/band/post/{{band._id}}/create" method="POST" enctype="multipart/form-data">
-      <textarea class='"md-textarea form-control' name="text" maxlength="140" placeholder="Write your text here..."
-        required></textarea>
-      <input type="file" name="images" multiple />
-      <button class="btn btn-secondary">Publish</button>
-    </form>
-  </div>
-  <h3>Posts</h3>
-  {{#each post}}
 
-  <div class="single-post d-flex justify-content-between">
-    <a href="/band/post/{{this._id }}">
-      <div>
-        {{#each this.images}}
-        <img src={{this.resizedUrl}}>
-        {{/each}}
-      </div>
-      <div class='d-flex flex-column'>
-        <p>{{ this.text }}</p>
-        <small>{{ this.creationDate }}</small>
-        <br />
-        <small>{{ this.author.username }}</small>
-      </div>
-    </a>
-  </div>
-  {{/each}}
-</div>
-</div>
 </div>
