@@ -11,6 +11,11 @@ const User = require("./../models/user");
 const Image = require("./../models/image");
 
 
+//SIGN IN WITH SPOTIFY
+userRouter.get('/sign-in/spotify', (req,res,next) => {
+  res.render('user/spoyify');
+})
+
 // GOING TO USER PROFILE
 userRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
@@ -61,7 +66,6 @@ userRouter.post(
       lastName,
       username,
       email,
-      passwordHash,
       passRecoveryQuestion,
       description,
       genres
@@ -77,24 +81,18 @@ userRouter.post(
     ) {
       Image.create(imageObjectArray).then((images = []) => {
         const imageIds = images.map(image => image._id);
-        return bcryptjs
-          .hash(passwordHash, 10)
-          .then(hash => {
-            return User.findOneAndUpdate({
-              _id: userId
-            }, {
-              firstName: firstName,
-              lastName: lastName,
-              username: username,
-              email: email,
-              passwordHash: hash,
-              passRecoveryQuestion,
-              description: description,
-              images: imageIds,
-              genres: genres
-            })
+        return User.findOneAndUpdate({
+            _id: userId
+          }, {
+            firstName: firstName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            passRecoveryQuestion,
+            description: description,
+            images: imageIds,
+            genres: genres
           })
-
           .then(user => {
             console.log("The user was edited", user);
             res.redirect(`/user/profile/${userId}`);

@@ -1,4 +1,6 @@
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 const eventRouter = new Router();
 const routeGuard = require("./../middleware/route-guard");
 const uploader = require("./../middleware/upload");
@@ -6,12 +8,21 @@ const User = require("./../models/user");
 const Image = require("./../models/image");
 const Event = require("./../models/events");
 
+
+
 //To get API of events' list through axios.
 eventRouter.get("/data", (req, res, next) => {
   let date = new Date();
   console.log("todays date", date);
-  Event.find()
+  Event.find({
+      'date': {
+        $gt: date
+      }
+    })
     .then(events => {
+      events.forEach(value => {
+        console.log(value.date)
+      });
       res.send({
         events
       });
@@ -27,10 +38,10 @@ eventRouter.post("/attend/:event_id", routeGuard, (req, res, next) => {
   const userId = req.user._id;
 
   Event.findByIdAndUpdate(eventId, {
-    $push: {
-      attend_users_id: userId
-    }
-  })
+      $push: {
+        attend_users_id: userId
+      }
+    })
     .then(() => {
       return Event.findById(eventId).then(event => {
         const attendingNumber = event.attend_users_id.length;
@@ -54,10 +65,10 @@ eventRouter.post("/not-attend/:event_id", routeGuard, (req, res, next) => {
   const userId = req.user._id;
 
   Event.findByIdAndUpdate(eventId, {
-    $pull: {
-      attend_users_id: userId
-    }
-  })
+      $pull: {
+        attend_users_id: userId
+      }
+    })
     .then(() => {
       return Event.findById(eventId).then(event => {
         const attendingNumber = event.attend_users_id.length;
@@ -78,7 +89,9 @@ eventRouter.post("/not-attend/:event_id", routeGuard, (req, res, next) => {
 //List of all events
 eventRouter.get("/list", routeGuard, (req, res, next) => {
   Event.find()
-    .sort([["date", -1]])
+    .sort([
+      ["date", -1]
+    ])
     .populate("user images")
 
     .then(events => {
@@ -95,8 +108,8 @@ eventRouter.get("/list", routeGuard, (req, res, next) => {
 //search events
 eventRouter.get("/search", routeGuard, (req, res, next) => {
   User.find({
-    role: "artist"
-  })
+      role: "artist"
+    })
     .then(artists => {
       res.render("band/events/search", {
         artists
@@ -111,9 +124,11 @@ eventRouter.get("/search", routeGuard, (req, res, next) => {
 eventRouter.post("/filter/artist-name", routeGuard, (req, res, next) => {
   const bandName = req.body.artistName;
   Event.find({
-    bandName: bandName
-  })
-    .sort([["date", -1]])
+      bandName: bandName
+    })
+    .sort([
+      ["date", -1]
+    ])
     .then(events => {
       res.render("band/events/event-list", {
         events
@@ -130,8 +145,8 @@ eventRouter.post("/filter/genre", routeGuard, (req, res, next) => {
   const genre = req.body.genre;
   console.log("this is genre", genre);
   Event.find({
-    type: genre
-  })
+      type: genre
+    })
     .then(events => {
       res.render("band/events/event-list", {
         events
@@ -149,8 +164,8 @@ eventRouter.post("/filter/city", routeGuard, (req, res, next) => {
   const city = req.body.city;
   console.log("req.body", req.body.city);
   Event.find({
-    "address.city": city
-  })
+      "address.city": city
+    })
     .then(events => {
       console.log("we found a city", events);
       res.render("band/events/event-list", {
@@ -218,6 +233,9 @@ eventRouter.post(
       date,
       time
     } = req.body;
+    const day = date.substr(8, 2);
+    const month = date.substr(5, 2);
+    const year = date.substr(0, 4);
     const imageObjectArray = (req.files || []).map(file => {
       return {
         url: file.url
@@ -246,6 +264,9 @@ eventRouter.post(
             description: description,
             price: price,
             date: date,
+            day:day,
+            month: month,
+            year:year,
             time: time,
             bandName: artistName,
             type: typeOfMusic,
@@ -253,9 +274,6 @@ eventRouter.post(
           });
         })
         .then(event => {
-          console.log('EVENT CREATED', event);
-          console.log('EVENT IMAGES', event.images);
-          console.log('EVENT IMAGES ARRAY?', event.images[0]);
           res.redirect(`/events/${bandId}`);
         })
         .catch(err => {
@@ -272,11 +290,11 @@ eventRouter.post(
 eventRouter.get("/:band_id", routeGuard, (req, res, next) => {
   const bandId = req.params.band_id;
   Event.find({
-    bandId: bandId
-  })
+      bandId: bandId
+    })
     .then(results => {
       res.render("band/events/event-single-band", {
-        results
+        results:results, bandId
       });
     })
     .catch(err => {
@@ -334,11 +352,9 @@ eventRouter.post("/edit/:event_id", routeGuard, (req, res, next) => {
       JSON.stringify(event.bandId) === JSON.stringify(userLoggedIn) ||
       userLoggedInrole === "admin"
     ) {
-      return Event.findOneAndUpdate(
-        {
+      return Event.findOneAndUpdate({
           _id: eventId
-        },
-        {
+        }, {
           nameOfEvent: nameOfEvent,
           address: {
             site: site,
@@ -354,8 +370,7 @@ eventRouter.post("/edit/:event_id", routeGuard, (req, res, next) => {
           price: price,
           date: date,
           time: time
-        }
-      )
+        })
         .then(event => {
           console.log("event edited", event);
           res.redirect(`/events/${event.bandId}`);

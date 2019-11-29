@@ -63,7 +63,6 @@ adminRouter.post(
       lastName,
       username,
       email,
-      passwordHash,
       passRecoveryQuestion
     } = req.body;
     const imageObjectArray = (req.files || []).map(file => {
@@ -74,22 +73,16 @@ adminRouter.post(
     if (JSON.stringify(adminId) === JSON.stringify(req.user._id)) {
       Image.create(imageObjectArray).then((images = []) => {
         const imageIds = images.map(image => image._id);
-        return bcryptjs
-          .hash(passwordHash, 10)
-          .then(hash => {
-            return User.findOneAndUpdate({
+        return  User.findOneAndUpdate({
               _id: adminId
             }, {
               firstName: firstName,
               lastName: lastName,
               username: username,
               email: email,
-              passwordHash: hash,
               passRecoveryQuestion: passRecoveryQuestion,
               images: imageIds
             })
-          })
-
           .then(admin => {
             res.redirect(`/admin/profile/${adminId}`);
           })
