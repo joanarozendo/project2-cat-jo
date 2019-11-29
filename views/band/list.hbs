@@ -1,24 +1,27 @@
-<ul class="list-unstyled">
-  {{#each bands}}
-  <li>
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          {{!-- <img src="..." class="card-img" alt="..."> --}}
-          {{!-- {{#each images}} --}}
-          <img src="{{images.0.resizedUrl}}" alt="" width="185px">
-          {{!-- {{/each}} --}}
+<div class="p-5 m-1">
+  <ul class="list-unstyled">
+    {{#each bands}}
+    <li>
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            {{!-- <img src="..." class="card-img" alt="..."> --}}
+            {{!-- {{#each images}} --}}
+            <img src="{{images.0.resizedUrl}}" alt="" width="185px">
+            {{!-- {{/each}} --}}
 
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{artistName}}</h5>
-            <p class="card-text">{{description}}</p>
-            <a href="/band/profile/{{_id}}" class="card-text"><small class="text-muted">Check out this profile</small></a>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{artistName}}</h5>
+              <p class="card-text">{{description}}</p>
+              <a href="/band/profile/{{_id}}" class="card-text"><small class="text-muted">Check out this
+                  profile</small></a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </li>
-  {{/each}}
-</ul>
+    </li>
+    {{/each}}
+  </ul>
+</div>

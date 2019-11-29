@@ -1,13 +1,10 @@
-<h2>Hi, {{admin.username}}.</h2>
-{{!-- {{#each admin.images}} --}}
-<img src={{admin.images.0.resizedUrl}}>
-{{!-- {{/each}} --}}
-<h3>You are an administrator</h3>
-{{!-- {{#ifUser user}}
-  <span>Want to get in touch with the administrator? Click <a href="/form/contact-form/{{user.id}}">here</a>.</span>
-{{/ifUser}} --}}
-<div>
-  <a href="/admin/edit/{{admin._id}}">Edit your profile</a>
+<div class="p-5 m-1">
+  <h2>Hi, {{admin.username}}.</h2>
+  <img src={{admin.images.0.resizedUrl}}>
+  <h3>You are an administrator</h3>
+  <div>
+    <a href="/admin/edit/{{admin._id}}">Edit your profile</a>
+  </div>
+  <p>Please access to the list of users or bands to be able to delete/edit their profiles.</p>
+  <p>You can also add users or bands through this link: <br><a href="/admin/add-user-first-page">Add users</a></p>
 </div>
-<p>Please access to the list of users or bands to be able to delete/edit their profiles.</p>
-<p>You can also add users or bands through this link: <br><a href="/admin/add-user-first-page">Add users</a></p>

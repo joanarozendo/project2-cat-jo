@@ -29,7 +29,9 @@ imageSchema.virtual("resizedUrl").get(function() {
   const path = url.replace(/[\w\/.:]+upload\//i, "");
   // console.log(path);
   const resizedUrl = cloudinary.url(path, { width: 150, height: 150 });
-  return resizedUrl;
+  // const resizedUrlHorRect = cloudinary.url(path, { width: 200, height: 150 });
+  // const resizedUrlVertRect = cloudinary.url(path, { width: 150, height: 200 });
+  return resizedUrl/* , resizedUrlHorRect, resizedUrlVertRect */;
 });
 
 const Image = mongoose.model("Image", imageSchema);
