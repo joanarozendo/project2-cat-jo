@@ -12,12 +12,13 @@
 
           </div>
           <div class="card-body">
+            <h3>Genres:</h3>
             {{#each user_individual.genres}}
-            <p class="text-capitalize">Genres: {{this}}</p>
+            <h4 class="text-capitalize">{{this}}</h4>
             {{/each}}
           </div>
           <div class="card-body">
-            <p>About: {{user_individual.description}}</p>
+            <h3>About: {{user_individual.description}}</h3>
           </div>
 
           <small class="card-body">Last updated {{user_individual.updateDate}}</small>

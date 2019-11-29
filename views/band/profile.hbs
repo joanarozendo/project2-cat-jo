@@ -30,15 +30,16 @@
             </span>
           </div>
           <div class="card-body">
+            <h3>Genres</h3>
             {{#each band.genres}}
-            <p class="text-capitalize">Genres: {{this}}</p>
+            <h2 class="text-capitalize">{{this}}</h2>
             {{/each}}
           </div>
           <div class="card-body">
-            <p>About: {{band.description}}</p>
+            <h3>About: {{band.description}}</h3>
           </div>
           <div class="card-body">
-            <p>Discography: {{band.artistAlbums}}</p>
+            <h3>Discography: {{band.artistAlbums}}<h3>
           </div>
 
           <small class="card-body">Last updated {{band.updateDate}}</small>
