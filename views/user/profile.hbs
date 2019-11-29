@@ -29,7 +29,7 @@
   <div id="band-profile-card" class="card mb-2">
     <h5 class="card-header">More</h5>
 
-    {{#ifNotSameLoggedIn user}}
+    {{#ifNotSameLoggedIn user_individual user}}
     <div class="card-body">
       <p class="card-text">Want to get in touch? Send an email!</p>
       <a href="/user/contact-form/{{user_individual.id}}" class="btn btn-secondary">Contact Me</a>
@@ -77,7 +77,7 @@
     </div>
   </div>
 
-  {{#ifSameLoggedIn}}
+  {{#ifSameLoggedIn user_individual user}}
   <div id="band-profile-card" class="card mb-2">
     <h5 class="card-header">Profile Settings</h5>
     <div class="card-body">
