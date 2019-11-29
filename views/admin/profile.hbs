@@ -1,10 +1,46 @@
-<div class="p-5 m-1">
-  <h2>Hi, {{admin.username}}.</h2>
-  <img src={{admin.images.0.resizedUrl}}>
-  <h3>You are an administrator</h3>
-  <div>
-    <a href="/admin/edit/{{admin._id}}">Edit your profile</a>
+<div class="p-2 m-0">
+  <div id="band-profile-card" class="card mb-2">
+
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img class="card-img border border-secondary" src="{{admin.images.0.resizedUrl}}" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <div class="card-title">
+            <h1>{{admin.firstName}} {{admin.lastName}}</h1>
+
+          </div>
+          <div class="card-body">
+            <p class="card-text"> Please access to list of users or bands to be able to delete/edit their profiles.
+            </p>
+            <p class="card-text">You can also add users or bands. <br>
+              <a class="btn btn-secondary" href="/admin/add-user-first-page">Add</a>
+            </p>
+
+          </div>
+
+          <small class="card-body">Last updated {{admin.updateDate}}</small>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <p>Please access to the list of users or bands to be able to delete/edit their profiles.</p>
-  <p>You can also add users or bands through this link: <br><a href="/admin/add-user-first-page">Add users</a></p>
+
+  {{#ifSameLoggedIn admin user}}
+  <div id="band-profile-card" class="card mb-2">
+    <h5 class="card-header">Profile Settings</h5>
+    <div class="card-body">
+      <p class="card-text">Edit your profile.</p>
+      <a href="/user/edit/{{admin._id}}" class="btn btn-secondary">Edit</a>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Delete your profile.</p>
+      <form action='/user/delete/{{admin._id}}' method="POST">
+        <button class="btn btn-secondary">Delete</button>
+      </form>
+    </div>
+  </div>
+  {{/ifSameLoggedIn}}
+
 </div>

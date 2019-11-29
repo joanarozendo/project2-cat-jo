@@ -3,7 +3,7 @@
 
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img class="card-img border border-secondary" src="{{band.images.0.url}}" alt="...">
+        <img class="card-img border border-secondary" src="{{band.images.0.resizedUrl}}" alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -12,7 +12,7 @@
             <span>
               <div>⭐ Rating: {{band.bandAverageRate}}</div>
               {{#ifRated band user}}
-              {{!-- <div>You already rated this band!</div> --}}
+              <div>You already rated this band!</div>
               {{/ifRated}}
               {{#ifNotRated band user}}
               <form action="/band/profile/{{band._id}}/rate" method='POST'>
@@ -24,7 +24,7 @@
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </select>
-                <button>Rate</button>
+                <button class="btn btn-secondary">Rate</button>
               </form>
               {{/ifNotRated}}
             </span>
