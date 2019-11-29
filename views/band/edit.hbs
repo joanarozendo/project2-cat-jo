@@ -9,23 +9,25 @@
             <label for="username">Username</label><textarea name="username"
                 class="form-control">{{band.username}}</textarea> </div>
 
-        <div class="form-group col-md-4">
-            <label for="input-artistName">Artist/Band Name</label>
-            <input class="form-control" type="text" id="input-artistName" name="artistName"
-                placeholder="{{band.artistName}}" />
-        </div>
 
         <div class="form-group col-md-4"> <label for="email">Email</label>
             <textarea name="email" type='email' class="form-control">{{band.email}}</textarea>
+        </div>
+
+        <div class="form-group col-md-4"> <label for="description">Description</label> <textarea name="description"
+                class="form-control">{{band.description}}</textarea>
         </div>
 
     </div>
 
     <div class="form-row">
 
-        <div class="form-group col-md-4"><label for="input-password">Password</label>
-            <input type="password" name="passwordHash" id="input-password" class="form-control"
-                placeholder="Your password here" /></div>
+        <div class="form-group col-md-4">
+            <label for="input-artistName">Artist/Band Name</label>
+            <input class="form-control" type="text" id="input-artistName" name="artistName"
+                placeholder="{{band.artistName}}" />
+        </div>
+
 
         <div class="form-group col-md-4"><label for="input-artistAlbums">Your Albums</label>
             <input type="text" id="input-artistAlbums" name="artistAlbums" class="form-control"
@@ -43,10 +45,7 @@
 
     <div class="form-row">
 
-        <div class="form-group col-md-5"> <label for="description">Description</label> <textarea name="description"
-                class="form-control">{{band.description}}</textarea>
 
-        </div>
 
         <div class="form-group col-md-2">
             <label for="input-genres">What is your genre? </label>
@@ -61,10 +60,14 @@
             </select>
         </div>
 
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-6">
             <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
             <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion" class="form-control"
                 placeholder="{{band.passRecoveryQuestion}}" />
+        </div>
+
+        <div class="form-group col-md-4 d-flex justify-content-end align-items-end font-italic">
+            <a class='text-dark' href="/band/edit-password/{{user._id}}">Would you like to change your password?</a>
         </div>
 
     </div>

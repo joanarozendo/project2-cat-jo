@@ -1,19 +1,48 @@
-<h1>Add an artist</h1>
-<form action="/admin/add-artist" method="POST">
-    <label for="input-artistName">Artist/Band Name</label>
-    <input type="text" id="input-artistName" name="artistName" placeholder="Your name here" />
-    <br>
+<form action="/admin/add-artist" method="POST" class="border border-secondary p-5 m-1 rounded-sm font-weight-bold">
+  <h1>Add an artist</h1>
 
-    <label for="input-images">Your Profile Image<label>
-      <input type="file" id="input-images" name="images" class="form-control"/>
-      <br>
+  <div class="form-row">
 
-    <label for="input-description">About</label>
-    <textarea name="description" id="input-description" cols="30" rows="2">Write something about them here</textarea>
-    <br>
+    <div class="form-group col-md-4">
+      <label for="input-artistName">Artist/Band Name</label>
+      <input type="text" id="input-artistName" name="artistName" class="form-control" placeholder="Your name here" />
+    </div>
 
-    <label for="input-genres">What is their genre? You can select more than one</label>
-    <select name="genres" id="input-genres" multiple>
+    <div class="form-group col-md-4">
+      <label for="input-username">Username</label>
+      <input type="text" id="input-username" name="username" class="form-control" placeholder="Your username here" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="input-email">Email</label>
+      <input type="email" id="input-email" name="email" class="form-control" placeholder="Your email" />
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="input-password">Password</label>
+      <input type="password" name="password" id="input-password" class="form-control"
+        placeholder="Your password here" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="input-description">About</label>
+      <textarea name="description" id="input-description"
+        class="form-control">Write something about them here</textarea>
+    </div>
+
+    <div class="form-group col-md-4"> <label for="input-artistAlbums">Their Albums</label>
+      <input type="text" id="input-artistAlbums" name="artistAlbums" class="form-control"
+        placeholder="Your albums here" />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4"> <label for="input-genres">What is their genre? You can select more than
+        one</label>
+      <select name="genres" id="input-genres" class="form-control" multiple>
         <option value="indie">Indie</option>
         <option value="rock">Rock</option>
         <option value="pop">Pop</option>
@@ -21,25 +50,12 @@
         <option value="hip-pop">Hip-Pop</option>
         <option value="metal">Metal</option>
         <option value="fado">Fado</option>
-    </select>
-    <br>
-
-    <label for="input-artistAlbums">Their Albums</label>
-    <input type="text" id="input-artistAlbums" name="artistAlbums" placeholder="Your albums here" />
-    <br>
-
-    <label for="input-username">Username</label>
-    <input type="text" id="input-username" name="username" placeholder="Your username here" />
-    <br>
-
-    <label for="input-email">Email</label>
-    <input type="email" id="input-email" name="email" placeholder="Your email" />
-    <br>
-
-    <label for="input-password">Password</label>
-    <input type="password" name="password" id="input-password" placeholder="Your password here" />
-    <br>
-
-    <button class="my-btn">Add Artist!</button>
+      </select></div>
+    <div class="form-group col-md-4">
+      <label for="input-images">Their Profile Image<label>
+          <input type="file" id="input-images" name="images" class="form-control" />
+    </div>
+  </div>
+  <button class="btn btn-dark border-secondary mt-1">Add Artist!</button>
 
 </form>

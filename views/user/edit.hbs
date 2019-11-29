@@ -29,13 +29,14 @@
         placeholder="abc@def.com">{{user.email}}</textarea>
     </div>
 
-    <div class="form-group col-md-4">
-      <label for="input-password">Password</label>
-      <textarea type="password" class="form-control" id="input-password" name="passwordHash"
-        placeholder="Password">{{user.passwordHash}}</textarea>
-    </div>
-    <div class="form-group col-md-4">
 
+    <div class="form-group col-md-4">
+      <label for="input-description">About you</label>
+      <textarea name="description" class="form-control" id="input-description" rows="2"
+        placeholder="Write something here...">{{user.description}}</textarea>
+    </div>
+
+    <div class="form-group col-md-4">
       <label for="images_upload">Your Profile Image<label>
           <div class="custom-file" name='images_upload'>
             <input type="file" class="custom-file-input" id="input-images" name="images">
@@ -45,12 +46,6 @@
 
   </div>
   <div class="form-row">
-
-    <div class="form-group col-md-4">
-      <label for="input-description">About you</label>
-      <textarea name="description" class="form-control" id="input-description" rows="2"
-        placeholder="Write something here...">{{user.description}}</textarea>
-    </div>
 
     <div class="form-group col-md-4">
 
@@ -72,6 +67,8 @@
       </select>
     </div>
 
+    <div class="form-group col-md-4 d-flex justify-content-end align-items-end font-italic">
+      <a class='text-dark' href="/user/edit-password/{{user._id}}">Would you like to change your password?</a></div>
   </div>
 
   <button class="btn btn-dark border-secondary mt-1">Edit</button>

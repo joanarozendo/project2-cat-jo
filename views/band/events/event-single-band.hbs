@@ -1,10 +1,40 @@
 <div class="p-5 m-1">
-
-  <h1>Events</h1>
-  <ul>
-    {{#each results}}
-    <li>{{this.nameOfEvent}} <br> {{bandName}}<br>{{this.date}} <br> {{this.address.city}} <a
-        href="/events/edit/{{this._id}}">Edit</a></li>
-    <a href="/events/profile/{{this._id}}">Event profile</a> {{/each}}
-  </ul>
+  <h1 class="font-weight-bold">List of events</h1>
+  <a href="/events/search" class='mb-2'> 🔍Go to search page</a>
+  <p>Type something in the input field to search the table for events, artist names or dates:</p>
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <br>
+  <table class="table table-bordered table-striped border-secondary">
+    <thead>
+      <tr class='text-center border-secondary'>
+        <th>Event</th>
+        <th>Who?</th>
+        <th>When?</th>
+        <th>Where?</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      {{#each results}}
+      <tr class='text-center'>
+        <td>{{this.nameOfEvent}}</td>
+        <td>{{this.bandName}}</td>
+        <td>{{this.day}}/{{this.month}}/{{this.year}}</td>
+        <td>{{this.city}}</td>
+        <td><a href="/events/profile/{{this._id}}">Click to know more!</a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
+
+<script>
+  $(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>

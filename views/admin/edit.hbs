@@ -23,11 +23,11 @@
       <textarea name="email" type='email' class="form-control" placeholder="required"
         required>{{admin.email}}</textarea></div>
 
-    <div class="form-group col-md-4"><label for="password">Password</label>
-      <textarea name="passwordHash" type='password' class="form-control" placeholder="required"></textarea></div>
+    <div class="form-group col-md-4"> <label for="description">Description</label>
+      <textarea name="description" class="form-control">{{admin.description}}</textarea>
+    </div>
 
     <div class="form-group col-md-4">
-
       <label for="images_upload">Your Profile Image<label>
           <div class="custom-file" name='images_upload'>
             <input type="file" class="custom-file-input" id="input-images" name="images">
@@ -44,10 +44,9 @@
       <textarea name="passRecoveryQuestion" class="form-control">{{admin.passRecoveryQuestion}}</textarea>
     </div>
 
-    <div class="form-group col-md-6"> <label for="description">Description</label>
-      <textarea name="description" class="form-control">{{admin.description}}</textarea>
+    <div class="form-group col-md-4 d-flex justify-content-end align-items-end font-italic">
+      <a class='text-dark' href="/admin/edit-password/{{user._id}}">Would you like to change your password?</a>
     </div>
-
   </div>
 
   <button class="btn btn-dark border-secondary mt-1">Edit</button>

@@ -112,7 +112,6 @@ bandRouter.post(
       artistName,
       username,
       email,
-      passwordHash,
       passRecoveryQuestion,
       description,
       genres,
@@ -129,22 +128,17 @@ bandRouter.post(
     ) {
       Image.create(imageObjectArray).then((images = []) => {
         const imageIds = images.map(image => image._id);
-        return bcryptjs
-          .hash(passwordHash, 10)
-          .then(hash => {
-            return User.findOneAndUpdate({
-              _id: bandId
-            }, {
-              username: username,
-              email: email,
-              description: description,
-              genres: genres,
-              artistAlbums: artistAlbums,
-              artistName: artistName,
-              passwordHash: hash,
-              passRecoveryQuestion: passRecoveryQuestion,
-              images: imageIds
-            });
+        return User.findOneAndUpdate({
+            _id: bandId
+          }, {
+            username: username,
+            email: email,
+            description: description,
+            genres: genres,
+            artistAlbums: artistAlbums,
+            artistName: artistName,
+            passRecoveryQuestion: passRecoveryQuestion,
+            images: imageIds
           })
           .then(band => {
             res.redirect(`/band/profile/${bandId}`);
