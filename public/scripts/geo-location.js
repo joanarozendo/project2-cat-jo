@@ -67,47 +67,45 @@ function initMapList() {
       //disableDefaultUI: true,  --> wil remove all the arrows, lines
       mapTypeId: "roadmap"
     });
-    
+
     //load events
-function getEvents() {
-    axios
-      .get("/events/data")
-      .then(response => {
-        placeEvents(response.data.events);
-      })
-      .catch(error => {
-        console.log("there was an error", error);
-      });
-  }
-  
-  function placeEvents(events) {
-    const markers = [];
-    events.forEach(event => {
-      if (event.address.latitude & event.address.longitude) {
-        const position = {
-          lat: event.address.latitude,
-          lng: event.address.longitude
-        };
-        const pin = new google.maps.Marker({
-          position: position,
-          map: map,
-          title:'The band ' + event.nameOfEvent + ' on ' + event.date,
-          url: `/events/profile/${event._id}`
+    function getEvents() {
+      axios
+        .get("/events/data")
+        .then(response => {
+          placeEvents(response.data.events);
+        })
+        .catch(error => {
+          console.log("there was an error", error);
         });
-        google.maps.event.addListener(pin, 'click', function() {
+    }
+
+    function placeEvents(events) {
+      const markers = [];
+      events.forEach(event => {
+        if (event.address.latitude & event.address.longitude) {
+          const position = {
+            lat: event.address.latitude,
+            lng: event.address.longitude
+          };
+          const pin = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: 'The band ' + event.nameOfEvent + ` on ${event.day}/${event.month}/${event.year}`,
+            url: `/events/profile/${event._id}`
+          });
+          google.maps.event.addListener(pin, 'click', function () {
             window.location.href = this.url;
-        });
-        markers.push(pin);
-       
-      } else {
-        console.log("the event has no latitude or longitude");
-      }
-    });
-  }
-  
-  getEvents();
+          });
+          markers.push(pin);
+
+        } else {
+          console.log("the event has no latitude or longitude");
+        }
+      });
+    }
+
+    getEvents();
 
   }
 }
-
-

@@ -11,6 +11,11 @@ const User = require("./../models/user");
 const Image = require("./../models/image");
 
 
+//SIGN IN WITH SPOTIFY
+userRouter.get('/sign-in/spotify', (req,res,next) => {
+  res.render('user/spoyify');
+})
+
 // GOING TO USER PROFILE
 userRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
