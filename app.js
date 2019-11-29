@@ -30,8 +30,6 @@ const postBandRouter = require('./routes/post_band');
 const postEventsRouter = require('./routes/post_event');
 const formRouter = require('./routes/form');
 
-
-
 const app = express();
 
 app.set("views", join(__dirname, "views"));

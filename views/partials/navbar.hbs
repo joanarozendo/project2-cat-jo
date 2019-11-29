@@ -1,146 +1,97 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <span class="text-light" href="/">Jam Up</span>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand p-0 m-0" href="/"><img class="img-fluid" src="/images/logo3.png" alt=""></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+
+  <div class="collapse navbar-collapse mx-auto" style="width: 200px;" id="navbarNav">
+
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       {{#if user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboard">Dashboard</a>
-    </li>
 
-    {{#ifUser user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/user/profile/{{user._id}}">Profile</a>
-    </li>
-    {{/ifUser}}
+      {{#ifUser user}}
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/user/profile/{{user._id}}">Profile</a>
+      </li>
+      {{/ifUser}}
 
-    {{#ifBand user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/band/profile/{{user._id}}">Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/events/{{user._id}}/add-event">Add an Event</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/events/{{user._id}}">Your events</a>
-    </li>
-    {{/ifBand}}
+      {{#ifBand user}}
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/band/profile/{{user._id}}">Profile</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/events/{{user._id}}/add-event">Add an Event</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/events/{{user._id}}">Your events</a>
+      </li>
+      {{/ifBand}}
 
-    {{#ifAdmin user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/admin/profile/{{user._id}}">Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/admin/add-user-first-page">Add Users/Artists</a>
-    </li>
-    {{/ifAdmin}}
+      {{#ifAdmin user}}
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/admin/profile/{{user._id}}">Profile</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/admin/add-user-first-page">Add Users/Artists</a>
+      </li>
+      {{/ifAdmin}}
 
-    <li class="nav-item">
-      <a class="nav-link" href="/band/list">List of bands</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/user/list">List of users</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/events/list">List of events</a>
-    </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/band/list">List of bands</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/user/list">List of users</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/events/list">List of events</a>
+      </li>
 
-    {{else}}
-    <li class="nav-item">
-      <a class="nav-link" href="/">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/about">About</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/authentication/login">Log In</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/authentication/signup-first-step">Sign Up</a>
-    </li>
-    {{/if}}
-
-    {{#if user}}
-  <form action="/authentication/logout" method="POST">
-    <button class="my-btn btn btn-outline-success my-2 my-sm-0">Log Out</button>
-  </form>
-  {{/if}}
-      
     </ul>
+
   </div>
-</nav>
 
+  {{else}}
 
-{{!-- <div id="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex justify-content-between">
-  
-  <ul class="navbar-nav">
+  <div class="collapse navbar-collapse" id="navbarNav">
 
-    {{#if user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboard">Dashboard</a>
-    </li>
+    <div>
+      <form class="form-inline my-2 my-lg-0" action="/authentication/login" method="GET">
+        {{!-- <li class="nav-item mr-4"> --}}
+        <a class="my-btn btn btn-outline-secondary my-2 my-sm-0 mr-3" href="/authentication/login" role="button">Log
+          In</a>
+        {{!-- </li> --}}
+      </form>
+    </div>
 
-    {{#ifUser user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/user/profile/{{user._id}}">Profile</a>
-    </li>
-    {{/ifUser}}
+    <div>
+      <form class="form-inline my-2 my-lg-0" action="/authentication/login" method="GET">
+        {{!-- <li class="nav-item mr-4"> --}}
+        <a class="my-btn btn btn-outline-secondary my-2 my-sm-0 mr-1" href="/authentication/signup-first-step"
+          role="button">Sign Up</a>
+        {{!-- </li> --}}
+      </form>
+    </div>
 
-    {{#ifBand user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/band/profile/{{user._id}}">Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/events/{{user._id}}/add-event">Add an Event</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/events/{{user._id}}">Your events</a>
-    </li>
-    {{/ifBand}}
-
-    {{#ifAdmin user}}
-    <li class="nav-item">
-      <a class="nav-link" href="/admin/profile/{{user._id}}">Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/admin/add-user-first-page">Add Users/Artists</a>
-    </li>
-    {{/ifAdmin}}
-
-    <li class="nav-item">
-      <a class="nav-link" href="/band/list">List of bands</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/user/list">List of users</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/events/list">List of events</a>
-    </li>
-
-    {{else}}
-    <li class="nav-item">
-      <a class="nav-link" href="/">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/about">About</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/authentication/login">Log In</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/authentication/signup-first-step">Sign Up</a>
-    </li>
     {{/if}}
 
-  </ul>
+    {{#if user}}
 
-  {{#if user}}
-  <form action="/authentication/logout" method="POST">
-    <button class="my-btn btn btn-outline-success my-2 my-sm-0">Log Out</button>
-  </form>
+    <form class="form-inline my-2 my-lg-0" action="/authentication/logout" method="POST">
+      <button class="my-btn btn btn-outline-secondary my-2 my-sm-0 text-right">Log Out</button>
+    </form>
+  </div>
+
+
   {{/if}}
 
-</div> --}}
-
+</nav>
