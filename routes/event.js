@@ -264,9 +264,9 @@ eventRouter.post(
             description: description,
             price: price,
             date: date,
-            day:day,
+            day: day,
             month: month,
-            year:year,
+            year: year,
             time: time,
             bandName: artistName,
             type: typeOfMusic,
@@ -294,7 +294,8 @@ eventRouter.get("/:band_id", routeGuard, (req, res, next) => {
     })
     .then(results => {
       res.render("band/events/event-single-band", {
-        results:results, bandId
+        results: results,
+        bandId
       });
     })
     .catch(err => {

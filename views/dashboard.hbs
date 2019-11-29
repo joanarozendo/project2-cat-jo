@@ -1,12 +1,8 @@
 <div class="text-center p-5 m-1 rounded-sm align-middle">
 
-    <h1>Hi, {{user.username}}!</h1>
+    <h1 class="font-weight-bold mt-5"> Hi, {{user.username}}!</h1>
     <br>
-    You like:
-    <ul>
-        {{#each user.genres}}
-        <li>{{this}}</li>
-        {{/each}}
-    </ul>
-    <a href="/events/list">Check all the events!</a>
+    <img src="{{user.images.0.resizedUrl}}" alt="It was not possible to show your profile picture" class='m-3 rounded'>
+    <br>
+    <a class='btn btn-dark border-secondary mt-6' href="/events/list">Let's begin by checking all the events!</a>
 </div>

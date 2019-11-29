@@ -1,10 +1,14 @@
 'use strict';
-
-const { Router } = require('express');
+const User = require("./../models/user");
+const {
+  Router
+} = require('express');
 const router = new Router();
 
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Jam Up' });
+  res.render('index', {
+    title: 'Jam Up'
+  });
 });
 
 router.get('/about', (req, res, next) => {
@@ -12,7 +16,18 @@ router.get('/about', (req, res, next) => {
 });
 
 router.get('/dashboard', (req, res, next) => {
-  res.render('dashboard');
+  const userId = req.user._id;
+  console.log(req.user);
+  User.findById(userId)
+    .populate('images')
+    .then(user => {
+      res.render('dashboard', {
+        user
+      });
+    })
+    .catch(err => {
+      next(err)
+    });
 });
 
 module.exports = router;

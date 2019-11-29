@@ -1,36 +1,43 @@
-<div class="p-5 m-1">
+<div class="p-5 m-1 rounded-sm font-weight-bold">
     <h1>Event</h1>
-    <img src="{{event.images.0.resizedUrl}}" alt="">
-    <h2>{{event.bandName}}</h2>
-    <h3>{{event.date}}</h3>
-    <p> {{event.time}}
-        {{event.nameOfEvent}}
-        {{event.address.site}}
-        {{event.address.road}}
-        {{event.address.building}}
-        {{event.address.floor}}
-        {{event.address.city}}
-        {{event.address.zip_code}}
-        {{event.address.latitude}}
-        {{event.address.longitude}}
-        {{event.description}}
+    <div class='d-flex'>
 
-        {{event.price}} €</p>
-    <label for="rate">Number of attendants:</label> <textarea name="rate" cols="2" rows="1"
-        disabled>{{event.number_of_attendants}}</textarea>
-    {{#ifNotSameThanEvent event.bandId user}}
-    {{#ifNotAttend event user}}
-    <form action="/events/attend/{{event.id}}" method='POST'><button class="my-btn">Attend</button></form>
-    {{/ifNotAttend}}
-    {{#ifAttend event user}}
-    <form action="/events/not-attend/{{event.id}}" method='POST'>You are attending 😁 <button>I can't attend!
-            😔</button>
-    </form>}
-    {{/ifAttend}}
-    {{/ifNotSameThanEvent}}
-    <div>
+        <div class='text-center p-2'>
+            <div><img src="{{event.images.0.resizedUrl}}" alt="image_of_event"></div>
+            <div> <label for="rate">Number of attendants:</label> <br><textarea name="rate" cols="2" rows="1"
+                    class='bg-secondary text-center text-white rounded-circle'
+                    disabled>{{event.number_of_attendants}}</textarea>
+                {{#ifNotSameThanEvent event.bandId user}}
+                {{#ifNotAttend event user}}
+                <form action="/events/attend/{{event.id}}" method='POST'><button
+                        class='btn btn-dark border-secondary mt-1'>Attend</button></form>
+                {{/ifNotAttend}}
+                {{#ifAttend event user}}
+                <form action="/events/not-attend/{{event.id}}" method='POST'>You are attending 😁 <br> <button
+                        class='btn btn-dark border-secondary mt-4'>I can't
+                        attend!
+                        😔</button>
+                </form>
+                {{/ifAttend}}
+                {{/ifNotSameThanEvent}}</div>
+        </div>
+
+        <div class='pl-3'>
+            <h2>Who? {{event.bandName}}</h2>
+            <h3>What? {{event.nameOfEvent}}</h3>
+            <h3>When? {{event.day}} / {{event.month}} / {{event.year}} at {{event.time}} </h3>
+            <h3>Where? {{event.address.site}}, {{event.address.road}}, {{event.address.building}},
+                {{event.address.floor}},
+                {{event.address.zip_code}}, {{event.address.city}}</h3>
+            <h3>How much? {{event.price}} €</h3>
+            <h4>About: {{event.description}}</h4>
+        </div>
+
+    </div>
+
+    <div class="text-right">
         {{#ifSame event.bandId user}}
-        <a href="/events/edit/{{event._id}}">Edit your event</a>{{/ifSame}}
+        <a href="/events/edit/{{event._id}}" class='btn btn-dark border-secondary mt-1'>Edit your event</a>{{/ifSame}}
 
     </div>
 </div>

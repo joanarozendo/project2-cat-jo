@@ -392,7 +392,7 @@ authenticationRouter.get(
   function (req, res) {
     // req.user._id = req.session.passport
     req.session.user = req.user._id;
-    res.redirect(`/user/profile/${req.user._id}`); //if success will redirect for the profile edition
+    res.redirect(`/dashboard`); //if success will redirect for the profile edition
   }
 );
 
