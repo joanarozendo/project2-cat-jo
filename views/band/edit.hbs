@@ -24,14 +24,15 @@
 
         <div class="form-group col-md-4">
             <label for="input-artistName">Artist/Band Name</label>
-            <input class="form-control" type="text" id="input-artistName" name="artistName"
-                placeholder="{{band.artistName}}" />
+            <textarea class="form-control" type="text" id="input-artistName"
+                name="artistName">{{band.artistName}}</textarea>
         </div>
 
 
         <div class="form-group col-md-4"><label for="input-artistAlbums">Your Albums</label>
-            <input type="text" id="input-artistAlbums" name="artistAlbums" class="form-control"
-                placeholder="{{band.artistAlbums}}" /></div>
+            <textarea type="text" id="input-artistAlbums" name="artistAlbums"
+                class="form-control">{{band.artistAlbums}}</textarea>
+        </div>
 
         <div class="form-group col-md-4">
             <label for="images_upload">Your Profile Image<label>
@@ -62,8 +63,8 @@
 
         <div class="form-group col-md-6">
             <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
-            <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion" class="form-control"
-                placeholder="{{band.passRecoveryQuestion}}" />
+            <textarea type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion"
+                class="form-control">{{band.passRecoveryQuestion}}</textarea>
         </div>
 
         <div class="form-group col-md-4 d-flex justify-content-end align-items-end font-italic">
