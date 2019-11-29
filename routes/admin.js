@@ -1,10 +1,22 @@
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 const adminRouter = new Router();
 const bcryptjs = require("bcryptjs");
 const routeGuard = require("./../middleware/route-guard");
 const uploader = require("./../middleware/upload");
 const User = require("./../models/user");
 const Image = require("./../models/image");
+const generateToken = length => {
+  const characters =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let token = "";
+  for (let i = 0; i < length; i++) {
+    token += characters[Math.floor(Math.random() * characters.length)];
+  }
+  return token;
+};
+
 
 adminRouter.get("/profile/:user_id", routeGuard, (req, res, next) => {
   const userId = req.params.user_id;
@@ -59,31 +71,26 @@ adminRouter.post(
         url: file.url
       };
     });
-    // console.log("THIS IS ROLE OF SESSION", req.user.role);
     if (JSON.stringify(adminId) === JSON.stringify(req.user._id)) {
       Image.create(imageObjectArray).then((images = []) => {
         const imageIds = images.map(image => image._id);
         return bcryptjs
-        .hash(passwordHash, 10)
-        .then(hash => {
-        return User.findOneAndUpdate(
-          {
-            _id: adminId
-          },
-          {
-            firstName: firstName,
-            lastName: lastName,
-            username: username,
-            email: email,
-            passwordHash: hash,
-            passRecoveryQuestion: passRecoveryQuestion,
-            images: imageIds
-          }
-        )
-      })
+          .hash(passwordHash, 10)
+          .then(hash => {
+            return User.findOneAndUpdate({
+              _id: adminId
+            }, {
+              firstName: firstName,
+              lastName: lastName,
+              username: username,
+              email: email,
+              passwordHash: hash,
+              passRecoveryQuestion: passRecoveryQuestion,
+              images: imageIds
+            })
+          })
 
           .then(admin => {
-            console.log("The admin was edited", admin);
             res.redirect(`/admin/profile/${adminId}`);
           })
           .catch(error => {
@@ -124,21 +131,20 @@ adminRouter.get("/edit-password/:admin_id", routeGuard, (req, res, next) => {
 
 adminRouter.post("/edit-password/:admin_id", routeGuard, (req, res, next) => {
   const adminId = req.params.admin_id;
-  const { passwordHash } = req.body;
+  const {
+    passwordHash
+  } = req.body;
   if (
     JSON.stringify(adminId) === JSON.stringify(req.user._id)
   ) {
     bcryptjs
       .hash(passwordHash, 10)
       .then(hash => {
-        return User.findOneAndUpdate(
-          {
-            _id: adminId
-          },
-          {
-            passwordHash: hash
-          }
-        );
+        return User.findOneAndUpdate({
+          _id: adminId
+        }, {
+          passwordHash: hash
+        });
       })
       .then(admin => {
         console.log("The user was edited", admin);
@@ -166,8 +172,9 @@ adminRouter.get("/add-user-first-page", routeGuard, (req, res, next) => {
 });
 
 adminRouter.post("/add-user-first-page", routeGuard, (req, res, next) => {
-  const { role } = req.body;
-  // console.log("this is role", role);
+  const {
+    role
+  } = req.body;
   if (req.user.role === "admin") {
     if (role === "artist") {
       res.render("admin/add-artist");
@@ -195,6 +202,7 @@ adminRouter.post("/add-artist", routeGuard, (req, res, next) => {
     bcryptjs
       .hash(password, 10)
       .then(hash => {
+        let newConfirmationCode = generateToken(12);
         return User.create({
           artistName,
           username,
@@ -203,7 +211,8 @@ adminRouter.post("/add-artist", routeGuard, (req, res, next) => {
           role: "artist",
           description,
           genres: genres,
-          artistAlbums
+          artistAlbums,
+          confirmationCode: newConfirmationCode
         });
       })
       .then(band => {
@@ -229,10 +238,13 @@ adminRouter.post("/add-user", routeGuard, (req, res, next) => {
     description,
     genres
   } = req.body;
+  console.log('req.body', req.body);
   if (req.user.role === "admin") {
     bcryptjs
       .hash(password, 10)
       .then(hash => {
+        let newConfirmationCode = generateToken(12);
+        console.log('step 1');
         return User.create({
           firstName,
           lastName,
@@ -241,7 +253,8 @@ adminRouter.post("/add-user", routeGuard, (req, res, next) => {
           passwordHash: hash,
           role: "user",
           description,
-          genres
+          genres,
+          confirmationCode: newConfirmationCode
         });
       })
       .then(user_individual => {

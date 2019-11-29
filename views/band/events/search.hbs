@@ -1,37 +1,43 @@
-<div class='center'>
-    <h1>Refine your search</h1>
-    <div class='d-flex'>
-        <label for="genre"> Filter by Genre:</label>
-        <form action="/events/filter/genre" method='POST' name='genre'>
-            <select name="genre" class="form-control w-100" id="input-description">
-                <option value="indie">Indie</option>
-                <option value="rock">Rock</option>
-                <option value="pop">Pop</option>
-                <option value="rap">Rap</option>
-                <option value="hip-pop">Hip-Pop</option>
-                <option value="metal">Metal</option>
-                <option value="fado">Fado</option>
-            </select>
-            <button class="my-btn">Let's go!</button>
-        </form>
+<div class="text-center p-5 m-1 rounded-sm align-middle">
+    <h1 class='font-weight-bold'>Refine your search</h1>
+    <div class='d-flex justify-content-around'>
+        <div class="form-group col-md-3">
+            <label for="genre"> 🎵 Filter by Genre:</label>
+            <form action="/events/filter/genre" method='POST' name='genre'>
+                <select name="genre" class="custom-select w-50 text-center my-2" id="input-description">
+                    <option value="indie">Indie</option>
+                    <option value="rock">Rock</option>a
+                    <option value="pop">Pop</option>
+                    <option value="rap">Rap</option>
+                    <option value="hip-pop">Hip-Pop</option>
+                    <option value="metal">Metal</option>
+                    <option value="fado">Fado</option>
+                </select>
+                <button class="btn btn-dark border-secondary my-2 w-50">Let's go!</button>
+            </form>
+        </div>
 
-        <form action="/events/filter/artist-name" method='POST'>
-            <label for="artistName"> Filter by Band Name:</label>
-            <select name="artistName">
-                {{#each artists}}
-                <option value="{{{this.artistName}}}">{{{this.artistName}}}</option>
-                {{/each}}
-            </select>
-            <button class="my-btn">Let's go</button>
-        </form>
-        <label for="location">Filter by location:</label>
-        <form action="/events/filter/city" name='location' method='POST'>
-            <label for="city">City</label> <select name="city" id="">
-                <option value="Lisbon">Lisbon</option>
-                <option value="Porto">Porto</option>
-                <option value="Faro">Faro</option>
-            </select>
-            <button class="my-btn">Let's go!</button></form>
+        <div class="form-group col-md-3">
+            <label for="artistName_form"> 🎤 Filter by Band Name:</label>
+            <form action="/events/filter/artist-name" method='POST' name='artisName_form'>
+                <select name="artistName" class="custom-select w-50 text-center my-2">
+                    {{#each artists}}
+                    <option value="{{{this.artistName}}}">{{{this.artistName}}}</option>
+                    {{/each}}
+                </select>
+                <button class="btn btn-dark border-secondary my-2 w-50">Let's go</button>
+            </form>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="location">🌆 Filter by location:</label>
+            <form action="/events/filter/city" name='location' method='POST'>
+                <select name="city" class="custom-select w-50 text-center my-2">
+                    <option value="Lisbon">Lisbon</option>
+                    <option value="Porto">Porto</option>
+                    <option value="Faro">Faro</option>
+                </select>
+                <button class="btn btn-dark border-secondary my-2 w-50">Let's go!</button></form>
+        </div>
     </div>
 </div>
-

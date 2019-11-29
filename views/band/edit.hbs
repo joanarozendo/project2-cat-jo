@@ -1,41 +1,73 @@
-<h1>Edit your band profile</h1>
-
-<form action="/band/edit/{{band._id}}" method='POST' enctype="multipart/form-data">
-    <!-- image -->
-    <label for="input-images">Your Profile Image<label>
+<form action="/band/edit/{{band._id}}" method='POST' enctype="multipart/form-data"
+    class="border border-secondary p-5 m-1 rounded-sm font-weight-bold">
+    <h1>Edit your band profile</h1>
     <img src={{band.images.0.resizedUrl}}>
-    <input type="file" id="input-images" name="images" class="form-control" />
-    <!-- username -->
-    <label for="username">Username</label><textarea name="username" id="" cols="30"
-        rows="1">{{band.username}}</textarea>
-    <!-- description -->
-    <label for="description">Description</label> <textarea name="description" id="" cols="30"
-        rows="2">{{band.description}}</textarea>
-    <!-- email -->
-    <label for="email">Email</label>
-    <textarea name="email" type='email' id="" cols="30" rows="1">{{band.email}}</textarea>
-    <!-- genres-->
-    <label for="input-genres">What is your genre? You can select more than one</label>
-    <select name="genres" id="input-genres" multiple>
-        <option value="indie">Indie</option>
-        <option value="rock">Rock</option>
-        <option value="pop">Pop</option>
-        <option value="rap">Rap</option>
-        <option value="hip-pop">Hip-Pop</option>
-        <option value="metal">Metal</option>
-        <option value="fado">Fado</option>
-    </select>
-    <!-- artist/band name-->
-    <label for="input-artistName">Artist/Band Name</label>
-    <input type="text" id="input-artistName" name="artistName" placeholder="{{band.artistName}}" />
-    <!-- Albuns-->
-    <label for="input-artistAlbums">Your Albums</label>
-    <input type="text" id="input-artistAlbums" name="artistAlbums" placeholder="{{band.artistAlbums}}" />
-    <!-- Password-->
-    <label for="input-password">Password</label>
-    <input type="password" name="passwordHash" id="input-password" placeholder="Your password here" />
-    {{!-- Pass Recovery --}}
-    <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
-    <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion" placeholder="{{band.passRecoveryQuestion}}" />
-    <button class="my-btn">Edit</button>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-4">
+            <label for="username">Username</label><textarea name="username"
+                class="form-control">{{band.username}}</textarea> </div>
+
+        <div class="form-group col-md-4">
+            <label for="input-artistName">Artist/Band Name</label>
+            <input class="form-control" type="text" id="input-artistName" name="artistName"
+                placeholder="{{band.artistName}}" />
+        </div>
+
+        <div class="form-group col-md-4"> <label for="email">Email</label>
+            <textarea name="email" type='email' class="form-control">{{band.email}}</textarea>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-4"><label for="input-password">Password</label>
+            <input type="password" name="passwordHash" id="input-password" class="form-control"
+                placeholder="Your password here" /></div>
+
+        <div class="form-group col-md-4"><label for="input-artistAlbums">Your Albums</label>
+            <input type="text" id="input-artistAlbums" name="artistAlbums" class="form-control"
+                placeholder="{{band.artistAlbums}}" /></div>
+
+        <div class="form-group col-md-4">
+            <label for="images_upload">Your Profile Image<label>
+                    <div class="custom-file" name='images_upload'>
+                        <input type="file" class="custom-file-input" id="input-images" name="images">
+                        <label class="custom-file-label" for="images">Choose file</label>
+                    </div>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-5"> <label for="description">Description</label> <textarea name="description"
+                class="form-control">{{band.description}}</textarea>
+
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="input-genres">What is your genre? </label>
+            <select name="genres" id="input-genres" class="form-control" multiple>
+                <option value="indie">Indie</option>
+                <option value="rock">Rock</option>
+                <option value="pop">Pop</option>
+                <option value="rap">Rap</option>
+                <option value="hip-pop">Hip-Pop</option>
+                <option value="metal">Metal</option>
+                <option value="fado">Fado</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
+            <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion" class="form-control"
+                placeholder="{{band.passRecoveryQuestion}}" />
+        </div>
+
+    </div>
+
+    <button class="btn btn-dark border-secondary mt-1">Edit</button>
 </form>

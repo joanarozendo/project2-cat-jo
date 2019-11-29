@@ -248,6 +248,8 @@ authenticationRouter.post(
       return bcryptjs
         .hash(passwordHash, 10)
         .then(hash => {
+          let newConfirmationCode = generateToken(12);
+
           return User.create({
             firstName,
             lastName,
@@ -257,7 +259,8 @@ authenticationRouter.post(
             passRecoveryQuestion,
             role: "admin",
             status: "Active",
-            images: imageIds
+            images: imageIds,
+            confirmationCode: newConfirmationCode
           });
         })
         .then(user => {

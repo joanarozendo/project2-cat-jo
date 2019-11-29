@@ -1,24 +1,60 @@
-<h1>Add a user</h1>
-<form action="/admin/add-user" method="POST">
+<form action="/admin/add-user" method="POST" class="border border-secondary p-5 m-1 rounded-sm font-weight-bold">
 
-    <label for="input-firstName">First Name</label>
-    <input type="text" id="input-firstName" name="firstName" placeholder="Your first name here" />
-    <br>
+  <h1>Add a User</h1>
 
-    <label for="input-lastName">Last Name</label>
-    <input type="text" id="input-lastName" name="lastName" placeholder="Your last name here" />
-    <br>
+  <div class="form-row">
 
-    <label for="input-images">Your Profile Image<label>
-      <input type="file" id="input-images" name="images" class="form-control"/>
-      <br>
+    <div class="form-group col-md-4">
+      <label for="input-username">Username</label>
+      <input type="text" id="input-username" name="username" placeholder="jane_doe" required>
+    </div>
 
-    <label for="input-description">About You</label>
-    <textarea name="description" id="input-description" cols="30" rows="2">Write something about her/him</textarea>
-    <br>
+    <div class="form-group col-md-4">
+      <label for="input-firstName">First Name</label>
+      <input type="text" class="form-control" id="input-firstName" name="firstName" placeholder="Jane">
+    </div>
 
-    <label for="input-genres">Favorite genres</label>
-    <select name="genres" id="input-genres" multiple>
+    <div class="form-group col-md-4">
+      <label for="input-lastName">Last Name</label>
+      <input type="text" class="form-control" id="input-lastName" name="lastName" placeholder="Doe">
+    </div>
+
+  </div>
+
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="input-email">Email</label>
+      <input type="email" class="form-control" id="input-email" name="email" placeholder="abc@def.com" required>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="input-password">Password</label>
+      <input type="password" class="form-control" id="input-password" name="password" placeholder="Password" required>
+    </div>
+
+    <div class="form-group col-md-4">
+
+      <label for="images_upload">Your Profile Image<label>
+          <div class="custom-file" name='images_upload'>
+            <input type="file" class="custom-file-input" id="input-images" name="images">
+            <label class="custom-file-label" for="images">Choose file</label>
+          </div>
+    </div>
+
+  </div>
+
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="input-description">About him/her</label>
+      <textarea name="description" class="form-control" id="input-description" rows="2"
+        placeholder="Write something here..."></textarea>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="input-genres">Favorite genres</label>
+      <select name="genres" class="form-control" id="input-genres" multiple>
         <option value="indie">Indie</option>
         <option value="rock">Rock</option>
         <option value="pop">Pop</option>
@@ -26,21 +62,11 @@
         <option value="hip-pop">Hip-Pop</option>
         <option value="metal">Metal</option>
         <option value="fado">Fado</option>
-    </select>
-    <br>
+      </select>
+    </div>
 
-    <label for="input-username">Username</label>
-    <input type="text" id="input-username" name="username" placeholder="Your username here" />
-    <br>
+  </div>
 
-    <label for="input-email">Email</label>
-    <input type="email" id="input-email" name="email" placeholder="Your email" />
-    <br>
-
-    <label for="input-password">Password</label>
-    <input type="password" name="password" id="input-password" placeholder="Your password here" />
-    <br>
-
-    <button class="my-btn">Add user</button>
+  <button class="btn btn-dark border-secondary mt-1">Add user</button>
 
 </form>

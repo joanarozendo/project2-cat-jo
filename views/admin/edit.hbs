@@ -1,34 +1,55 @@
-<div class='center'>
+<form action="/admin/edit/{{admin._id}}" method='POST' enctype="multipart/form-data"
+  class="border border-secondary p-5 m-1 rounded-sm font-weight-bold">
   <h2>Update your settings</h2>
-  <form action="/admin/edit/{{admin._id}}" method='POST' enctype="multipart/form-data">
-      <!-- image -->
-    <label for="input-images">Your Profile Image<label>
-    <img src={{admin.images.0.resizedUrl}}>
-    <input type="file" id="input-images" name="images"/>
-    <br>
-    <label for="firstName">First Name</label>
-    <textarea name="firstName" id="" cols="30" rows="1">{{admin.firstName}}</textarea>
-    <br>
-    <label for="lastName">Last Name</label>
-    <textarea name="lastName" id="" cols="30" rows="1">{{admin.lastName}}</textarea>
-    <br>
-    <label for="username">Username</label>
-    <textarea name="username" id="" cols="30" rows="1">{{admin.username}}</textarea>
-    <br>
-    <label for="description">Description</label>
-    <textarea name="description" id="" cols="30" rows="1">{{admin.description}}</textarea>
-    <br>
-    <label for="email">Email</label>
-    <textarea name="email" type='email' id="" cols="30" rows="1" placeholder="required"
-      required>{{admin.email}}</textarea>
-    <br>
-    <label for="password">Password</label>
-    <textarea name="passwordHash" type='password' id="" cols="30" rows="1" placeholder="required"></textarea>
-    <br>
-    <label for="passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
-    <textarea name="passRecoveryQuestion" id="" cols="30" rows="1">{{admin.passRecoveryQuestion}}</textarea>
+  <img src={{admin.images.0.resizedUrl}}>
 
-    <button class="my-btn">Edit</button>
+  <div class="form-row">
 
-  </form>
-</div>
+    <div class="form-group col-md-4"><label for="username">Username</label>
+      <textarea name="username" class="form-control">{{admin.username}}</textarea></div>
+
+    <div class="form-group col-md-4"> <label for="firstName">First Name</label>
+      <textarea name="firstName" class="form-control">{{admin.firstName}}</textarea></div>
+
+    <div class="form-group col-md-4"><label for="lastName">Last Name</label>
+      <textarea name="lastName" class="form-control">{{admin.lastName}}</textarea></div>
+
+  </div>
+
+
+  <div class="form-row">
+
+    <div class="form-group col-md-4"> <label for="email">Email</label>
+      <textarea name="email" type='email' class="form-control" placeholder="required"
+        required>{{admin.email}}</textarea></div>
+
+    <div class="form-group col-md-4"><label for="password">Password</label>
+      <textarea name="passwordHash" type='password' class="form-control" placeholder="required"></textarea></div>
+
+    <div class="form-group col-md-4">
+
+      <label for="images_upload">Your Profile Image<label>
+          <div class="custom-file" name='images_upload'>
+            <input type="file" class="custom-file-input" id="input-images" name="images">
+            <label class="custom-file-label" for="images">Choose file</label>
+          </div>
+    </div>
+  </div>
+
+
+  <div class="form-row">
+
+    <div class="form-group col-md-4"> <label for="passRecoveryQuestion">Password recovery question: What's your
+        favorite color?</label>
+      <textarea name="passRecoveryQuestion" class="form-control">{{admin.passRecoveryQuestion}}</textarea>
+    </div>
+
+    <div class="form-group col-md-6"> <label for="description">Description</label>
+      <textarea name="description" class="form-control">{{admin.description}}</textarea>
+    </div>
+
+  </div>
+
+  <button class="btn btn-dark border-secondary mt-1">Edit</button>
+
+</form>

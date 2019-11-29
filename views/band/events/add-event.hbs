@@ -1,30 +1,74 @@
-<div class='center'>
-    <h1>Add events</h1>
-    <form action="/events/{{user._id}}/add-event" method='POST' class='d-flex flex-column' enctype="multipart/form-data">
-        <label for="date">Date</label><input type="date" name='date' required>
-        <label for="time">Time</label><input type="time" name='time' required>
-        <label for="nameOfEvent">Name Of Event</label><input type="text" name='nameOfEvent' required>
-        Address:
-        <label for="site">Site</label><input type="text" name='site'>
-        <label for="road">Road</label><input type="text" name='road'>
-        <label for="building">Number</label><input type="text" name='building'>
-        <label for="floor">Floor</label><input type="text" name='floor'>
-        <label for="city">City</label> <select name="city" id="" required>
-            <option value="Lisbon">Lisbon</option>
-            <option value="Porto">Porto</option>
-            <option value="Faro">Faro</option>
-        </select>
-        <label for="zip_code">Zip Code</label> <input type="text" name='zip_code'>
-        <label for="latitude">Latitude</label>
-        <input type="text" name="latitude" min="-90" max="90" required placeholder="Latitude" />
-        <label for="longitude">Longitude</label>
-        <input type="text" name="longitude" min="-180" max="180" required placeholder="Longitude" />
-        <label for="description">Description</label> <input type="text" name='description'>
-        <label for="images">Images</label> <input type="file" name='images'>
-        <label for="price">Price</label><input type="number" name='price'>
-        <button class='my-btn mt-1 w-25'>Add event!</button>
+<div class='d-flex flex-row align-items-center'>
+    <form action="/events/{{user._id}}/add-event" method='POST'
+        class="border border-secondary p-5 m-1 rounded-sm font-weight-bold w-100" enctype="multipart/form-data">
+        <h1 class='font-weight-bold'>Add events</h1>
+
+        <div class='form row'>
+            <div class="form-group col-md-3"><label for="date">Date</label><input class="form-control" type="date"
+                    name='date' required>
+            </div>
+            <div class="form-group col-md-2"> <label for="time">Time</label><input class="form-control" type="time"
+                    name='time' required>
+            </div>
+            <div class="form-group col-md-3"><label for="nameOfEvent">Name Of Event</label><input class="form-control"
+                    type="text" name='nameOfEvent' required>
+            </div>
+            <div class="form-group col-md-2"><label for="price">Price €</label><input class="form-control" type="number"
+                    name='price'>
+            </div>
+        </div>
+
+        <label for="address">Address</label>
+        <div class='form row' name='address'>
+            <div class="form-group col-md-3"><input class="form-control" placeholder='Site' type="text" name='site'>
+            </div>
+            <div class="form-group col-md-2"><input class="form-control" placeholder='road' type="text" name='road'>
+            </div>
+            <div class="form-group col-md-2"> <input class="form-control" placeholder='number' type="text"
+                    name='building'>
+            </div>
+            <div class="form-group col-md-2"><input class="form-control" placeholder='floot' type="text" name='floor'>
+            </div>
+            <div class="form-group col-md-2"> <select name="city" class="form-control" required>
+                    <option value="Lisbon">Lisbon</option>
+                    <option value="Porto">Porto</option>
+                    <option value="Faro">Faro</option>
+                </select>
+            </div>
+        </div>
+        <div class='form row'>
+            <div class="form-group col-md-2">
+                <input placeholder='zip-code' type="text" name='zip_code' class="form-control">
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" name="latitude" min="-90" max="90" class="form-control" required
+                    placeholder="Latitude" />
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" name="longitude" min="-180" max="180" class="form-control" required
+                    placeholder="Longitude" />
+            </div>
+            <div class="form-group col-md-5"> 🌎 Select on the map the location</div>
+        </div>
+        <div class='form row'>
+            <div class="form-group col-md-6"> <label for="description">Description</label> <input class="form-control"
+                    type="text" name='description'></div>
+            <div class="form-group col-md-4">
+                <label for="images_upload">Image of event<label>
+                        <div class="custom-file" name='images_upload'>
+                            <input type="file" class="custom-file-input" id="input-images" name="images">
+                            <label class="custom-file-label" for="images">Choose file</label>
+                        </div>
+            </div>
+
+
+
+        </div>
+        <button class='btn btn-dark border-secondary mt-1'>Add event!</button>
     </form>
-    <div id="map">Map</div>
+
+    <div id="map" name='map' class='w-50 border border-secondary rounded'>Map</div>
+
 </div>
 
 <script src='/scripts/geo-location.js'></script>

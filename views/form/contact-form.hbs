@@ -1,21 +1,16 @@
-<div class="center">
-
+<form action="/form/contact-form/{{user._id}}" method="POST" class="text-center p-5 m-1 rounded-sm align-middle">
   <h2>Contact Form</h2>
+  <label for="name">Your Username</label>
+  <input type="text" name="name" id="" required>
+  <br>
 
-  <form action="/form/contact-form/{{user._id}}" method="POST">
+  <label for="email">Your Email</label>
+  <input type="email" name="email" id="" required>
+  <br>
 
-    <label for="name">Your Username</label>
-    <input type="text" name="name" id="" required>
-    <br>
+  <label for="message">Your Message</label>
+  <textarea minlength="5" maxlength="200" rows="5" cols="40" type="text" name="message" id=""
+    placeholder="Write your message here" required></textarea>
 
-    <label for="email">Your Email</label>
-    <input type="email" name="email" id="" required>
-    <br>
-
-    <label for="message">Your Message</label>
-    <textarea minlength="5" maxlength="200" rows="5" cols="40" type="text" name="message" id="" placeholder="Write your message here" required></textarea>
-
-    <button class="my-btn">Send</button>
-  </form>
-
-</div>
+  <button class="btn btn-dark border-secondary mt-1'">Send</button>
+</form>

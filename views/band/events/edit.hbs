@@ -1,20 +1,37 @@
-<h2>Edit your event</h2>
+<form action="/events/edit/{{event._id}}" method='POST'
+    class="border border-secondary p-5 m-1 rounded-sm font-weight-bold w-100">
+    <h2 class="font-weight-bold">Edit your event</h2>
+    <div class='form row'>
+        <div class="form-group col-md-4"> <label for="nameOfEvent">Name Of Event</label><textarea type="text"
+                name='nameOfEvent' class="form-control">{{event.nameOfEvent}}</textarea></div>
+        <div class="form-group col-md-5"> <label for="description">Description</label><textarea type="text"
+                name='description' class="form-control">{{event.description}}</textarea></div>
+        <div class="form-group col-md-3">
+            <label for="price">Price (€)</label> <textarea type="number" name='price'
+                class="form-control">{{event.price}}</textarea></div>
+    </div>
 
-<form action="/events/edit/{{event._id}}" method='POST' class='d-flex flex-column'>
-    <label for="date">Date</label><textarea type="date" name='date' cols="5" rows="1">{{event.date}}</textarea>
-    <label for="time">Time</label><textarea type="time" name='time' cols="5" rows="1">{{event.time}}</textarea>
-    <label for="nameOfEvent">Name Of Event</label><textarea type="text" name='nameOfEvent' cols="5" rows="1">{{event.nameOfEvent}}</textarea>
-    <label for="site">Site</label><textarea type="text" name='site' cols="5" rows="1">{{event.address.site}}</textarea>
-    <label for="road">Road</label> <textarea type="text" name='road' cols="30" rows="10">{{event.address.road}}</textarea>
-    <label for="building">Number</label> <textarea type="text" name='building' cols="5" rows="1">{{event.address.building}}</textarea>
-    <label for="floor">Floor</label> <textarea type="text" name='floor' cols="5" rows="1">{{event.address.floor}}</textarea>
-    <label for="city">City</label><textarea type="text" name='city'cols="5" rows="1">{{event.address.city}}</textarea>
-    <label for="zip_code">Zip Code</label><textarea type="text" name='zip_code' cols="5" rows="1">{{event.address.zip_code}}</textarea>
-    <label for="latitude">Latitude</label> <textarea type="number" name='latitude' cols="5" rows="1">{{event.address.latitude}}</textarea>
-    <label for="longitude">Longitude</label> <textarea type="number" name='longitude' cols="5" rows="1">{{event.address.longitude}}</textarea>
-    <label for="description">Description</label><textarea type="text" name='description' cols="5" rows="1">{{event.description}}</textarea>
-    <label for="price">Price</label> <textarea type="number" name='price' cols="5" rows="1">{{event.price}}</textarea>
-    <button class='my-btn mt-1 w-25'>Edit event</button>
+    <div class='form row'>
+        <div class="form-group col-md-4"> <label for="site">Site</label><textarea type="text" name='site'
+                class="form-control">{{event.address.site}}</textarea></div>
+        <div class="form-group col-md-4"> <label for="road">Road</label> <textarea type="text" name='road'
+                class="form-control">{{event.address.road}}</textarea></div>
+        <div class="form-group col-md-2"> <label for="building">Number</label> <textarea type="text" name='building'
+                class="form-control">{{event.address.building}}</textarea></div>
+        <div class="form-group col-md-2">
+            <label for="floor">Floor</label> <textarea type="text" name='floor'
+                class="form-control">{{event.address.floor}}</textarea></div>
+    </div>
+
+    <div class='form row'>
+        <div class="form-group col-md-2"><label for="city">City</label><textarea type="text" name='city'
+                class="form-control">{{event.address.city}}</textarea></div>
+        <div class="form-group col-md-2"><label for="zip_code">Zip Code</label><textarea type="text" name='zip_code'
+                class="form-control">{{event.address.zip_code}}</textarea></div>
+        <div class="form-group col-md-3"><label for="latitude">Latitude</label> <textarea type="number" name='latitude'
+                class="form-control">{{event.address.latitude}}</textarea></div>
+        <div class="form-group col-md-3"><label for="longitude">Longitude</label> <textarea type="number"
+                name='longitude' class="form-control">{{event.address.longitude}}</textarea></div>
+    </div>
+    <button class='btn btn-dark border-secondary mt-1'>Edit event</button>
 </form>
-
-<form action="/events/delete/{{event._id}}" method='POST'><button class="my-btn">Delete Event</button></form>

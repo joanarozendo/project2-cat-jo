@@ -1,45 +1,79 @@
-<div class='center'>
+<form action="/user/edit/{{user._id}}" method='POST' enctype="multipart/form-data"
+  class="border border-secondary p-5 m-1 rounded-sm font-weight-bold">
   <h2>Update your settings</h2>
-  <form action="/user/edit/{{user._id}}" method='POST' enctype="multipart/form-data">
-    <!-- image -->
-    <label for="input-images">Your Profile Image<label>
-        <img src={{user.images.0.resizedUrl}}>
-        <input type="file" id="input-images" name="images" class="form-control" />
-        <label for="firstName">First Name</label>
-        <textarea name="firstName" id="" cols="30" rows="1">{{user.firstName}}</textarea>
-        <br>
-        <label for="lastName">Last Name</label>
-        <textarea name="lastName" id="" cols="30" rows="1">{{user.lastName}}</textarea>
-        <br>
-        <label for="username">Username</label>
-        <textarea name="username" id="" cols="30" rows="1">{{user.username}}</textarea>
-        <br>
-        <label for="description">Description</label>
-        <textarea name="description" id="" cols="30" rows="1">{{user.description}}</textarea>
-        <br>
-        <label for="email">Email</label>
-        <textarea name="email" type='email' id="" cols="30" rows="1" placeholder="required"
-          required>{{user.email}}</textarea>
-        <br>
-        <label for="input-genres">Choose your favorite genres</label>
-        <select name="genres" class="form-control" id="input-genres" multiple required>
-          <option value="indie">Indie</option>
-          <option value="rock">Rock</option>
-          <option value="pop">Pop</option>
-          <option value="rap">Rap</option>
-          <option value="hip-pop">Hip-Pop</option>
-          <option value="metal">Metal</option>
-          <option value="fado">Fado</option>
-        </select>
+  <img src={{user.images.0.resizedUrl}}>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="input-username">Username</label>
+      <textarea type="text" pattern="[^ \x22]+" title="Mustn't contain spaces" maxlength="8" class="form-control"
+        id="input-username" name="username">{{user.username}}</textarea>
 
-        <label for="passwordHash">Password</label>
-        <textarea name="passwordHash" type='password' id="" cols="30" rows="1" placeholder="required"></textarea>
+    </div>
 
-        <label for="input-passRecoveryQuestion">Password recovery question: What's your favorite color?</label>
-        <input type="text" name="passRecoveryQuestion" id="input-passRecoveryQuestion"
-          placeholder="{{user.passRecoveryQuestion}}" />
+    <div class="form-group col-md-4">
+      <label for="input-firstName">First Name</label>
+      <textarea type="text" class="form-control" id="input-firstName" name="firstName">{{user.firstName}}</textarea>
+    </div>
 
-        <button class="my-btn">Edit</button>
+    <div class="form-group col-md-4">
+      <label for="input-lastName">Last Name</label>
+      <textarea type="text" class="form-control" id="input-lastName" name="lastName">{{user.lastName}}</textarea>
+    </div>
+  </div>
 
-  </form>
-</div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="input-email">Email</label>
+      <textarea type="email" class="form-control" id="input-email" name="email"
+        placeholder="abc@def.com">{{user.email}}</textarea>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="input-password">Password</label>
+      <textarea type="password" class="form-control" id="input-password" name="passwordHash"
+        placeholder="Password">{{user.passwordHash}}</textarea>
+    </div>
+    <div class="form-group col-md-4">
+
+      <label for="images_upload">Your Profile Image<label>
+          <div class="custom-file" name='images_upload'>
+            <input type="file" class="custom-file-input" id="input-images" name="images">
+            <label class="custom-file-label" for="images">Choose file</label>
+          </div>
+    </div>
+
+  </div>
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="input-description">About you</label>
+      <textarea name="description" class="form-control" id="input-description" rows="2"
+        placeholder="Write something here...">{{user.description}}</textarea>
+    </div>
+
+    <div class="form-group col-md-4">
+
+      <label for="input-password">Password recovery question: What's your favorite song?</label>
+      <textarea type="text" id="input-passRecoveryQuestion" name="passRecoveryQuestion"
+        class="form-control">{{user.passRecoveryQuestion}}</textarea>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="input-genres">Choose your favorite genres</label>
+      <select name="genres" class="form-control" id="input-genres" multiple>
+        <option value="indie">Indie</option>
+        <option value="rock">Rock</option>
+        <option value="pop">Pop</option>
+        <option value="rap">Rap</option>
+        <option value="hip-pop">Hip-Pop</option>
+        <option value="metal">Metal</option>
+        <option value="fado">Fado</option>
+      </select>
+    </div>
+
+  </div>
+
+  <button class="btn btn-dark border-secondary mt-1">Edit</button>
+
+</form>
