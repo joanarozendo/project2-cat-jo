@@ -1,6 +1,6 @@
-IronHack - Web Development Full-Time Bootcamp
 
-Project #2: Web App NodeJS&Express&HandleBars&MongoDB
+## Project #2: Web App NodeJS&Express&HandleBars&MongoDB
+IronHack - Web Development Full-Time Bootcamp
 
 Our Project:
 
