@@ -2,7 +2,7 @@
 
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img class="card-img border border-secondary ml-4" src="{{band.images.0.resizedUrl}}" alt="...">
+        <img class="card-img border border-secondary ml-4" src="{{band.images.0.resizedUrl}}" alt="..." style="max-width:350px">
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -52,7 +52,7 @@
     </div>
     <div class="card-body">
       <p class="card-text">Want to know even more about us, and, even better, listen to our music?</p>
-      <a href="{{band.bandWebsite}}" class="btn btn-secondary">Spotify</a>
+      <a href="{{band.bandWebsite}}" class="btn btn-secondary">Our Website</a>
     </div>
     <div class="card-body">
       <p class="card-text">Come check us out live! Here's a list of our next gigs.</p>
@@ -106,12 +106,12 @@
   </div>
 
   {{#ifSameLoggedIn band user}}
-  <div id="band-profile-card" class="card mb-2 d-flex flex-row mr-3 ml-4">
-    <h5 class="card-header"> Profile Settings</h5>
-    <div class="card-body">
+  <h5 class="ml-4"> Profile Settings</h5>
+  <div id="" class="mb-2 d-flex flex-row mr-3 ml-4 justify-content-around">
+    <div class="c">
       <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit your profile</a>
     </div>
-    <div class="card-body">
+    <div class="">
       <form action='/band/delete/{{band._id}}' method="POST">
         <button class="btn btn-secondary">Delete your profile.</button>
       </form>
@@ -120,12 +120,12 @@
   {{/ifSameLoggedIn}}
 
   {{#isAdmin user}}
-  <div id="band-profile-card" class="card mb-2 d-flex flex-row mr-3 ml-4">
-    <h5 class="card-header">Band Profile Settings</h5>
-    <div class="card-body">
+  <h5 class="ml-4">Band Profile Settings</h5>
+  <div id="" class="mb-2 d-flex flex-row mr-3 ml-4 justify-content-around">
+    <div class="">
       <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit this profile.</a>
     </div>
-    <div class="card-body">
+    <div class="">
       <form action='/band/delete/{{band._id}}' method="POST">
         <button class="btn btn-secondary">Delete this profile.</button>
       </form>
