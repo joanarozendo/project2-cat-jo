@@ -17,22 +17,22 @@ main {
   background-color: rgba(250, 248, 242, 0.4); }
 
 .main-font {
-  font-family: 'Lato', sans-serif; }
+  font-family: "Lato", sans-serif; }
 
 .navbar img {
   width: 15%; }
 
 .navbar li {
-  font-family: 'Karla', sans-serif; }
+  font-family: "Karla", sans-serif; }
 
 .navbar a {
-  font-family: 'Karla', sans-serif; }
+  font-family: "Karla", sans-serif; }
 
 .footer {
-  font-family: 'Karla', sans-serif; }
+  font-family: "Karla", sans-serif; }
 
 .my-btn {
-  font-family: 'Karla', sans-serif; }
+  font-family: "Karla", sans-serif; }
 
 h1,
 h2,
@@ -40,7 +40,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Karla', sans-serif; }
+  font-family: "Karla", sans-serif; }
 
 #map {
   color: blue;
@@ -56,5 +56,8 @@ h6 {
 
 #band-profile-card {
   background-color: rgba(93, 93, 93, 0.2); }
+
+#navbar-grow {
+  flex-grow: 0; }
 
 /*# sourceMappingURL=style.css.map */

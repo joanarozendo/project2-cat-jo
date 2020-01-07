@@ -1,9 +1,8 @@
 <div class="p-2 m-0">
-  <div id="band-profile-card" class="card mb-2 {{!-- bg-transparent --}}">
 
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img class="card-img border border-secondary" src="{{band.images.0.resizedUrl}}" alt="...">
+        <img class="card-img border border-secondary ml-4" src="{{band.images.0.resizedUrl}}" alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -12,7 +11,7 @@
             <span>
               <div>⭐ Rating: {{band.bandAverageRate}}</div>
               {{#ifRated band user}}
-              <div>You already rated this band!</div>
+              <div>You have rated this band!</div>
               {{/ifRated}}
               {{#ifNotRated band user}}
               <form action="/band/profile/{{band._id}}/rate" method='POST'>
@@ -30,27 +29,22 @@
             </span>
           </div>
           <div class="card-body">
-            <h3>Genres</h3>
+            <ul class='mb-0'>Genres</ul>
             {{#each band.genres}}
-            <h2 class="text-capitalize">{{this}}</h2>
+            <li class="text-capitalize">{{this}}</li>
             {{/each}}
           </div>
           <div class="card-body">
-            <h3>About: {{band.description}}</h3>
+            <p>About {{band.description}}</p>
           </div>
           <div class="card-body">
-            <h3>Discography: {{band.artistAlbums}}<h3>
+            <p>Discography {{band.artistAlbums}}<p>
           </div>
-
-          <small class="card-body">Last updated {{band.updateDate}}</small>
         </div>
       </div>
     </div>
 
-
-  </div>
-
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card" class="card mb-2 mr-3 ml-4">
     <h5 class="card-header">More From Us</h5>
     <div class="card-body">
       <p class="card-text">Want to get in touch?</p>
@@ -72,7 +66,7 @@
     {{/ifNotSameLoggedIn}}
   </div>
 
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card" class="card mb-2 mr-3 ml-4">
     <h5 class="card-header">Add a Comment</h5>
     <div class="card-body">
       <form class="card-text" action="/band/post/{{band._id}}/create" method="POST" enctype="multipart/form-data">
@@ -84,7 +78,7 @@
     </div>
   </div>
 
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card" class="card mb-2 mr-3 ml-4">
     <h5 class="card-header">Comments</h5>
     <div class="card-body">
       {{#each post}}
@@ -112,7 +106,7 @@
   </div>
 
   {{#ifSameLoggedIn band user}}
-  <div id="band-profile-card" class="card mb-2 d-flex flex-row">
+  <div id="band-profile-card" class="card mb-2 d-flex flex-row mr-3 ml-4">
     <h5 class="card-header"> Profile Settings</h5>
     <div class="card-body">
       <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit your profile</a>
@@ -126,7 +120,7 @@
   {{/ifSameLoggedIn}}
 
   {{#isAdmin user}}
-  <div id="band-profile-card" class="card mb-2 d-flex flex-row">
+  <div id="band-profile-card" class="card mb-2 d-flex flex-row mr-3 ml-4">
     <h5 class="card-header">Band Profile Settings</h5>
     <div class="card-body">
       <a href="/band/edit/{{band._id}}" class="btn btn-secondary">Edit this profile.</a>

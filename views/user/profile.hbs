@@ -1,33 +1,26 @@
 <div class="p-2 m-0">
-  <div id="band-profile-card" class="card mb-2">
-
-    <div class="row no-gutters">
+      <div class="row mb-3">
       <div class="col-md-4 align-middle">
-        <img class="card-img border border-secondary align-middle" src="{{user_individual.images.0.resizedUrl}}" alt="...">
+        <img class="card-img border border-secondary align-middle ml-4" src="{{user_individual.images.0.resizedUrl}}" alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
           <div class="card-title">
             <h1 class="font-weight-bold">{{user_individual.firstName}} {{user_individual.lastName}}</h1>
-
           </div>
           <div class="card-body">
-            <h3>Genres:</h3>
+            <h4>Favorite genres:</h4>
             {{#each user_individual.genres}}
             <h4 class="text-capitalize">{{this}}</h4>
             {{/each}}
           </div>
           <div class="card-body">
-            <h3>About: {{user_individual.description}}</h3>
+            <h4>About: {{user_individual.description}}</h4>
           </div>
-
-          <small class="card-body">Last updated {{user_individual.updateDate}}</small>
         </div>
       </div>
     </div>
-
-  </div>
-  <div id="band-profile-card" class="card mb-2">
+  <div id="band-profile-card" class="card mb-2 mr-4 ml-4">
     <h5 class="card-header">More</h5>
 
     <div class="card-body">
@@ -38,7 +31,7 @@
   </div>
 
   {{#ifSameLoggedIn user_individual user}}
-  <div id="band-profile-card" class="card mb-2 d-flex flex-row ">
+  <div id="band-profile-card" class="card mb-2 d-flex flex-row mr-4 ml-4">
     <h5 class="card-header">Profile Settings</h5>
     <div class="card-body">
       <a href="/user/edit/{{user_individual._id}}" class="btn btn-secondary">Edit your profile</a>

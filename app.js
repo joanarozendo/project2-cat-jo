@@ -1,8 +1,6 @@
 "use strict";
 
-const {
-  join
-} = require("path");
+const { join } = require("path");
 const express = require("express");
 const createError = require("http-errors");
 const cookieParser = require("cookie-parser");
@@ -20,14 +18,14 @@ const MongoStore = connectMongo(expressSession);
 const User = require("./models/user");
 
 //ROUTES
-const indexRouter = require('./routes/index');
-const authenticationRouter = require('./routes/authentication');
-const usersRouter = require('./routes/user');
-const bandRouter = require('./routes/band');
-const adminRouter = require('./routes/admin');
-const eventRouter = require('./routes/event');
-const postBandRouter = require('./routes/post_band');
-const formRouter = require('./routes/form');
+const indexRouter = require("./routes/index");
+const authenticationRouter = require("./routes/authentication");
+const usersRouter = require("./routes/user");
+const bandRouter = require("./routes/band");
+const adminRouter = require("./routes/admin");
+const eventRouter = require("./routes/event");
+const postBandRouter = require("./routes/post_band");
+const formRouter = require("./routes/form");
 
 const app = express();
 
@@ -39,72 +37,71 @@ const hbs = require("hbs");
 hbs.registerPartials(__dirname + "/views/partials");
 
 //Register hbs helpers
-hbs.registerHelper("ifBand", function (v1, options) {
+hbs.registerHelper("ifBand", function(v1, options) {
   if (v1.role === "artist") {
     return options.fn(this);
   }
   return options.inverse(this);
 });
 
-hbs.registerHelper("ifUser", function (v1, options) {
+hbs.registerHelper("ifUser", function(v1, options) {
   if (v1.role === "user") {
     return options.fn(this);
   }
   return options.inverse(this);
 });
 
-hbs.registerHelper("ifAdmin", function (v1, options) {
+hbs.registerHelper("ifAdmin", function(v1, options) {
   if (v1.role === "admin") {
     return options.fn(this);
   }
   return options.inverse(this);
 });
 
-hbs.registerHelper("ifSameLoggedIn", function (arg1, arg2, options) {
-  return JSON.stringify(arg1._id) == JSON.stringify(arg2._id) ?
-    options.fn(this) :
-    options.inverse(this);
+hbs.registerHelper("ifSameLoggedIn", function(arg1, arg2, options) {
+  return JSON.stringify(arg1._id) == JSON.stringify(arg2._id)
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
-hbs.registerHelper("ifNotSameLoggedIn", function (arg1, arg2, options) {
-  return !JSON.stringify(arg1._id) == JSON.stringify(arg2._id) ?
-    options.fn(this) :
-    options.inverse(this);
+hbs.registerHelper("ifNotSameLoggedIn", function(arg1, arg2, options) {
+  return !JSON.stringify(arg1._id) == JSON.stringify(arg2._id)
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
-hbs.registerHelper("ifNotSameThanEvent", function (arg1, arg2, options) {
-  return !(JSON.stringify(arg1) === JSON.stringify(arg2._id)) ?
-    options.fn(this) :
-    options.inverse(this);
+hbs.registerHelper("ifNotSameThanEvent", function(arg1, arg2, options) {
+  return !(JSON.stringify(arg1) === JSON.stringify(arg2._id))
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
-
-hbs.registerHelper("ifSame", function (arg1, arg2, options) {
-  return JSON.stringify(arg1) == JSON.stringify(arg2._id) ?
-    options.fn(this) :
-    options.inverse(this);
+hbs.registerHelper("ifSame", function(arg1, arg2, options) {
+  return JSON.stringify(arg1) == JSON.stringify(arg2._id)
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
-hbs.registerHelper("isAdmin", function (arg1, options) {
+hbs.registerHelper("isAdmin", function(arg1, options) {
   if (arg1.role === "admin") {
     return options.fn(this);
   }
   return options.inverse(this);
 });
 
-hbs.registerHelper("ifAttend", function (arg1, arg2, options) {
-  return arg1.attend_users_id.includes(arg2._id) ?
-    options.fn(this) :
-    options.inverse(this);
+hbs.registerHelper("ifAttend", function(arg1, arg2, options) {
+  return arg1.attend_users_id.includes(arg2._id)
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
-hbs.registerHelper("ifNotAttend", function (arg1, arg2, options) {
-  return !arg1.attend_users_id.includes(arg2._id) ?
-    options.fn(this) :
-    options.inverse(this);
+hbs.registerHelper("ifNotAttend", function(arg1, arg2, options) {
+  return !arg1.attend_users_id.includes(arg2._id)
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
-hbs.registerHelper("ifRated", function (arg1, arg2, options) {
+hbs.registerHelper("ifRated", function(arg1, arg2, options) {
   const usersThatRated = [];
   //In the following function we add all the ids of users that rated to the usersThatRated array.
   arg1.bandUsersRate.forEach(value => {
@@ -112,19 +109,19 @@ hbs.registerHelper("ifRated", function (arg1, arg2, options) {
   });
 
   //both objects were converted to string with JSON.stringify to allow comparison
-  return usersThatRated.includes(JSON.stringify(arg2._id)) ?
-    options.fn(this) :
-    options.inverse(this);
+  return usersThatRated.includes(JSON.stringify(arg2._id))
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
-hbs.registerHelper("ifNotRated", function (arg1, arg2, options) {
+hbs.registerHelper("ifNotRated", function(arg1, arg2, options) {
   const usersThatRated = [];
   arg1.bandUsersRate.forEach(value => {
     usersThatRated.push(JSON.stringify(value.id));
   });
-  return !usersThatRated.includes(JSON.stringify(arg2._id)) ?
-    options.fn(this) :
-    options.inverse(this);
+  return !usersThatRated.includes(JSON.stringify(arg2._id))
+    ? options.fn(this)
+    : options.inverse(this);
 });
 
 app.use(logger("dev"));
@@ -139,7 +136,8 @@ app.use(
   sassMiddleware({
     src: join(__dirname, "public"),
     dest: join(__dirname, "public"),
-    outputStyle: process.env.NODE_ENV === "development" ? "nested" : "compressed",
+    outputStyle:
+      process.env.NODE_ENV === "development" ? "nested" : "compressed",
     sourceMap: true
   })
 );
@@ -165,13 +163,12 @@ app.use(
 );
 
 //PASSPORT CONFIG
-require('./passport-config');
+require("./passport-config");
 
-const passport = require('passport');
+const passport = require("passport");
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 //GETTING ACCESS TO THE USER IN LOCALS
 
@@ -192,20 +189,19 @@ app.use((req, res, next) => {
   }
 });
 
-
 //APP USER ROUTES
-app.use('/', indexRouter);
-app.use('/authentication', authenticationRouter);
-app.use('/user', usersRouter);
-app.use('/band', bandRouter);
-app.use('/admin', adminRouter);
-app.use('/events', eventRouter);
-app.use('/band/post', postBandRouter);
-app.use('/form', formRouter);
+app.use("/", indexRouter);
+app.use("/authentication", authenticationRouter);
+app.use("/user", usersRouter);
+app.use("/band", bandRouter);
+app.use("/admin", adminRouter);
+app.use("/events", eventRouter);
+app.use("/band/post", postBandRouter);
+app.use("/form", formRouter);
 
 // Catch missing routes and forward to error handler
-app.use('*', (req, res, next) => {
-  const error = new Error('This page was not found.');
+app.use("*", (req, res, next) => {
+  const error = new Error("This page was not found.");
   error.status = 404;
   next(error);
 });
@@ -220,7 +216,5 @@ app.use((error, req, res, next) => {
   res.render("error");
   //to show error go to error view and add {{error.stack}}
 });
-
-
 
 module.exports = app;

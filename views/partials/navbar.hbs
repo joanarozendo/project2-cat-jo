@@ -1,18 +1,15 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex">
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between">
+  <div>
   <a class="navbar-brand p-0 m-0" href="/"><img class="img-fluid" src="/images/logo3.png" alt=""></a>
+</div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   {{#if user}}
 
-  <div class="collapse navbar-collapse mx-auto" style="width: 200px;" id="navbarNav">
-
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-
+  <div class="collapse navbar-collapse" style="" id="navbar-grow">
+    <ul class="navbar-nav mt-2">
       {{#ifUser user}}
       <li class="nav-item mr-3">
         <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -23,7 +20,7 @@
       {{/ifUser}}
 
       {{#ifBand user}}
-      <li class="nav-item mr-3">
+      <li class="nav-item">
         <a class="nav-link" href="/dashboard">Dashboard</a>
       </li>
       <li class="nav-item mr-3">
@@ -58,8 +55,12 @@
       <li class="nav-item mr-3">
         <a class="nav-link" href="/events/list">List of events</a>
       </li>
+      <li class="nav-item"> 
+         <form class="form-inline my-2 my-lg-0" action="/authentication/logout" method="POST">
+      <button class="my-btn btn btn-outline-secondary my-2 my-sm-0 text-right">Log Out</button>
+    </form>
+    </li>
     </ul>
-
   </div>
 
   {{else}}
@@ -82,12 +83,6 @@
         {{!-- </li> --}}
       </form>
     </div>
-    {{/if}}
-
-    {{#if user}}
-    <form class="form-inline my-2 my-lg-0" action="/authentication/logout" method="POST">
-      <button class="my-btn btn btn-outline-secondary my-2 my-sm-0 text-right">Log Out</button>
-    </form>
     {{/if}}
 
   </div>

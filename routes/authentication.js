@@ -118,15 +118,16 @@ authenticationRouter.post(
             passwordHash: hash,
             passRecoveryQuestion,
             role: "artist",
-            description,
+            description: description,
             genres: genres,
-            artistAlbums,
+            artistAlbums: artistAlbums,
             images: imageIds,
             confirmationCode: newConfirmationCode,
             bandWebsite
           });
         })
         .then(user => {
+          console.log('user created', user);
           sendMail(user);
           req.session.user = user._id;
           req.user = user;
