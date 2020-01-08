@@ -1,20 +1,20 @@
 <div class="p-5 m-1">
   <h2 class="font-weight-bold">Find out about the musicians</h2>
-  <div class="d-flex justify-content-center align-content-center flex-wrap">
+  <div class="d-flex align-items-center align-content-center justify-content-center flex-wrap">
     {{#each bands}}
-    <div id="band-profile-card" class="card mb-3 ml-3 col-6" style="max-width: 40%; height: 180px">
-      <div class="row no-gutters">
-        <div class="col-md-4">
+    <div id="band-profile-card-list" class="mb-3 ml-3" style="">
+      <div class="no-gutters d-flex flex-row align-items-center align-content-center justify-content-center">
+        <div class="col-md-4 image-list">
 
           <img class="card-img" src="{{images.0.resizedUrl}}" alt="">
 
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 content-list">
           <div class="card-body">
             <h5 class="card-title">{{artistName}}</h5>
             <div class="card-text">
 
-              <p class="text-capitalize">{{#each genres}} {{this}}{{/each}}</p>
+            <p class="text-capitalize">{{#each genres}} {{this}}{{/each}}</p>
 
             </div>
             <p class="card-text">{{description}}</p>

@@ -5,18 +5,15 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <div class="card-title">
-            <h1 class="font-weight-bold">{{user_individual.firstName}} {{user_individual.lastName}}</h1>
-          </div>
-          <div class="card-body">
+            <h1 class="font-weight-bold card-title">{{user_individual.firstName}} {{user_individual.lastName}}</h1>
+            <br>
+            <p>About: {{user_individual.description}}</p>
+            <br>
             <ul>Favorite genres:
             {{#each user_individual.genres}}
             <li class="text-capitalize">{{this}}</li>
             {{/each}}
             </ul>
-          </div>
-          <div class="card-body">
-            <h4>About: {{user_individual.description}}</h4>
           </div>
         </div>
       </div>

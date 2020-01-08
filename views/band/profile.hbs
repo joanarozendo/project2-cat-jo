@@ -29,15 +29,13 @@
             </span>
           </div>
           <div class="card-body">
+            <p>About {{band.description}}</p>
+            <br>
             <ul class='mb-0'>Genres</ul>
             {{#each band.genres}}
             <li class="text-capitalize">{{this}}</li>
             {{/each}}
-          </div>
-          <div class="card-body">
-            <p>About {{band.description}}</p>
-          </div>
-          <div class="card-body">
+            <br>
             <p>Discography {{band.artistAlbums}}<p>
           </div>
         </div>

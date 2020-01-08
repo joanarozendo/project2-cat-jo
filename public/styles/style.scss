@@ -10,7 +10,7 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  background-color:  #ffe066;
+  background-color: #fdd962;
   background-image: url(/images/06.jpg);
   background-position: center center;
   background-repeat: no-repeat;
@@ -73,6 +73,33 @@ h6 {
 
 #band-profile-card {
   background-color: rgba(93, 93, 93, 0.2);
+}
+
+@media only screen and (max-width: 900px) {
+  #band-profile-card-list {
+    width: 1000px;
+    background-color: rgba(93, 93, 93, 0.2);
+    .image-list {
+      width:40%;
+      margin-left: auto;
+      margin-right: auto;
+      height: 100%;
+    }
+    img {
+      vertical-align: middle;
+    }
+    .content-list {
+      width: 60%;
+    }
+  }
+}
+
+@media only screen and (min-width: 901px) {
+  #band-profile-card-list {
+    background-color: rgba(93, 93, 93, 0.2);
+    width: 40%;
+    height: 180px;
+  }
 }
 
 .navbar-grow {
